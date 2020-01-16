@@ -2,9 +2,9 @@
 ###############################################################
 # Required Informations
 ###############################################################
-${SCHEDULE_STRING}          Month
-${OBJECTIVE_STRING}         Visit
-${START_DATE_STRING}        14-02-2020
+${SCHEDULE_STRING}          Week
+${OBJECTIVE_STRING}         POC
+${START_DATE_STRING}        15-02-2020
 ${STATUS_STRING}            Cancel
 ${ACCOUNT_SEARCH_STRING}    A I SYSTEM CO., LTD.
 ${TIME_START_STRING}        18:35
@@ -15,15 +15,15 @@ ${PLAN_DETAIL_STRING}       This is Plan Detail
 ################################################################
 # Optional Informations
 ################################################################
-${EMAIL_TEXT_STRING}        ruel@aisyst.com
-${DEPARTMENT_STRING}        Automation Testing Department
-${POSITION_STRING}          Test Automation
+${EMAIL_TEXT_STRING}
+${DEPARTMENT_STRING}
+${POSITION_STRING}
 ${MOBILE_STRING}
 ${PHONE_STRING}
-${COMMENT_STRING}           Test Automation Comment
-${REPORT_STRING}            Test Automation Report
-${REMAINING_STRING}         This is Remaining Information
-${COMPETITOR_STRING}        This is Competitor Information
-${REMARK_STRING}            This is Remark Information
+${COMMENT_STRING}
+${REPORT_STRING}
+${REMAINING_STRING}
+${COMPETITOR_STRING}
+${REMARK_STRING}
 
 
