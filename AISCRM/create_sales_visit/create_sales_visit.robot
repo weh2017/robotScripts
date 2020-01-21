@@ -25,10 +25,8 @@ Log-In User with Valid Username And Password
     Input User's Password      ${PASS}
     Click Login button
 
-Verify If Home Page Is Displayed
+Home Page Verify Then Select Sales Menu
     Verify Home Page
-
-Selecting Sales Menu Header
     Select Sales Menu
 
 Selecting Schedule Tab
@@ -39,23 +37,68 @@ Entering Sales Visit Form
 
 
 Entering Sales Visit Informations
-    Sales Visit Information
-    Execute Adding Account
-    Execute Deleting Account
-    Verify Erase Account
+    Start And End Date Informations
 
-#Entering Plan Informations
-    #Plan Information
+Account Name
+    Adding Account Information
+    Verify Added Account Information
 
-#Entering Report Informations
-    #Report Information
+    Click Erase Button          ${ACCOUNT_CLEAR_BUTTON}
 
-#Entering Other Informations
-    #Other Information
+    Verify Erased Account Information
+    Adding Account Information
 
-#Save Created Sales Visit Data
-    #No Alert Should Be Found
-    #Click Save Button
+Start Time And End Time
+    Start Time and End Time Information
+
+Department Sales Visit
+    Department Information
+
+Position Sales Visit
+    Position Information
+
+Contact Name
+    Adding Contact Name Information
+    Verify Added Contact Information
+
+    Click Erase Button      ${CONTACT_CLEAR_BUTTON}
+
+    Verify Erased Contact Information
+    Adding Contact Name Information
+    Verify Added Contact Information
+
+Project Name
+    Adding Project Information
+    Verify Added Project Information
+
+    Click Erase Button      ${PROJECT_CLEAR_BUTTON}
+
+    Verify Erased Project Information
+    Adding Project Information
+    Verify Added Project Information
+
+Lead Number
+    Adding Lead Information
+    Verify Added Lead Information
+
+    Click Erase Button      ${LEAD_CLEAR_BUTTON}
+
+    Verify Erased Lead Information
+    Adding Lead Information
+    Verify Added Lead Information
+
+Plan Information
+    Plan Information
+
+Report Information
+    Report Information
+
+Other Information
+    Other Information
+
+Save Created Sales Visit Data
+    No Alert Should Be Found
+    Click Save Button
 
 
 

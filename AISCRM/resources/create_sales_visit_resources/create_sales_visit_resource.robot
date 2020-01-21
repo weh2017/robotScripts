@@ -16,7 +16,9 @@ ${SAVE_BUTTON_LOCATOR}      //input[@title="Save [Alt+S]"]
 ${ACCOUNT_OPTION_STRING}    Account Name
 ${FIRST_NAME_OPTION_STRING}     First Name
 ${PROJECT_DROP_DOWN}      Project Name
+${LEAD_DROPDOWN}            Lead No
 ${ACCOUNT_HEADER}           Accounts
+${LEAD_HEADER}              Leads
 ${OBJECTIVE_SELECT}         //option[@value="${OBJECTIVE_STRING}"]
 ${START_DATE_LOCATOR}       //input[@name="date_start"]
 ${STATUS_LOCATOR}           //option[@value="${STATUS_STRING}"]
@@ -27,11 +29,12 @@ ${TIME_START_LOCATOR}       //tbody/tr[4]/td/span/input[1]         #this is a st
 ${TIME_END_LOCATOR}         //tbody/tr[5]/td[4]/span/input[1]      #this is an end time locator
 ${ADD_CONTACT_NAME}         //table/tbody/tr[6]/td[4]/table/tbody/tr/td[2]/img     #this is a contact button.opens new window
 ${ADD_PROJECT_NAME}         //tr[9]//td[4]//table[1]//tbody[1]//tr[1]//td[3]//img[1]    #this is a project button.open new window
-${CONTACT_LIST_LOCATOR}     //a[@href="javascript:window.close();"][contains(text(), '${CONTACT_LIST_STRING}')]
+${CONTACT_LIST_LOCATOR}     //a[@href="javascript:window.close();"][contains(text(), '${FIRST_NAME_STRING}')]
 ${DEPARTMENT_LOCATOR}       id:con_department
 ${POSITION_LOCATOR}         id:con_position
 ${PHONE_LOCATOR}            id:phone
 ${MOBILE_LOCATOR}           id:mobile
+${ADD_LEAD_NAME}            //tr[10]//td[4]//table[1]//tbody[1]//tr[1]//td[3]//img[1]   #this is adding lead information button
 ############################################
 # PLAN INFORMATION LOCATORS
 ############################################
@@ -47,9 +50,22 @@ ${REMAINING_LOCATOR}        id:sale_remaining
 ##############################################
 ${COMPETITOR_LOCATOR}       id:competitors
 ${REMARK_LOCATOR}           id:sale_remark
-
 ${ADD_IMAGE_BUTTON}     //input[@value="Add Image"]
 ${CHOOSE_FILE_BUTTON}   //form[@id="frmUpload"]
+${ACCOUNT_CLEAR_BUTTON}     //td[@class='showPanelBg']//td[2]//table[1]//tbody[1]//tr[1]//td[3]//input[1]                  #this is an clear button of add account
+${ADD_ACCOUNT_NAME}         //table/tbody/tr[7]/td[2]/table/tbody/tr/td[2]/img     #this is an add account button.opens new window
+${CONTACT_CLEAR_BUTTON}     //td[4]//table[1]//tbody[1]//tr[1]//td[3]//input[1]
+${PROJECT_CLEAR_BUTTON}     //tr[9]//td[4]//table[1]//tbody[1]//tr[1]//td[4]//input[1]
+${LEAD_CLEAR_BUTTON}        //tr[10]//td[4]//table[1]//tbody[1]//tr[1]//td[4]//input[1]
+${ACCOUNT_VALUE}            account_name
+${CONTACT_VALUE}            contact_name
+${PROJECT_VALUE}            project_no
+${LEAD_VALUE}               lead_name
+##############################################
+#  VERIFICATION LOCATORS
+##############################################
+${OBJECTIVE_VERIFY_LOCATOR}     //td[@class="dvtCellInfo"]/font[contains(text(), "POC")]
+${START_DATE_VERIFY_LOCATOR}    //td[@class="dvtCellInfo"][contains(text(), "15-02-2020")]
 
 *** Keywords ***
 
@@ -69,17 +85,16 @@ View Sales Visit Form
     Mouse Over      ${CAL_ADD_BUTTON}
     Click Link   ${SALES_VISIT_OPTION}
     Log     Successfully entered ${OBJECTIVE_STRING}
-    Log To Console      \nSuccessfull entered ${OBJECTIVE_STRING}
 
 
-Sales Visit Information
+Start And End Date Informations
     Wait Until Element Is Visible   ${OBJECTIVE_SELECT}
     Press Keys      ${START_DATE_LOCATOR}       CTRL+a+DELETE
     Input Text      ${START_DATE_LOCATOR}   ${START_DATE_STRING}
     Click Element   ${STATUS_LOCATOR}
-    Log To Console      \nSuccessfully entered ${START_DATE_STRING}
 
-Execute Adding Account
+
+Adding Account Information
     Click Element   ${ADD_ACCOUNT_NAME}
     Select Window   NEW              #To Focus Pop up Browser Window
     Verify Pop-up Window Header      ${ACCOUNT_HEADER}
@@ -88,48 +103,58 @@ Execute Adding Account
     Click Search Button
     Select The List Found   ${ACCOUNT_SEARCH_STRING}
     Select Window              #To Focus back the main browser window
-    Verify Added Information
-    Log To Console     \nSuccessfully entered ${ACCOUNT_SEARCH_STRING}
 
-Execute Deleting Account
-    Click Erase Button
-
-Verify Erase Account
-    Verify Deleting Information
+Verify Added Account Information
+    Verify Added Information        ${ACCOUNT_SEARCH_STRING}        ${ACCOUNT_VALUE}
 
 
-    ################## This is end from Start and End Time Account Name###################
+
+Verify Erased Account Information
+    Verify Deleted Information     ${ACCOUNT_VALUE}
+
+Start Time and End Time Information
+    [Documentation]     Time Start and End Time Settings
     Press Keys      ${TIME_END_LOCATOR}        CTRL+a+DELETE
     Input Text      ${TIME_END_LOCATOR}     ${TIME_END_STRING}
     Press Keys      ${TIME_START_LOCATOR}       CTRL+a+DELETE
     Input Text      ${TIME_START_LOCATOR}       ${TIME_START_STRING}
-    Log To Console  \nSuccessfully entered ${TIME_END_STRING}
-    Log To Console  \nSuccessfully entered ${TIME_START_STRING}
 
-    ################## This is start from Adding Contact Name###########################
+Adding Contact Name Information
+    [Documentation]     This is start from Adding Contact Name
     Click Element   ${ADD_CONTACT_NAME}
     Select Window   NEW                 #To Focus Pop up Browser Window
     Verify Pop-up Window Header   ${ACCOUNT_HEADER}
     Verify and Set Drop Down From Search        ${FIRST_NAME_OPTION_STRING}
-    Input Text To Search    ${CONTACT_LIST_STRING}
+    Input Text To Search    ${FIRST_NAME_STRING}
     Click Search Button
-    Select The List Found       ${CONTACT_LIST_STRING}
+    Select The List Found       ${FIRST_NAME_STRING}
     Select Window
-    Log To Console      \nSuccessfully entered ${CONTACT_LIST_STRING}
 
-    ##################This is Email Textfield############################################
+Verify Added Contact Information
+    [Documentation]     Contact Name Verification
+    Verify Added Information        ${FIRST_NAME_STRING} ${LAST_NAME_STRING}      ${CONTACT_VALUE}
+
+Verify Erased Contact Information
+    [Documentation]     Contact Deleted Information
+    Verify Deleted Information      ${CONTACT_VALUE}
+
+Email Address Information
+    [Documentation]     This is Valid Email Address
     Input Text      ${EMAIL_TEXT_LOCATOR}       ${EMAIL_TEXT_STRING}        clear=True
-    Log To Console  \nSuccessfully entered ${EMAIL_TEXT_STRING}
+    #Should Not Be Empty     ${EMAIL_TEXT_STRING}
 
-    ##################This is Department Textfield####################################
+Department Information
+    [Documentation]     Department Information
     Input Text      ${DEPARTMENT_LOCATOR}       ${DEPARTMENT_STRING}        clear=True
-    Log To Console  \nSuccessfully entered ${DEPARTMENT_STRING}
+    #Should Not Be Empty     ${DEPARTMENT_STRING}
 
-    ##################This is Position Textfield#########################################
+Position Information
+    [Documentation]     Position Information
     Input Text      ${POSITION_LOCATOR}     ${POSITION_STRING}      clear=True
-    Log To Console  \nSuccessfully entered ${POSITION_STRING}
+    #Should Not Be Empty     ${POSITION_STRING}
 
-    ###################This is Project name field########################################
+Adding Project Information
+    [Documentation]     Project Name Information
     Click Element       ${ADD_PROJECT_NAME}
     Select Window       NEW
     Verify Pop-up Window Header     ${ACCOUNT_HEADER}
@@ -138,7 +163,33 @@ Verify Erase Account
     Click Search Button
     Select The List Found   ${PROJECT_NAME_STRING}
     Select Window
-    Log To Console  \Successfully entered ${PROJECT_NAME_STRING}
+
+Verify Added Project Information
+    [Documentation]     Project Name verification
+    Verify Added Information        ${PROJECT_NAME_STRING}      ${PROJECT_VALUE}
+
+Verify Erased Project Information
+    [Documentation]     Deleted Project Name Verification
+    Verify Deleted Information     ${PROJECT_VALUE}
+
+Adding Lead Information
+    [Documentation]     Lead Information
+    Click Element       ${ADD_LEAD_NAME}
+    Select Window       NEW
+    Verify Pop-up Window Header     ${LEAD_HEADER}
+    Verify and Set Drop Down From Search        ${LEAD_DROPDOWN}
+    Input Text To Search        ${LEAD_STRING}
+    Click Search Button
+    Select The List Found       ${LEAD_STRING}
+    Select Window
+
+Verify Added Lead Information
+    [Documentation]     Added Lead Information
+    Verify Added Information        ${CUSTOMER_NAME_STRING}      ${LEAD_VALUE}
+
+Verify Erased Lead Information
+    [Documentation]     Deleted Lead Information
+    Verify Deleted Information      ${LEAD_VALUE}
 
     ###################This is Phone and Mobile textfield#####################################
     #Input Text      ${PHONE_LOCATOR}    ${PHONE_STRING}
@@ -180,3 +231,9 @@ Click Save Button
 
 No Alert Should Be Found
     Alert Should Not Be Present
+
+Verify All Fields Informations
+    [Documentation]     Verify All Saved Informations
+
+
+

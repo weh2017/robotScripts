@@ -64,22 +64,27 @@ Verify Home Page
 
 Click Erase Button
     [Documentation]  This function is to erase the added account name, contact name, etc. example in creating sales visit.
-    Wait Until Element Is Visible   ${ACCOUNT_CLEAR_BUTTON}
-    Click Element   ${ACCOUNT_CLEAR_BUTTON}
+    [Arguments]     ${account_delete}
+    Wait Until Element Is Visible   ${account_delete}
+    Click Element   ${account_delete}
+
 
 Verify Added Information
     [Documentation]     This function is to check the added account name, contact name, project name.
-    ${get}=     Get Value       ${DISPLAY_ACCOUNT_NAME}
-    ${output}=  Convert To String    ${get}
-    Should Not Be Empty     ${output}
+    [Arguments]     ${expected}     ${variable}
+    ${actual}=     Get Value       //input[@name="${variable}"]
+    Should Be Equal As Strings     ${actual}      ${expected}
+    Log     ${actual} and ${expected} are both the same
 
 
 
-Verify Deleting Information
+
+Verify Deleted Information
     [Documentation]  This function is to check if successfull deleting account after clicking the erase button.
-    ${get}=     Get Value   ${DISPLAY_ACCOUNT_NAME}
-    ${output}=  Convert To String    ${get}
-    Should Be Empty     ${output}
+    [Arguments]     ${variable}
+    ${actual}=     Get Value   //input[@name="${variable}"]
+    Log     ${actual}
+    Should Be Empty     ${actual}
 
 
 *** Variables ***
@@ -89,6 +94,6 @@ ${PASSWORD_LOCATOR}         name:user_password
 ${HOME_PAGE_LOCATOR}        //td[@class="level2SelTab"]/a[contains(text(), "Home")]
 ${SIGNIN_LOCATOR}           //input[@value="Sign In"]
 ${LOGOUT_LOCATOR}           //td[@class="user-signout"]/a[contains(text(), "Sign Out")]
-${ACCOUNT_CLEAR_BUTTON}     //td[@class='showPanelBg']//td[2]//table[1]//tbody[1]//tr[1]//td[3]//input[1]                  #this is an clear button of add account
-${ADD_ACCOUNT_NAME}         //table/tbody/tr[7]/td[2]/table/tbody/tr/td[2]/img     #this is an add account button.opens new window
-${DISPLAY_ACCOUNT_NAME}     //input[@name="account_name"]       #this is account name displayed
+${MODIFIED_TIME_LOCATOR}    //td[@class="dvtCellInfo"][contains(text(), "21-01-2020 16:05:28")]
+
+
