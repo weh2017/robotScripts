@@ -44,8 +44,8 @@ Click Login button
 
 Click Button
     [Documentation]     Add Image Button
-    [Arguments]     ${image}
-    Click Element   //input[@value="${image}"]
+    [Arguments]     ${xpath}    ${image}
+    Click Element   //input[@${xpath}="${image}"]
 
 Click Logout button
     [Documentation]  This is Log out function from the system.

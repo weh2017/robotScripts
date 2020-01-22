@@ -86,7 +86,8 @@ ${DEPT_VERIFY_LOCATOR}          //span[@id="dtlview_Department"][contains(text()
 ${POSITION_VERIFY_LOCATOR}      //span[@id="dtlview_Position"][contains(text(), '${POSITION_STRING}')]  #Not
 ${PROJECT_NAME_LOCATOR}          //td[@id="mouseArea_Project Name"]/a[contains(text(), '${PROJECT_NAME_STRING}')]
 ${COMMENT_VERIFY_LOCATOR}       //div[@class="dataField"][contains(text(), '${COMMENT_STRING}')]
-${CHOOSE_FILE_BUTTON}           id:frmUpload
+${UPLOAD_FILE_BUTTON}           //input[@class="inputFile"]
+${CHOOSE_FILE_BUTTON}           //form[@id="frmUpload"]
 
 
 
@@ -313,8 +314,9 @@ Verify All Fields Informations
 
 Click Add Image Button
     Scroll Down Page From The Browser
-    Click Button    Add Image
-    Click Button    ${CHOOSE_FILE_BUTTON}
+    Click Button    value   Add Image
+    Select Window   NEW
+    Press Keys        ${UPLOAD_FILE_BUTTON}      TAB+ENTER+ENTER
 
 
 
