@@ -3,6 +3,7 @@ Documentation   This is the script for Create Sales Visit Repository
 Library     Selenium2Library
 Library     OperatingSystem
 Library     String
+Library     DateTime
 Resource        ../resources/create_sales_visit_resources/create_sales_visit_resource.robot
 Resource        ../../common_resources/web_common.robot
 Resource        create_sales_visit_form/create_sales_visit_variables.robot
@@ -51,12 +52,6 @@ Account Name
 Start Time And End Time
     Start Time and End Time Information
 
-Department Sales Visit
-    Department Information
-
-Position Sales Visit
-    Position Information
-
 Contact Name
     Adding Contact Name Information
     Verify Added Contact Information
@@ -66,6 +61,15 @@ Contact Name
     Verify Erased Contact Information
     Adding Contact Name Information
     Verify Added Contact Information
+
+Department Sales Visit
+    Department Information
+
+Position Sales Visit
+    Position Information
+
+E-mail Address Sales Visit
+    Email Address Information
 
 Project Name
     Adding Project Information
@@ -100,6 +104,8 @@ Save Created Sales Visit Data
     No Alert Should Be Found
     Click Save Button
 
+All Required Informations
+    Verify All Fields Informations
 
 
 

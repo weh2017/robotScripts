@@ -50,8 +50,8 @@ ${REMAINING_LOCATOR}        id:sale_remaining
 ##############################################
 ${COMPETITOR_LOCATOR}       id:competitors
 ${REMARK_LOCATOR}           id:sale_remark
-${ADD_IMAGE_BUTTON}     //input[@value="Add Image"]
-${CHOOSE_FILE_BUTTON}   //form[@id="frmUpload"]
+${ADD_IMAGE_BUTTON}         //input[@value="Add Image"]
+${CHOOSE_FILE_BUTTON}       //form[@id="frmUpload"]
 ${ACCOUNT_CLEAR_BUTTON}     //td[@class='showPanelBg']//td[2]//table[1]//tbody[1]//tr[1]//td[3]//input[1]                  #this is an clear button of add account
 ${ADD_ACCOUNT_NAME}         //table/tbody/tr[7]/td[2]/table/tbody/tr/td[2]/img     #this is an add account button.opens new window
 ${CONTACT_CLEAR_BUTTON}     //td[4]//table[1]//tbody[1]//tr[1]//td[3]//input[1]
@@ -64,8 +64,30 @@ ${LEAD_VALUE}               lead_name
 ##############################################
 #  VERIFICATION LOCATORS
 ##############################################
-${OBJECTIVE_VERIFY_LOCATOR}     //td[@class="dvtCellInfo"]/font[contains(text(), "POC")]
-${START_DATE_VERIFY_LOCATOR}    //td[@class="dvtCellInfo"][contains(text(), "15-02-2020")]
+${OBJECTIVE_VERIFY_LOCATOR}     //font[contains(text(), "${OBJECTIVE_STRING}")]
+${STATUS_VERIFY_LOCATOR}        //font[contains(text(), '${STATUS_STRING}')]
+${ACCOUNT_NAME_VERIFY_LOCATOR}  //td[contains(text(), '${ACCOUNT_SEARCH_STRING}')]
+${ASSIGNED_TO_VERIFY_LOCATOR}   //td[contains(text(), '${ASSIGNED_TO}')]
+${TIME_START_VERIFY_LOCATOR}    //td[contains(text(), '${TIME_START_STRING}')]
+${TIME_END_VERIFY_LOCATOR}      //td[contains(text(), '${TIME_END_STRING}')]
+${PLAN_DETAIL_VERIFY_LOCATOR}   //div[@id='tblStep1PlanInformation']//tr[1]//td[2]
+${LEAD_VERIFY_LOCATOR}          //td[contains(text(), '${CUSTOMER_NAME_STRING}')]            #Not
+${REPORT_VERIFY_LOCATOR}        //div[@id='tblStep2ReportInformation']//tr[1]//td[2]      #Not
+${REMAINING_VERIFY_LOCATOR}     //div[@id='tblStep2ReportInformation']//tr[2]//td[2]   #Not
+${COMPETITOR_VERIFY_LOCATOR}    //div[@id='tblStep3OtherInformation']//tr[1]//td[2]  #Not
+${REMARK_VERIFY_LOCATOR}        //div[@id='tblStep3OtherInformation']//tr[2]//td[2]    #Not
+${START_DATE_VERIFY_LOCATOR}    //div[@id='tblSalesVisitInfomation']//tr[2]//td[2]
+${END_DATE_VERIFY_LOCATOR}       //body[@class='small']//tr//tr//tr//tr//tr//tr[3]//td[2]
+${EMAIL_VERIFY_LOCATOR}         //a[contains(text(), '${EMAIL_TEXT_STRING}')]   #Not
+${CONTACT_NAME_VERIFY_LOCATOR}  //a[contains(text(), '${FIRST_NAME_STRING}')]
+${PHONE_VERIFY_LOCATOR}         //span[@id="dtlview_Phone"][contains(text(),'${PHONE_STRING}')]  # Not
+${MOBILE_VERIFY_LOCATOR}        //span[@id="dtlview_Mobile"][contains(text(),'${MOBILE_STRING}')]  # Not
+${DEPT_VERIFY_LOCATOR}          //span[@id="dtlview_Department"][contains(text(), '${DEPARTMENT_STRING}')]  #Not
+${POSITION_VERIFY_LOCATOR}      //span[@id="dtlview_Position"][contains(text(), '${POSITION_STRING}')]  #Not
+${PROJECT_NAME_LOCATOR}          //td[@id="mouseArea_Project Name"]/a[contains(text(), '${PROJECT_NAME_STRING}')]
+${COMMENT_VERIFY_LOCATOR}       //div[@class="dataField"][contains(text(), '${COMMENT_STRING}')]
+
+
 
 *** Keywords ***
 
@@ -83,6 +105,7 @@ Select Sales Visit Schedule Tab
 View Sales Visit Form
     Wait Until Element Is Visible       ${SALES_VISIT_TAB}
     Mouse Over      ${CAL_ADD_BUTTON}
+    Mouse Down       ${SALES_VISIT_OPTION}
     Click Link   ${SALES_VISIT_OPTION}
     Log     Successfully entered ${OBJECTIVE_STRING}
 
@@ -140,17 +163,17 @@ Verify Erased Contact Information
 
 Email Address Information
     [Documentation]     This is Valid Email Address
-    Input Text      ${EMAIL_TEXT_LOCATOR}       ${EMAIL_TEXT_STRING}        clear=True
+    Input Text      ${EMAIL_TEXT_LOCATOR}       ${EMAIL_TEXT_STRING}
     #Should Not Be Empty     ${EMAIL_TEXT_STRING}
 
 Department Information
     [Documentation]     Department Information
-    Input Text      ${DEPARTMENT_LOCATOR}       ${DEPARTMENT_STRING}        clear=True
+    Input Text      ${DEPARTMENT_LOCATOR}       ${DEPARTMENT_STRING}
     #Should Not Be Empty     ${DEPARTMENT_STRING}
 
 Position Information
     [Documentation]     Position Information
-    Input Text      ${POSITION_LOCATOR}     ${POSITION_STRING}      clear=True
+    Input Text      ${POSITION_LOCATOR}     ${POSITION_STRING}
     #Should Not Be Empty     ${POSITION_STRING}
 
 Adding Project Information
@@ -191,9 +214,12 @@ Verify Erased Lead Information
     [Documentation]     Deleted Lead Information
     Verify Deleted Information      ${LEAD_VALUE}
 
-    ###################This is Phone and Mobile textfield#####################################
-    #Input Text      ${PHONE_LOCATOR}    ${PHONE_STRING}
-    #Input Text      ${MOBILE_LOCATOR}   ${MOBILE_STRING}
+Phone And Mobile Contacts Information
+    [Documentation]   Phone And Mobile Contacts Information
+    ${contacts}=    Run Keyword And Return Status       Element Should Be Visible   ${PHONE_LOCATOR}
+    Run Keyword If      ${contacts}     Pag
+    Input Text      ${PHONE_LOCATOR}    ${PHONE_STRING}
+    Input Text      ${MOBILE_LOCATOR}   ${MOBILE_STRING}
 
 Plan Information
     Input Text      ${PLAN_DETAIL_LOCATOR}      ${PLAN_DETAIL_STRING}
@@ -232,8 +258,71 @@ Click Save Button
 No Alert Should Be Found
     Alert Should Not Be Present
 
+
+
+
+
 Verify All Fields Informations
-    [Documentation]     Verify All Saved Informations
+    [Documentation]     To verify the created required informations
+    #Objective
+    Element Should Contain      ${OBJECTIVE_VERIFY_LOCATOR}         ${OBJECTIVE_STRING}
+    Page Should Contain Textfield   ${OBJECTIVE_VERIFY_LOCATOR}
+
+    #Start Date
+    Element Should Contain      ${START_DATE_VERIFY_LOCATOR}        ${START_DATE_STRING}
+
+    #End Date
+    Element Should Contain      ${END_DATE_VERIFY_LOCATOR}          ${START_DATE_STRING}
+    #Status
+    Element Should Contain      ${STATUS_VERIFY_LOCATOR}            ${STATUS_STRING}
+    #Account name
+    Element Should Contain      ${ACCOUNT_NAME_VERIFY_LOCATOR}      ${ACCOUNT_SEARCH_STRING}
+    #Email
+    Element Should Contain      ${EMAIL_VERIFY_LOCATOR}             ${EMAIL_TEXT_STRING}
+    #Phone
+    Element Should Contain      ${PHONE_VERIFY_LOCATOR}             ${PHONE_STRING}
+    #Mobile
+    Element Should Contain      ${MOBILE_VERIFY_LOCATOR}            ${MOBILE_STRING}
+    #Time Start
+    Element Should Contain      ${TIME_START_VERIFY_LOCATOR}        ${TIME_START_STRING}
+    #Time End
+    Element Should Contain      ${TIME_END_VERIFY_LOCATOR}          ${TIME_END_STRING}
+    #Contact Name
+    Element Should Contain      ${CONTACT_NAME_VERIFY_LOCATOR}      ${FIRST_NAME_STRING}
+    #Department
+    Element Should Contain      ${DEPT_VERIFY_LOCATOR}              ${DEPARTMENT_STRING}
+    #Position
+    Element Should Contain      ${POSITION_VERIFY_LOCATOR}          ${POSITION_STRING}
+    #Project
+    Element Should Contain      ${PROJECT_NAME_LOCATOR}              ${PROJECT_NAME_STRING}
+    ${today}=       Get Current Date    result_format=%d-%m-%Y %H:%M
+    #Modified Time
+    Element Should Contain      //tr[8]//td[4][contains(text(), '${today}')]  ${today}
+    #Created Time
+    Element Should Contain      //tr[9]//td[2][contains(text(), '${today}')]    ${today}
+    #Comment
+    Element Should Contain      ${COMMENT_VERIFY_LOCATOR}       ${COMMENT_STRING}
+    ${today}=   Get Current Date    result_format=%Y-%m-%d %H:%M
+    Element Should Contain      //div[@class="dataLabel"]/font[contains(text(), ': ${USER} on ${today}')]
+    ...         : ${USER} on ${today}
+    #Plan Detail
+    Element Should Contain      ${PLAN_DETAIL_VERIFY_LOCATOR}       ${PLAN_DETAIL_STRING}
+    Element Should Contain      ${REPORT_VERIFY_LOCATOR}            ${REPORT_STRING}
+    Element Should Contain      ${REMAINING_VERIFY_LOCATOR}         ${REMAINING_STRING}
+    Element Should Contain      ${COMPETITOR_VERIFY_LOCATOR}        ${COMPETITOR_STRING}
+    Element Should Contain      ${REMARK_VERIFY_LOCATOR}            ${REMARK_STRING}
+
+
+
+    #@{second_list}=     Create List     ${ACCOUNT_SEARCH_STRING}    ${ASSIGNED_TO}  ${TIME_START_STRING}
+    #...         ${TIME_END_STRING}
+
+    #:FOR    ${result}   IN  @{second_list}
+    #\   ${two}=     Get Text    //td[contains(text(), '${result}')]
+    #\   Page Should Contain     ${result}
+
+
+
 
 
 
