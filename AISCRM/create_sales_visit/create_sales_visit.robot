@@ -1,6 +1,6 @@
 *** Settings ***
 Documentation   This is the script for Create Sales Visit Repository
-Library     Selenium2Library
+Library     SeleniumLibrary
 Library     OperatingSystem
 Library     String
 Library     DateTime
@@ -31,7 +31,7 @@ Home Page Verify Then Select Sales Menu
     Select Sales Menu
 
 Selecting Schedule Tab
-    Select Sales Visit Schedule Tab      VISIT       ${SCHEDULE_STRING}
+    Select Sales Visit Schedule Tab          ${SCHEDULE_STRING}
 
 Entering Sales Visit Form
     View Sales Visit Form
@@ -43,9 +43,9 @@ Entering Sales Visit Informations
 Account Name
     Adding Account Information
     Verify Added Account Information
-
+    Sleep   1
     Click Erase Button          ${ACCOUNT_CLEAR_BUTTON}
-
+    Sleep   1
     Verify Erased Account Information
     Adding Account Information
 
@@ -55,9 +55,9 @@ Start Time And End Time
 Contact Name
     Adding Contact Name Information
     Verify Added Contact Information
-
+    Sleep   1
     Click Erase Button      ${CONTACT_CLEAR_BUTTON}
-
+    Sleep   1
     Verify Erased Contact Information
     Adding Contact Name Information
     Verify Added Contact Information
@@ -74,9 +74,9 @@ E-mail Address Sales Visit
 Project Name
     Adding Project Information
     Verify Added Project Information
-
+    Sleep   1
     Click Erase Button      ${PROJECT_CLEAR_BUTTON}
-
+    Sleep   1
     Verify Erased Project Information
     Adding Project Information
     Verify Added Project Information
@@ -84,9 +84,9 @@ Project Name
 Lead Number
     Adding Lead Information
     Verify Added Lead Information
-
+    Sleep   1
     Click Erase Button      ${LEAD_CLEAR_BUTTON}
-
+    Sleep   1
     Verify Erased Lead Information
     Adding Lead Information
     Verify Added Lead Information
@@ -107,6 +107,8 @@ Save Created Sales Visit Data
 All Required Informations
     Verify All Fields Informations
 
+Add Image
+    Click Add Image Button
 
 
 

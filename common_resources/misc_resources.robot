@@ -25,7 +25,10 @@ Input User's Password
     Wait Until Element Is Visible   ${PASSWORD_LOCATOR}
     Input Password   ${PASSWORD_LOCATOR}       ${user_pass}    clear=True
 
-
+Scroll Down Page From The Browser
+    [Documentation]     This function will perform to scroll down to bottom.
+    #Execute Javascript      window.scrollTo(0, 1500)       # Can also use this to scroll down page
+    Execute Javascript      window.scrollTo(0,document.body.scrollHeight)
 Verify Error Message
     [Documentation]  This is to test the error message if prompted or not.
     [Arguments]     ${error_message}
@@ -39,7 +42,10 @@ Click Login button
     Wait Until Element Is Not Visible       ${SIGNIN_LOCATOR}
     Log     Successfully entered credentials
 
-
+Click Button
+    [Documentation]     Add Image Button
+    [Arguments]     ${image}
+    Click Element   //input[@value="${image}"]
 
 Click Logout button
     [Documentation]  This is Log out function from the system.

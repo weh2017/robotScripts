@@ -86,6 +86,7 @@ ${DEPT_VERIFY_LOCATOR}          //span[@id="dtlview_Department"][contains(text()
 ${POSITION_VERIFY_LOCATOR}      //span[@id="dtlview_Position"][contains(text(), '${POSITION_STRING}')]  #Not
 ${PROJECT_NAME_LOCATOR}          //td[@id="mouseArea_Project Name"]/a[contains(text(), '${PROJECT_NAME_STRING}')]
 ${COMMENT_VERIFY_LOCATOR}       //div[@class="dataField"][contains(text(), '${COMMENT_STRING}')]
+${CHOOSE_FILE_BUTTON}           id:frmUpload
 
 
 
@@ -98,14 +99,16 @@ Select Sales Menu
     Click Link   ${SALES_VISIT_DROPDOWN_LOCATOR}
 
 Select Sales Visit Schedule Tab
-    [Arguments]     ${duration}     ${sched}
-    Run Keyword If  '${duration}'=='True'    Click Element   //td/a[contains(text(), '${sched}')]
-    Run Keyword If  '${duration}'=='True'       Click Element   //td[contains(text(), '${sched}')]
+    [Arguments]         ${sched}
+    ${selected}=    Run Keyword And Return Status   Wait Until Element Is Visible       //td/a[contains(text(), '${sched}')]
+    Run Keyword If      ${selected}       Click Element     //td/a[contains(text(), '${sched}')]
 
 View Sales Visit Form
     Wait Until Element Is Visible       ${SALES_VISIT_TAB}
     Mouse Over      ${CAL_ADD_BUTTON}
-    Mouse Down       ${SALES_VISIT_OPTION}
+    #Scroll Down Page From The Browser
+    #Scroll Element Into View    ${SALES_VISIT_OPTION}
+    Execute Javascript      window.scrollTo(0,document.body.scrollHeight)
     Click Link   ${SALES_VISIT_OPTION}
     Log     Successfully entered ${OBJECTIVE_STRING}
 
@@ -258,15 +261,10 @@ Click Save Button
 No Alert Should Be Found
     Alert Should Not Be Present
 
-
-
-
-
 Verify All Fields Informations
     [Documentation]     To verify the created required informations
     #Objective
     Element Should Contain      ${OBJECTIVE_VERIFY_LOCATOR}         ${OBJECTIVE_STRING}
-    Page Should Contain Textfield   ${OBJECTIVE_VERIFY_LOCATOR}
 
     #Start Date
     Element Should Contain      ${START_DATE_VERIFY_LOCATOR}        ${START_DATE_STRING}
@@ -313,13 +311,11 @@ Verify All Fields Informations
     Element Should Contain      ${REMARK_VERIFY_LOCATOR}            ${REMARK_STRING}
 
 
+Click Add Image Button
+    Scroll Down Page From The Browser
+    Click Button    Add Image
+    Click Button    ${CHOOSE_FILE_BUTTON}
 
-    #@{second_list}=     Create List     ${ACCOUNT_SEARCH_STRING}    ${ASSIGNED_TO}  ${TIME_START_STRING}
-    #...         ${TIME_END_STRING}
-
-    #:FOR    ${result}   IN  @{second_list}
-    #\   ${two}=     Get Text    //td[contains(text(), '${result}')]
-    #\   Page Should Contain     ${result}
 
 
 
