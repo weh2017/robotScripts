@@ -2,8 +2,8 @@
 ###############################################################
 # Required Informations
 ###############################################################
-${SCHEDULE_STRING}          Week
-${OBJECTIVE_STRING}         Other
+${SCHEDULE_STRING}          Year
+${OBJECTIVE_STRING}         Quotation
 ${START_DATE_STRING}        23-02-2020
 ${STATUS_STRING}            Cancel
 ${ACCOUNT_SEARCH_STRING}    A I SYSTEM CO., LTD.

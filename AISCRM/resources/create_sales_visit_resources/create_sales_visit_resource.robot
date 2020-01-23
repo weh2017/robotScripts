@@ -88,8 +88,10 @@ ${PROJECT_NAME_LOCATOR}          //td[@id="mouseArea_Project Name"]/a[contains(t
 ${COMMENT_VERIFY_LOCATOR}       //div[@class="dataField"][contains(text(), '${COMMENT_STRING}')]
 ${UPLOAD_FILE_BUTTON}           //input[@class="inputFile"]
 ${CHOOSE_FILE_BUTTON}           //form[@id="frmUpload"]
+${END_TIME_WARN_MSG}            //div[contains(text(), 'End time is more than the start time.')]
+${WARN_OK_BTN}                  //span[@class="l-btn-text"][contains(text(), 'Ok')]
 
-
+#End time is more than the start time.
 
 *** Keywords ***
 
@@ -116,7 +118,7 @@ View Sales Visit Form
 
 Start And End Date Informations
     Wait Until Element Is Visible   ${OBJECTIVE_SELECT}
-    Press Keys      ${START_DATE_LOCATOR}       CTRL+a+DELETE
+    SeleniumLibrary.Press Keys      ${START_DATE_LOCATOR}       CTRL+a+DELETE
     Input Text      ${START_DATE_LOCATOR}   ${START_DATE_STRING}
     Click Element   ${STATUS_LOCATOR}
 
@@ -141,9 +143,24 @@ Verify Erased Account Information
 
 Start Time and End Time Information
     [Documentation]     Time Start and End Time Settings
-    Press Keys      ${TIME_END_LOCATOR}        CTRL+a+DELETE
+    ${current_date}=   Get Current Date    result_format=%H:%M:%S
+    Log     ${current_date}
+    ${set_var}=     Set Variable    ${current_date}
+    ${subtract}=    Subtract Time From Time     ${set_var}      1 hour  #exlude_millis=true
+    ${convert}=     Convert Time    ${subtract}     Timer
+    ${set}=     Set Variable    ${convert}
+    ${split}=   Split String From Right     ${set}  :   max_split=1
+    ${list}=    Get From List   ${split}    0
+    Log     ${list}
+    SeleniumLibrary.Press Keys      ${TIME_END_LOCATOR}        CTRL+a+DELETE
+    Input Text      ${TIME_END_LOCATOR}         ${list}
+    SeleniumLibrary.Press Keys      ${TIME_END_LOCATOR}         ENTER
+    ${warning}=     Run Keyword And Return Status   Wait Until Element Is Visible   ${END_TIME_WARN_MSG}
+    Run Keyword If   ${warning}   Run Keywords    Click Element       ${WARN_OK_BTN}
+    ...     AND     Wait Until Element Is Not Visible   ${END_TIME_WARN_MSG}
+    SeleniumLibrary.Press Keys      ${TIME_END_LOCATOR}        CTRL+a+DELETE
     Input Text      ${TIME_END_LOCATOR}     ${TIME_END_STRING}
-    Press Keys      ${TIME_START_LOCATOR}       CTRL+a+DELETE
+    SeleniumLibrary.Press Keys      ${TIME_START_LOCATOR}       CTRL+a+DELETE
     Input Text      ${TIME_START_LOCATOR}       ${TIME_START_STRING}
 
 Adding Contact Name Information
@@ -314,9 +331,23 @@ Verify All Fields Informations
 
 Click Add Image Button
     Scroll Down Page From The Browser
-    Click Button    value   Add Image
+    Click Button    Add Image
     Select Window   NEW
-    Press Keys        ${UPLOAD_FILE_BUTTON}      TAB+ENTER+ENTER
+#    SeleniumLibrary.Press Keys        ${UPLOAD_FILE_BUTTON}      TAB+ENTER+ENTER
+    Choose File     //input[@name='image']      C:\Users\ruela\Documents\Different images format\BMP.bmp
+    #Click Button    //input[@name='image']
+    Sleep   2
+#    Get Upload Image
+
+Get Upload Image
+    #Attach Window   Open
+    #Input Text To Textbox          id:1148      C:\Users\ruela\Documents\Different images format\BMP.bmp
+    WhiteLibrary.Press Keys          C://Users/ruela/Documents/Different images format/BMP.bmp
+    Press Special Key   ENTER
+
+Click Delete Button
+    Click Button        Delete
+    Alert Should Be Present     Are you sure you want to delete this record?    action=ACCEPT
 
 
 

@@ -44,8 +44,10 @@ Click Login button
 
 Click Button
     [Documentation]     Add Image Button
-    [Arguments]     ${xpath}    ${image}
-    Click Element   //input[@${xpath}="${image}"]
+    [Arguments]         ${image}
+    Click Element   //input[@value="${image}"]
+
+
 
 Click Logout button
     [Documentation]  This is Log out function from the system.
@@ -83,6 +85,17 @@ Verify Added Information
     Log     ${actual} and ${expected} are both the same
 
 
+Subtract Time Without Seconds
+    [Documentation]     Subract Time From Time And Remove Seconds
+    ${currrent_date}=   Get Current Date    result_format=%H:%M:%S
+    Log     ${current_date}
+    ${set_var}=     Set Variable    ${current_date}
+    ${subtract}=    Subtract Time From Time     ${set_var}      1 hour  exlude_millis=true
+    ${convert}=     Convert Time    ${subtract}     Timer
+    ${set}=     Set Variable    ${convert}
+    ${split}=   Split String From Right     ${set}  :   max_split=1
+    ${list}=    Get From List   ${split}    0
+    Log     ${list}
 
 
 Verify Deleted Information
