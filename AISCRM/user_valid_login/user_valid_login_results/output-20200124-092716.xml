@@ -1,0 +1,682 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 3.1.2 (Python 3.7.4 on win32)" generated="20200124 09:27:16.630" rpa="false">
+<suite id="s1" name="User Valid Login" source="C:\Users\ruela\Documents\robotScripts\AISCRM\user_valid_login\user_valid_login.robot">
+<kw name="Open Chrome Browser" library="web_common" type="setup">
+<doc>Open the Chrome Browser with maximize view, no infobars notification and no pop-ups.</doc>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>sys.modules['selenium.webdriver'].ChromeOptions()</arg>
+<arg>sys, selenium.webdriver</arg>
+</arguments>
+<assign>
+<var>${chrome_options}</var>
+</assign>
+<msg timestamp="20200124 09:27:16.921" level="INFO">${chrome_options} = &lt;selenium.webdriver.chrome.options.Options object at 0x04358E30&gt;</msg>
+<status status="PASS" starttime="20200124 09:27:16.919" endtime="20200124 09:27:16.921"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>credentials_enable_service=${false}</arg>
+</arguments>
+<assign>
+<var>${prefs}</var>
+</assign>
+<msg timestamp="20200124 09:27:16.921" level="INFO">${prefs} = {'credentials_enable_service': False}</msg>
+<status status="PASS" starttime="20200124 09:27:16.921" endtime="20200124 09:27:16.921"></status>
+</kw>
+<kw name="Call Method" library="BuiltIn">
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<arguments>
+<arg>${chrome_options}</arg>
+<arg>add_experimental_option</arg>
+<arg>prefs</arg>
+<arg>${prefs}</arg>
+</arguments>
+<status status="PASS" starttime="20200124 09:27:16.921" endtime="20200124 09:27:16.923"></status>
+</kw>
+<kw name="Call Method" library="BuiltIn">
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<arguments>
+<arg>${chrome_options}</arg>
+<arg>add_argument</arg>
+<arg>--start-maximized</arg>
+</arguments>
+<status status="PASS" starttime="20200124 09:27:16.923" endtime="20200124 09:27:16.923"></status>
+</kw>
+<kw name="Call Method" library="BuiltIn">
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<arguments>
+<arg>${chrome_options}</arg>
+<arg>add_argument</arg>
+<arg>--disable-infobars</arg>
+</arguments>
+<status status="PASS" starttime="20200124 09:27:16.923" endtime="20200124 09:27:16.924"></status>
+</kw>
+<kw name="Call Method" library="BuiltIn">
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<arguments>
+<arg>${chrome_options}</arg>
+<arg>add_argument</arg>
+<arg>--disable-popup-blocking</arg>
+</arguments>
+<status status="PASS" starttime="20200124 09:27:16.924" endtime="20200124 09:27:16.924"></status>
+</kw>
+<kw name="Create Webdriver" library="SeleniumLibrary">
+<doc>Creates an instance of Selenium WebDriver.</doc>
+<arguments>
+<arg>Chrome</arg>
+<arg>chrome_options=${chrome_options}</arg>
+</arguments>
+<msg timestamp="20200124 09:27:16.924" level="INFO">Creating an instance of the Chrome WebDriver.</msg>
+<status status="PASS" starttime="20200124 09:27:16.924" endtime="20200124 09:27:22.143"></status>
+</kw>
+<status status="PASS" starttime="20200124 09:27:16.919" endtime="20200124 09:27:22.144"></status>
+</kw>
+<test id="s1-t1" name="Launch AIS-CRM site">
+<kw name="Launch Web System" library="misc_resources">
+<doc>Url of the web application</doc>
+<arguments>
+<arg>${URL}</arg>
+</arguments>
+<kw name="Go To" library="SeleniumLibrary">
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<arguments>
+<arg>${link}</arg>
+</arguments>
+<msg timestamp="20200124 09:27:22.146" level="INFO">Opening url 'http://aisystem.dyndns.biz:8090/aistcrm_uat/index.php?module=Users&amp;action=Logout'</msg>
+<status status="PASS" starttime="20200124 09:27:22.146" endtime="20200124 09:27:23.092"></status>
+</kw>
+<kw name="Verify Title Page" library="misc_resources">
+<doc>Verify the title of the page after the login with username successfully entered.</doc>
+<kw name="Get Title" library="SeleniumLibrary">
+<doc>Returns the title of the current page.</doc>
+<status status="PASS" starttime="20200124 09:27:23.093" endtime="20200124 09:27:23.102"></status>
+</kw>
+<kw name="Title Should Be" library="SeleniumLibrary">
+<doc>Verifies that the current page title equals ``title``.</doc>
+<arguments>
+<arg>MOAI-CRM - The Premium CRM Solution</arg>
+</arguments>
+<msg timestamp="20200124 09:27:23.107" level="INFO">Page title is 'MOAI-CRM - The Premium CRM Solution'.</msg>
+<status status="PASS" starttime="20200124 09:27:23.103" endtime="20200124 09:27:23.107"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>Get Title</arg>
+</arguments>
+<msg timestamp="20200124 09:27:23.108" level="INFO">Get Title</msg>
+<status status="PASS" starttime="20200124 09:27:23.108" endtime="20200124 09:27:23.108"></status>
+</kw>
+<status status="PASS" starttime="20200124 09:27:23.092" endtime="20200124 09:27:23.109"></status>
+</kw>
+<status status="PASS" starttime="20200124 09:27:22.145" endtime="20200124 09:27:23.109"></status>
+</kw>
+<status status="PASS" starttime="20200124 09:27:22.144" endtime="20200124 09:27:23.109" critical="yes"></status>
+</test>
+<test id="s1-t2" name="Login Valid AIS-CRM Credentials">
+<kw name="Input Username" library="misc_resources">
+<doc>This is the email username input text function.</doc>
+<arguments>
+<arg>${USER}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${USERNAME_LOCATOR}</arg>
+</arguments>
+<status status="PASS" starttime="20200124 09:27:23.112" endtime="20200124 09:27:23.150"></status>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${USERNAME_LOCATOR}</arg>
+<arg>${user_name}</arg>
+<arg>clear=True</arg>
+</arguments>
+<msg timestamp="20200124 09:27:23.151" level="INFO">Typing text 'ruel.arb' into text field 'name:user_name'.</msg>
+<status status="PASS" starttime="20200124 09:27:23.150" endtime="20200124 09:27:23.276"></status>
+</kw>
+<status status="PASS" starttime="20200124 09:27:23.111" endtime="20200124 09:27:23.276"></status>
+</kw>
+<kw name="Input User's Password" library="misc_resources">
+<doc>This is the email password input text function.</doc>
+<arguments>
+<arg>${PASS}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${PASSWORD_LOCATOR}</arg>
+</arguments>
+<status status="PASS" starttime="20200124 09:27:23.277" endtime="20200124 09:27:23.316"></status>
+</kw>
+<kw name="Input Password" library="SeleniumLibrary">
+<doc>Types the given password into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${PASSWORD_LOCATOR}</arg>
+<arg>${user_pass}</arg>
+<arg>clear=True</arg>
+</arguments>
+<msg timestamp="20200124 09:27:23.317" level="INFO">Typing password into text field 'name:user_password'.</msg>
+<status status="PASS" starttime="20200124 09:27:23.317" endtime="20200124 09:27:23.430"></status>
+</kw>
+<status status="PASS" starttime="20200124 09:27:23.276" endtime="20200124 09:27:23.430"></status>
+</kw>
+<kw name="Click Login button" library="misc_resources">
+<doc>This is Sign In function from the system.</doc>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${SIGNIN_LOCATOR}</arg>
+</arguments>
+<status status="PASS" starttime="20200124 09:27:23.431" endtime="20200124 09:27:23.462"></status>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>${SIGNIN_LOCATOR}</arg>
+</arguments>
+<msg timestamp="20200124 09:27:23.462" level="INFO">Clicking element '//input[@value="Sign In"]'.</msg>
+<status status="PASS" starttime="20200124 09:27:23.462" endtime="20200124 09:27:29.386"></status>
+</kw>
+<status status="PASS" starttime="20200124 09:27:23.430" endtime="20200124 09:27:29.386"></status>
+</kw>
+<kw name="Verify Home Page" library="misc_resources">
+<doc>Verify if User successfully access the system home page.</doc>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${HOME_PAGE_LOCATOR}</arg>
+<arg>timeout=10</arg>
+</arguments>
+<status status="PASS" starttime="20200124 09:27:29.387" endtime="20200124 09:27:29.434"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>Home Page Found</arg>
+</arguments>
+<msg timestamp="20200124 09:27:29.435" level="INFO">Home Page Found</msg>
+<status status="PASS" starttime="20200124 09:27:29.435" endtime="20200124 09:27:29.436"></status>
+</kw>
+<status status="PASS" starttime="20200124 09:27:29.387" endtime="20200124 09:27:29.436"></status>
+</kw>
+<kw name="Click Logout button" library="misc_resources">
+<doc>This is Log out function from the system.</doc>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${LOGOUT_LOCATOR}</arg>
+</arguments>
+<status status="PASS" starttime="20200124 09:27:29.437" endtime="20200124 09:27:29.480"></status>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>${LOGOUT_LOCATOR}</arg>
+</arguments>
+<msg timestamp="20200124 09:27:29.480" level="INFO">Clicking element '//td[@class="user-signout"]/a[contains(text(), "Sign Out")]'.</msg>
+<status status="PASS" starttime="20200124 09:27:29.480" endtime="20200124 09:27:30.050"></status>
+</kw>
+<kw name="Wait Until Element Is Not Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is not visible.</doc>
+<arguments>
+<arg>${LOGOUT_LOCATOR}</arg>
+</arguments>
+<status status="PASS" starttime="20200124 09:27:30.050" endtime="20200124 09:27:30.070"></status>
+</kw>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${SIGNIN_LOCATOR}</arg>
+</arguments>
+<status status="PASS" starttime="20200124 09:27:30.070" endtime="20200124 09:27:30.105"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>Successfully Signed Out the system</arg>
+</arguments>
+<msg timestamp="20200124 09:27:30.106" level="INFO">Successfully Signed Out the system</msg>
+<status status="PASS" starttime="20200124 09:27:30.106" endtime="20200124 09:27:30.106"></status>
+</kw>
+<status status="PASS" starttime="20200124 09:27:29.436" endtime="20200124 09:27:30.107"></status>
+</kw>
+<status status="PASS" starttime="20200124 09:27:23.110" endtime="20200124 09:27:30.107" critical="yes"></status>
+</test>
+<test id="s1-t3" name="Login Valid E-mail And Invalid Password AIS-CRM Credentials">
+<kw name="Input Username" library="misc_resources">
+<doc>This is the email username input text function.</doc>
+<arguments>
+<arg>${USER}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${USERNAME_LOCATOR}</arg>
+</arguments>
+<status status="PASS" starttime="20200124 09:27:30.110" endtime="20200124 09:27:30.144"></status>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${USERNAME_LOCATOR}</arg>
+<arg>${user_name}</arg>
+<arg>clear=True</arg>
+</arguments>
+<msg timestamp="20200124 09:27:30.145" level="INFO">Typing text 'ruel.arb' into text field 'name:user_name'.</msg>
+<status status="PASS" starttime="20200124 09:27:30.144" endtime="20200124 09:27:30.285"></status>
+</kw>
+<status status="PASS" starttime="20200124 09:27:30.110" endtime="20200124 09:27:30.285"></status>
+</kw>
+<kw name="Input User's Password" library="misc_resources">
+<doc>This is the email password input text function.</doc>
+<arguments>
+<arg>!@#$#$%x</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${PASSWORD_LOCATOR}</arg>
+</arguments>
+<status status="PASS" starttime="20200124 09:27:30.286" endtime="20200124 09:27:30.321"></status>
+</kw>
+<kw name="Input Password" library="SeleniumLibrary">
+<doc>Types the given password into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${PASSWORD_LOCATOR}</arg>
+<arg>${user_pass}</arg>
+<arg>clear=True</arg>
+</arguments>
+<msg timestamp="20200124 09:27:30.322" level="INFO">Typing password into text field 'name:user_password'.</msg>
+<status status="PASS" starttime="20200124 09:27:30.321" endtime="20200124 09:27:30.486"></status>
+</kw>
+<status status="PASS" starttime="20200124 09:27:30.285" endtime="20200124 09:27:30.486"></status>
+</kw>
+<kw name="Click Login button" library="misc_resources">
+<doc>This is Sign In function from the system.</doc>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${SIGNIN_LOCATOR}</arg>
+</arguments>
+<status status="PASS" starttime="20200124 09:27:30.487" endtime="20200124 09:27:30.509"></status>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>${SIGNIN_LOCATOR}</arg>
+</arguments>
+<msg timestamp="20200124 09:27:30.509" level="INFO">Clicking element '//input[@value="Sign In"]'.</msg>
+<status status="PASS" starttime="20200124 09:27:30.509" endtime="20200124 09:27:31.162"></status>
+</kw>
+<status status="PASS" starttime="20200124 09:27:30.486" endtime="20200124 09:27:31.163"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2</arg>
+</arguments>
+<msg timestamp="20200124 09:27:33.167" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" starttime="20200124 09:27:31.163" endtime="20200124 09:27:33.167"></status>
+</kw>
+<kw name="Verify Error Message" library="misc_resources">
+<doc>This is to test the error message if prompted or not.</doc>
+<arguments>
+<arg>${LOGIN_ERROR_MSG}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${error_message}</arg>
+</arguments>
+<status status="PASS" starttime="20200124 09:27:33.167" endtime="20200124 09:27:33.241"></status>
+</kw>
+<kw name="Convert To Strings">
+<arguments>
+<arg>${error_message}</arg>
+</arguments>
+<assign>
+<var>${error_string}=</var>
+</assign>
+<msg timestamp="20200124 09:27:33.255" level="FAIL">No keyword with name 'Convert To Strings' found. Did you mean:
+    BuiltIn.Convert To String</msg>
+<status status="FAIL" starttime="20200124 09:27:33.255" endtime="20200124 09:27:33.255"></status>
+</kw>
+<status status="FAIL" starttime="20200124 09:27:33.167" endtime="20200124 09:27:33.255"></status>
+</kw>
+<status status="FAIL" starttime="20200124 09:27:30.109" endtime="20200124 09:27:33.255" critical="yes">No keyword with name 'Convert To Strings' found. Did you mean:
+    BuiltIn.Convert To String</status>
+</test>
+<test id="s1-t4" name="Login Invalid E-mail And Valid Password AIS-CRM Credentials">
+<kw name="Input Username" library="misc_resources">
+<doc>This is the email username input text function.</doc>
+<arguments>
+<arg>ais@aisyst.com</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${USERNAME_LOCATOR}</arg>
+</arguments>
+<status status="PASS" starttime="20200124 09:27:33.259" endtime="20200124 09:27:33.312"></status>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${USERNAME_LOCATOR}</arg>
+<arg>${user_name}</arg>
+<arg>clear=True</arg>
+</arguments>
+<msg timestamp="20200124 09:27:33.312" level="INFO">Typing text 'ais@aisyst.com' into text field 'name:user_name'.</msg>
+<status status="PASS" starttime="20200124 09:27:33.312" endtime="20200124 09:27:33.588"></status>
+</kw>
+<status status="PASS" starttime="20200124 09:27:33.259" endtime="20200124 09:27:33.589"></status>
+</kw>
+<kw name="Input User's Password" library="misc_resources">
+<doc>This is the email password input text function.</doc>
+<arguments>
+<arg>${PASS}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${PASSWORD_LOCATOR}</arg>
+</arguments>
+<status status="PASS" starttime="20200124 09:27:33.590" endtime="20200124 09:27:33.634"></status>
+</kw>
+<kw name="Input Password" library="SeleniumLibrary">
+<doc>Types the given password into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${PASSWORD_LOCATOR}</arg>
+<arg>${user_pass}</arg>
+<arg>clear=True</arg>
+</arguments>
+<msg timestamp="20200124 09:27:33.635" level="INFO">Typing password into text field 'name:user_password'.</msg>
+<status status="PASS" starttime="20200124 09:27:33.635" endtime="20200124 09:27:33.812"></status>
+</kw>
+<status status="PASS" starttime="20200124 09:27:33.589" endtime="20200124 09:27:33.813"></status>
+</kw>
+<kw name="Click Login button" library="misc_resources">
+<doc>This is Sign In function from the system.</doc>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${SIGNIN_LOCATOR}</arg>
+</arguments>
+<status status="PASS" starttime="20200124 09:27:33.813" endtime="20200124 09:27:33.838"></status>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>${SIGNIN_LOCATOR}</arg>
+</arguments>
+<msg timestamp="20200124 09:27:33.838" level="INFO">Clicking element '//input[@value="Sign In"]'.</msg>
+<status status="PASS" starttime="20200124 09:27:33.838" endtime="20200124 09:27:34.539"></status>
+</kw>
+<status status="PASS" starttime="20200124 09:27:33.813" endtime="20200124 09:27:34.540"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2</arg>
+</arguments>
+<msg timestamp="20200124 09:27:36.547" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" starttime="20200124 09:27:34.540" endtime="20200124 09:27:36.547"></status>
+</kw>
+<kw name="Verify Error Message" library="misc_resources">
+<doc>This is to test the error message if prompted or not.</doc>
+<arguments>
+<arg>${LOGIN_ERROR_MSG}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${error_message}</arg>
+</arguments>
+<status status="PASS" starttime="20200124 09:27:36.547" endtime="20200124 09:27:36.613"></status>
+</kw>
+<kw name="Convert To Strings">
+<arguments>
+<arg>${error_message}</arg>
+</arguments>
+<assign>
+<var>${error_string}=</var>
+</assign>
+<msg timestamp="20200124 09:27:36.626" level="FAIL">No keyword with name 'Convert To Strings' found. Did you mean:
+    BuiltIn.Convert To String</msg>
+<status status="FAIL" starttime="20200124 09:27:36.626" endtime="20200124 09:27:36.626"></status>
+</kw>
+<status status="FAIL" starttime="20200124 09:27:36.547" endtime="20200124 09:27:36.626"></status>
+</kw>
+<status status="FAIL" starttime="20200124 09:27:33.259" endtime="20200124 09:27:36.626" critical="yes">No keyword with name 'Convert To Strings' found. Did you mean:
+    BuiltIn.Convert To String</status>
+</test>
+<test id="s1-t5" name="Login With Username And Password TextFields Are Both Blank">
+<kw name="Input Username" library="misc_resources">
+<doc>This is the email username input text function.</doc>
+<arguments>
+<arg>${EMPTY}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${USERNAME_LOCATOR}</arg>
+</arguments>
+<status status="PASS" starttime="20200124 09:27:36.632" endtime="20200124 09:27:36.685"></status>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${USERNAME_LOCATOR}</arg>
+<arg>${user_name}</arg>
+<arg>clear=True</arg>
+</arguments>
+<msg timestamp="20200124 09:27:36.687" level="INFO">Typing text '' into text field 'name:user_name'.</msg>
+<status status="PASS" starttime="20200124 09:27:36.686" endtime="20200124 09:27:36.864"></status>
+</kw>
+<status status="PASS" starttime="20200124 09:27:36.632" endtime="20200124 09:27:36.865"></status>
+</kw>
+<kw name="Input User's Password" library="misc_resources">
+<doc>This is the email password input text function.</doc>
+<arguments>
+<arg>${EMPTY}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${PASSWORD_LOCATOR}</arg>
+</arguments>
+<status status="PASS" starttime="20200124 09:27:36.865" endtime="20200124 09:27:36.922"></status>
+</kw>
+<kw name="Input Password" library="SeleniumLibrary">
+<doc>Types the given password into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${PASSWORD_LOCATOR}</arg>
+<arg>${user_pass}</arg>
+<arg>clear=True</arg>
+</arguments>
+<msg timestamp="20200124 09:27:36.922" level="INFO">Typing password into text field 'name:user_password'.</msg>
+<status status="PASS" starttime="20200124 09:27:36.922" endtime="20200124 09:27:37.089"></status>
+</kw>
+<status status="PASS" starttime="20200124 09:27:36.865" endtime="20200124 09:27:37.089"></status>
+</kw>
+<kw name="Click Login button" library="misc_resources">
+<doc>This is Sign In function from the system.</doc>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${SIGNIN_LOCATOR}</arg>
+</arguments>
+<status status="PASS" starttime="20200124 09:27:37.094" endtime="20200124 09:27:37.145"></status>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>${SIGNIN_LOCATOR}</arg>
+</arguments>
+<msg timestamp="20200124 09:27:37.145" level="INFO">Clicking element '//input[@value="Sign In"]'.</msg>
+<status status="PASS" starttime="20200124 09:27:37.145" endtime="20200124 09:27:37.718"></status>
+</kw>
+<status status="PASS" starttime="20200124 09:27:37.093" endtime="20200124 09:27:37.719"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2</arg>
+</arguments>
+<msg timestamp="20200124 09:27:39.724" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" starttime="20200124 09:27:37.719" endtime="20200124 09:27:39.724"></status>
+</kw>
+<kw name="Verify Error Message" library="misc_resources">
+<doc>This is to test the error message if prompted or not.</doc>
+<arguments>
+<arg>${LOGIN_ERROR_MSG}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${error_message}</arg>
+</arguments>
+<status status="PASS" starttime="20200124 09:27:39.726" endtime="20200124 09:27:39.786"></status>
+</kw>
+<kw name="Convert To Strings">
+<arguments>
+<arg>${error_message}</arg>
+</arguments>
+<assign>
+<var>${error_string}=</var>
+</assign>
+<msg timestamp="20200124 09:27:39.802" level="FAIL">No keyword with name 'Convert To Strings' found. Did you mean:
+    BuiltIn.Convert To String</msg>
+<status status="FAIL" starttime="20200124 09:27:39.800" endtime="20200124 09:27:39.802"></status>
+</kw>
+<status status="FAIL" starttime="20200124 09:27:39.725" endtime="20200124 09:27:39.802"></status>
+</kw>
+<status status="FAIL" starttime="20200124 09:27:36.630" endtime="20200124 09:27:39.802" critical="yes">No keyword with name 'Convert To Strings' found. Did you mean:
+    BuiltIn.Convert To String</status>
+</test>
+<test id="s1-t6" name="Login With Invalid Username And Password Are Entered">
+<kw name="Input Username" library="misc_resources">
+<doc>This is the email username input text function.</doc>
+<arguments>
+<arg>invalid@aisyst.com</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${USERNAME_LOCATOR}</arg>
+</arguments>
+<status status="PASS" starttime="20200124 09:27:39.807" endtime="20200124 09:27:39.863"></status>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${USERNAME_LOCATOR}</arg>
+<arg>${user_name}</arg>
+<arg>clear=True</arg>
+</arguments>
+<msg timestamp="20200124 09:27:39.863" level="INFO">Typing text 'invalid@aisyst.com' into text field 'name:user_name'.</msg>
+<status status="PASS" starttime="20200124 09:27:39.863" endtime="20200124 09:27:40.211"></status>
+</kw>
+<status status="PASS" starttime="20200124 09:27:39.806" endtime="20200124 09:27:40.211"></status>
+</kw>
+<kw name="Input User's Password" library="misc_resources">
+<doc>This is the email password input text function.</doc>
+<arguments>
+<arg>invalidpassword</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${PASSWORD_LOCATOR}</arg>
+</arguments>
+<status status="PASS" starttime="20200124 09:27:40.213" endtime="20200124 09:27:40.305"></status>
+</kw>
+<kw name="Input Password" library="SeleniumLibrary">
+<doc>Types the given password into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${PASSWORD_LOCATOR}</arg>
+<arg>${user_pass}</arg>
+<arg>clear=True</arg>
+</arguments>
+<msg timestamp="20200124 09:27:40.306" level="INFO">Typing password into text field 'name:user_password'.</msg>
+<status status="PASS" starttime="20200124 09:27:40.305" endtime="20200124 09:27:40.532"></status>
+</kw>
+<status status="PASS" starttime="20200124 09:27:40.212" endtime="20200124 09:27:40.532"></status>
+</kw>
+<kw name="Click Login button" library="misc_resources">
+<doc>This is Sign In function from the system.</doc>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${SIGNIN_LOCATOR}</arg>
+</arguments>
+<status status="PASS" starttime="20200124 09:27:40.535" endtime="20200124 09:27:40.590"></status>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>${SIGNIN_LOCATOR}</arg>
+</arguments>
+<msg timestamp="20200124 09:27:40.592" level="INFO">Clicking element '//input[@value="Sign In"]'.</msg>
+<status status="PASS" starttime="20200124 09:27:40.591" endtime="20200124 09:27:41.163"></status>
+</kw>
+<status status="PASS" starttime="20200124 09:27:40.534" endtime="20200124 09:27:41.163"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2</arg>
+</arguments>
+<msg timestamp="20200124 09:27:43.170" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" starttime="20200124 09:27:41.164" endtime="20200124 09:27:43.170"></status>
+</kw>
+<kw name="Verify Error Message" library="misc_resources">
+<doc>This is to test the error message if prompted or not.</doc>
+<arguments>
+<arg>${LOGIN_ERROR_MSG}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${error_message}</arg>
+</arguments>
+<status status="PASS" starttime="20200124 09:27:43.172" endtime="20200124 09:27:43.237"></status>
+</kw>
+<kw name="Convert To Strings">
+<arguments>
+<arg>${error_message}</arg>
+</arguments>
+<assign>
+<var>${error_string}=</var>
+</assign>
+<msg timestamp="20200124 09:27:43.253" level="FAIL">No keyword with name 'Convert To Strings' found. Did you mean:
+    BuiltIn.Convert To String</msg>
+<status status="FAIL" starttime="20200124 09:27:43.253" endtime="20200124 09:27:43.253"></status>
+</kw>
+<status status="FAIL" starttime="20200124 09:27:43.171" endtime="20200124 09:27:43.253"></status>
+</kw>
+<status status="FAIL" starttime="20200124 09:27:39.804" endtime="20200124 09:27:43.253" critical="yes">No keyword with name 'Convert To Strings' found. Did you mean:
+    BuiltIn.Convert To String</status>
+</test>
+<doc>Test Case for Email Valid Login</doc>
+<status status="FAIL" starttime="20200124 09:27:16.632" endtime="20200124 09:27:43.260"></status>
+</suite>
+<statistics>
+<total>
+<stat pass="2" fail="4">Critical Tests</stat>
+<stat pass="2" fail="4">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="2" fail="4" id="s1" name="User Valid Login">User Valid Login</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

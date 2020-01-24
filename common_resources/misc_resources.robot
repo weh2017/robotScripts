@@ -33,6 +33,7 @@ Verify Error Message
     [Documentation]  This is to test the error message if prompted or not.
     [Arguments]     ${error_message}
     Wait Until Element Is Visible   ${error_message}
+    Page Should Contain      Sign In
 
 
 Click Login button
@@ -115,5 +116,6 @@ ${SIGNIN_LOCATOR}           //input[@value="Sign In"]
 ${LOGOUT_LOCATOR}           //td[@class="user-signout"]/a[contains(text(), "Sign Out")]
 ${MODIFIED_TIME_LOCATOR}    //td[@class="dvtCellInfo"][contains(text(), "21-01-2020 16:05:28")]
 ${LOGIN_ERROR_MSG}          //*[@id="form"]/div[5]/font
+${ERROR_LOGIN_MSG}          //font[contains(text(),'i')
 
 

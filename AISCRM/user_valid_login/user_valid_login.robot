@@ -1,11 +1,12 @@
 *** Settings ***
 Documentation    Test Case for Email Valid Login
 Library     SeleniumLibrary
+Library     String
 Resource        ../../common_resources/web_common.robot
 Resource        ../../common_resources/misc_resources.robot
 Resource        ../resources/user_login_resources/user_login_resource.robot
 Suite Setup     Open Chrome Browser
-#Suite Teardown  Close Browser
+Suite Teardown  Close Browser
 
 *** Test Cases ***
 
