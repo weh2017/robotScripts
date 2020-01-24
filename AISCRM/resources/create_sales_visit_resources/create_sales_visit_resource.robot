@@ -10,6 +10,7 @@ ${CAL_ADD_BUTTON}           //td[@class="calAddButton"]
 ${SALES_VISIT_OPTION}       //a[@id="add${OBJECTIVE_STRING}"]
 ${SCHEDULE_LOCATOR}         //td[@class="calUnSel"]/a[contains(text(), '${SCHEDULE_STRING}')]
 ${SAVE_BUTTON_LOCATOR}      //input[@title="Save [Alt+S]"]
+#${SAVE_BUTTON_UP_LOCATOR}       //div[@id='basicTab']//tr//tr[1]//td[1]//div[1]//input[1]
 ##########################
 #SALES VISIT INFORMATIONS
 ##########################
@@ -237,13 +238,15 @@ Verify Erased Lead Information
 
 Phone And Mobile Contacts Information
     [Documentation]   Phone And Mobile Contacts Information
-    ${contacts}=    Run Keyword And Return Status       Element Should Be Visible   ${PHONE_LOCATOR}
-    Run Keyword If      ${contacts}     Pag
-    Input Text      ${PHONE_LOCATOR}    ${PHONE_STRING}
-    Input Text      ${MOBILE_LOCATOR}   ${MOBILE_STRING}
+    #${contacts}=    Run Keyword And Return Status       Element Should Be Visible   ${PHONE_LOCATOR}
+    #Run Keyword If      ${contacts}     Pag
+    Input Text      ${PHONE_LOCATOR}    ${PHONE_STRING}     clear=True
+    Input Text      ${MOBILE_LOCATOR}   ${MOBILE_STRING}    clear=True
 
 Plan Information
     Input Text      ${PLAN_DETAIL_LOCATOR}      ${PLAN_DETAIL_STRING}
+
+Comment Information
     Input Text      ${COMMENT_PLAN_LOCATOR}     ${COMMENT_STRING}
 
 Report Information
@@ -276,8 +279,15 @@ Select The List Found
 Click Save Button
     Click Element   ${SAVE_BUTTON_LOCATOR}
 
+
 No Alert Should Be Found
     Alert Should Not Be Present
+
+Alert Should Be Found
+    #Alert Should Be Present
+    Handle Alert    timeout= 5 s
+    Capture Page Screenshot     filename= check if required fields are empty.png
+    Wait Until Element Is Visible   ${SAVE_BUTTON_LOCATOR}
 
 Verify All Fields Informations
     [Documentation]     To verify the created required informations

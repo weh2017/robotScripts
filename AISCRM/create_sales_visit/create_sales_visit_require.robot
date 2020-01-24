@@ -52,6 +52,7 @@ Continue Running
     \   Project Name
     \   Lead Number
     \   Plan Information Detail
+    \   Comment Information Detail
     \   Report Information Detail
     \   Other Information Detail
     \   Save Created Sales Visit Data
@@ -129,6 +130,8 @@ Lead Number
 Plan Information Detail
     Plan Information
 
+Comment Information Detail
+    Comment Information
 Report Information Detail
     Report Information
 

@@ -1,12 +1,12 @@
 *** Settings ***
 Documentation   This is the script for Create Sales Visit Repository
-Library     AutoItLibrary
+#Library     AutoItLibrary
 Library     SeleniumLibrary
 Library     OperatingSystem
 Library     String
 Library     DateTime
 Library     Collections
-Library     WhiteLibrary
+#Library     WhiteLibrary
 
 Resource        ../resources/create_sales_visit_resources/create_sales_visit_resource.robot
 Resource        ../../common_resources/web_common.robot
@@ -26,3 +26,49 @@ Log-In User with Valid Username And Password
     Input Username      ${USER}
     Input User's Password      ${PASS}
     Click Login button
+
+Home Page Verify Then Select Sales Menu
+    Verify Home Page
+    Select Sales Menu
+
+Selecting Schedule Tab
+    Select Sales Visit Schedule Tab          ${SCHEDULE_STRING}
+
+Entering Sales Visit Form
+    View Sales Visit Form
+
+#*** Keywords ***
+Phone And Mobile
+    Phone And Mobile Contacts Information
+
+Lead Number
+    Adding Lead Information
+    Verify Added Lead Information
+    Sleep   1
+    Click Erase Button      ${LEAD_CLEAR_BUTTON}
+    Sleep   1
+    Verify Erased Lead Information
+    Adding Lead Information
+    Verify Added Lead Information
+
+Department Sales Visit
+    Department Information
+
+Position Sales Visit
+    Position Information
+
+E-mail Address Sales Visit
+    Email Address Information
+
+Comment Information Detail
+    Comment Information
+
+Report Information Detail
+    Report Information
+
+Other Information Detail
+    Other Information
+
+Save Created Sales Visit Data
+    Click Save Button
+    Alert Should Be Found
