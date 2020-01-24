@@ -29,7 +29,28 @@ Log-In User with Valid Username And Password
 
 Home Page Verify Then Select Sales Menu
     Verify Home Page
-    Select Sales Menu
+#    Select Sales Menu
+
+Repeat Testing
+    :FOR   ${index}     IN RANGE   999999
+    \   Select Sales Menu
+    \   Selecting Schedule Tab
+    \   Entering Sales Visit Form
+    \   Phone And Mobile
+    \   Lead Number
+    \   Department Sales Visit
+    \   Position Sales Visit
+    \   E-mail Address Sales Visit
+#    \   E-mail Domain Remove Information
+    \   Comment Information Detail
+    \   Report Information Detail
+    \   Other Information Detail
+    \   Save Created Sales Visit Data
+#    \   Save Created Sales Visit Data
+    \   Log     ${index}
+    \   Exit For Loop If        ${index}==0
+
+*** Keywords ***
 
 Selecting Schedule Tab
     Select Sales Visit Schedule Tab          ${SCHEDULE_STRING}
@@ -56,6 +77,9 @@ Department Sales Visit
 
 Position Sales Visit
     Position Information
+
+E-mail Domain Remove Information
+    Email Domain Remove
 
 E-mail Address Sales Visit
     Email Address Information

@@ -87,10 +87,12 @@ ${DEPT_VERIFY_LOCATOR}          //span[@id="dtlview_Department"][contains(text()
 ${POSITION_VERIFY_LOCATOR}      //span[@id="dtlview_Position"][contains(text(), '${POSITION_STRING}')]  #Not
 ${PROJECT_NAME_LOCATOR}          //td[@id="mouseArea_Project Name"]/a[contains(text(), '${PROJECT_NAME_STRING}')]
 ${COMMENT_VERIFY_LOCATOR}       //div[@class="dataField"][contains(text(), '${COMMENT_STRING}')]
-${UPLOAD_FILE_BUTTON}           //input[@class="inputFile"]
+${UPLOAD_FILE_BUTTON}           //input[@type="file"]
 ${CHOOSE_FILE_BUTTON}           //form[@id="frmUpload"]
 ${END_TIME_WARN_MSG}            //div[contains(text(), 'End time is more than the start time.')]
 ${WARN_OK_BTN}                  //span[@class="l-btn-text"][contains(text(), 'Ok')]
+${FILE_UPLOAD_CONFIRMATION}     //div[contains(text(), 'อัพโหลดไฟล์สำเร็จ')]
+${UPLOAD_OK_BUTTON}             //span[@class="l-btn-text"][contains(text(), 'OK')]
 
 #End time is more than the start time.
 
@@ -156,6 +158,7 @@ Start Time and End Time Information
     SeleniumLibrary.Press Keys      ${TIME_END_LOCATOR}        CTRL+a+DELETE
     Input Text      ${TIME_END_LOCATOR}         ${list}
     SeleniumLibrary.Press Keys      ${TIME_END_LOCATOR}         ENTER
+    Sleep  2
     ${warning}=     Run Keyword And Return Status   Wait Until Element Is Visible   ${END_TIME_WARN_MSG}
     Run Keyword If   ${warning}   Run Keywords    Click Element       ${WARN_OK_BTN}
     ...     AND     Wait Until Element Is Not Visible   ${END_TIME_WARN_MSG}
@@ -187,6 +190,18 @@ Email Address Information
     [Documentation]     This is Valid Email Address
     Input Text      ${EMAIL_TEXT_LOCATOR}       ${EMAIL_TEXT_STRING}
     #Should Not Be Empty     ${EMAIL_TEXT_STRING}
+
+Email Domain Remove
+    [Documentation]     Email Domain Remove
+    ${remove}=  Set Variable    ${EMAIL_TEXT_STRING}
+    ${split}=   Split String From Right     ${remove}   @
+    ${get}=     Get From List       ${split}    0
+    Input Text      ${EMAIL_TEXT_LOCATOR}       ${split}
+
+Email Text Alert
+    [Documentation]   Email Text Alert
+    Handle Alert  timeout=2
+#    Alert Should Be Present     Please enter a valid E-mail (E-MAIL)    action=ACCEPT
 
 Department Information
     [Documentation]     Department Information
@@ -284,8 +299,9 @@ No Alert Should Be Found
     Alert Should Not Be Present
 
 Alert Should Be Found
-    #Alert Should Be Present
-    Handle Alert    timeout= 5 s
+    Sleep   3
+    Alert Should Be Present
+#    Handle Alert    timeout= 5 s
     Capture Page Screenshot     filename= check if required fields are empty.png
     Wait Until Element Is Visible   ${SAVE_BUTTON_LOCATOR}
 
@@ -338,24 +354,38 @@ Verify All Fields Informations
     Element Should Contain      ${COMPETITOR_VERIFY_LOCATOR}        ${COMPETITOR_STRING}
     Element Should Contain      ${REMARK_VERIFY_LOCATOR}            ${REMARK_STRING}
 
+Verify Required Fields Information
+    [Documentation]   Verify Required Fields Information
+    #Objective
+    Element Should Contain      ${OBJECTIVE_VERIFY_LOCATOR}         ${OBJECTIVE_STRING}
+    #Start Date
+    Element Should Contain      ${START_DATE_VERIFY_LOCATOR}        ${START_DATE_STRING}
+    #End Date
+    Element Should Contain      ${END_DATE_VERIFY_LOCATOR}          ${START_DATE_STRING}
+    #Status
+    Element Should Contain      ${STATUS_VERIFY_LOCATOR}            ${STATUS_STRING}
+    #Account name
+    Element Should Contain      ${ACCOUNT_NAME_VERIFY_LOCATOR}      ${ACCOUNT_SEARCH_STRING}
+    #Time Start
+    Element Should Contain      ${TIME_START_VERIFY_LOCATOR}        ${TIME_START_STRING}
+    #Time End
+    Element Should Contain      ${TIME_END_VERIFY_LOCATOR}          ${TIME_END_STRING}
+    #Plan Detail
+    Element Should Contain      ${PLAN_DETAIL_VERIFY_LOCATOR}       ${PLAN_DETAIL_STRING}
 
 Click Add Image Button
     Scroll Down Page From The Browser
     Click Button    Add Image
     Select Window   NEW
-#    SeleniumLibrary.Press Keys        ${UPLOAD_FILE_BUTTON}      TAB+ENTER+ENTER
-    Choose File     //input[@name='image']      C:\Users\ruela\Documents\Different images format\BMP.bmp
-    #Click Button    //input[@name='image']
-    Sleep   2
-#    Get Upload Image
-
-Get Upload Image
-    #Attach Window   Open
-    #Input Text To Textbox          id:1148      C:\Users\ruela\Documents\Different images format\BMP.bmp
-    WhiteLibrary.Press Keys          C://Users/ruela/Documents/Different images format/BMP.bmp
-    Press Special Key   ENTER
+#    Input Text     ${UPLOAD_FILE_BUTTON}        ${IMAGE_PATH}
+    Choose File     ${UPLOAD_FILE_BUTTON}        ${IMAGE_PATH}
+    Click Button    UPLOAD
+    Wait Until Element Is Visible   ${FILE_UPLOAD_CONFIRMATION}
+    Click Element       ${UPLOAD_OK_BUTTON}
+    Select Window
 
 Click Delete Button
+    Sleep  2
     Click Button        Delete
     Alert Should Be Present     Are you sure you want to delete this record?    action=ACCEPT
 

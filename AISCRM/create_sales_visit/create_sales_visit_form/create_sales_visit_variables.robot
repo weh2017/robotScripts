@@ -1,9 +1,12 @@
 *** Variables ***
 ###############################################################
+#  File Path where you can upload image : Make sure to follow the slash(/) symbol.
+${IMAGE_PATH}               C://Users/ruela/Documents/Different images format/BMP.bmp
+###############################################################
 # Required Informations
 ###############################################################
 ${SCHEDULE_STRING}          Year
-${OBJECTIVE_STRING}         Quotation
+${OBJECTIVE_STRING}         Other
 ${START_DATE_STRING}        23-02-2020
 ${STATUS_STRING}            Cancel
 ${ACCOUNT_SEARCH_STRING}    A I SYSTEM CO., LTD.
