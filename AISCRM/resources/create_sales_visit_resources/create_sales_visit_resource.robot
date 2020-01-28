@@ -11,6 +11,7 @@ ${SALES_VISIT_OPTION}       //a[@id="add${OBJECTIVE_STRING}"]
 ${SCHEDULE_LOCATOR}         //td[@class="calUnSel"]/a[contains(text(), '${SCHEDULE_STRING}')]
 ${SAVE_BUTTON_LOCATOR}      //input[@title="Save [Alt+S]"]
 #${SAVE_BUTTON_UP_LOCATOR}       //div[@id='basicTab']//tr//tr[1]//td[1]//div[1]//input[1]
+${NO_IMAGE_UPLOAD_LOCATOR}      link:include/images/noimage.gif
 ##########################
 #SALES VISIT INFORMATIONS
 ##########################
@@ -94,7 +95,7 @@ ${WARN_OK_BTN}                  //span[@class="l-btn-text"][contains(text(), 'Ok
 ${FILE_UPLOAD_CONFIRMATION}     //div[contains(text(), 'อัพโหลดไฟล์สำเร็จ')]
 ${UPLOAD_OK_BUTTON}             //span[@class="l-btn-text"][contains(text(), 'OK')]
 
-#End time is more than the start time.
+
 
 *** Keywords ***
 
@@ -121,7 +122,7 @@ View Sales Visit Form
 
 Start And End Date Informations
     Wait Until Element Is Visible   ${OBJECTIVE_SELECT}
-    SeleniumLibrary.Press Keys      ${START_DATE_LOCATOR}       CTRL+a+DELETE
+    Press Keys      ${START_DATE_LOCATOR}       CTRL+a+DELETE
     Input Text      ${START_DATE_LOCATOR}   ${START_DATE_STRING}
     Click Element   ${STATUS_LOCATOR}
 
@@ -155,16 +156,16 @@ Start Time and End Time Information
     ${split}=   Split String From Right     ${set}  :   max_split=1
     ${list}=    Get From List   ${split}    0
     Log     ${list}
-    SeleniumLibrary.Press Keys      ${TIME_END_LOCATOR}        CTRL+a+DELETE
+    Press Keys      ${TIME_END_LOCATOR}        CTRL+a+DELETE
     Input Text      ${TIME_END_LOCATOR}         ${list}
-    SeleniumLibrary.Press Keys      ${TIME_END_LOCATOR}         ENTER
+    Press Keys      ${TIME_END_LOCATOR}         ENTER
     Sleep  2
     ${warning}=     Run Keyword And Return Status   Wait Until Element Is Visible   ${END_TIME_WARN_MSG}
     Run Keyword If   ${warning}   Run Keywords    Click Element       ${WARN_OK_BTN}
     ...     AND     Wait Until Element Is Not Visible   ${END_TIME_WARN_MSG}
-    SeleniumLibrary.Press Keys      ${TIME_END_LOCATOR}        CTRL+a+DELETE
+    Press Keys      ${TIME_END_LOCATOR}        CTRL+a+DELETE
     Input Text      ${TIME_END_LOCATOR}     ${TIME_END_STRING}
-    SeleniumLibrary.Press Keys      ${TIME_START_LOCATOR}       CTRL+a+DELETE
+    Press Keys      ${TIME_START_LOCATOR}       CTRL+a+DELETE
     Input Text      ${TIME_START_LOCATOR}       ${TIME_START_STRING}
 
 Adding Contact Name Information
@@ -375,19 +376,25 @@ Verify Required Fields Information
 
 Click Add Image Button
     Scroll Down Page From The Browser
-    Click Button    Add Image
-    Select Window   NEW
+#    @{image_list}=   Create List     BMP   #JPEG   PNG
+    :FOR   ${image}     IN    @{IMAGE_FILE_TYPE}
+    \   Click Button    Add Image
+    \   Select Window   NEW
+    \   Choose File     ${UPLOAD_FILE_BUTTON}        ${IMAGE_PATH}/${image}
 #    Input Text     ${UPLOAD_FILE_BUTTON}        ${IMAGE_PATH}
-    Choose File     ${UPLOAD_FILE_BUTTON}        ${IMAGE_PATH}
-    Click Button    UPLOAD
-    Wait Until Element Is Visible   ${FILE_UPLOAD_CONFIRMATION}
-    Click Element       ${UPLOAD_OK_BUTTON}
-    Select Window
+    \   Click Button    UPLOAD
+    \   Wait Until Element Is Visible   ${FILE_UPLOAD_CONFIRMATION}
+    \   Click Element       ${UPLOAD_OK_BUTTON}
+    \   Select Window
+    Capture Page Screenshot     filename=Verify no.of pages uploaded.png
+
 
 Click Delete Button
     Sleep  2
     Click Button        Delete
     Alert Should Be Present     Are you sure you want to delete this record?    action=ACCEPT
+
+
 
 
 

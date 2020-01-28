@@ -6,9 +6,10 @@ Open Chrome Browser
     ${prefs}   Create Dictionary   credentials_enable_service=${false}
     Call Method   ${chrome_options}   add_experimental_option    prefs    ${prefs}
     Call Method   ${chrome_options}   add_argument   --start-maximized
-    Call Method   ${chrome_options}   add_argument   --disable-infobars
     Call Method   ${chrome_options}   add_argument   --disable-popup-blocking
     Create WebDriver   Chrome   chrome_options=${chrome_options}
+
+
 
 Close All Chrome Browsers
     [Documentation]     Close the Chrome Browser

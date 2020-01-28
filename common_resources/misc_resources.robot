@@ -8,7 +8,7 @@ Documentation    This misc_resource is compiled the email login, add button, edi
 Launch Web System
     [Documentation]   Url of the web application
     [Arguments]     ${link}
-    Go To   ${link}
+    Go To   ${link}          # For the link. I saved it to user_login_resource.robot file
     Verify Title Page
 
 Input Username
@@ -105,6 +105,9 @@ Verify Deleted Information
     ${actual}=     Get Value   //input[@name="${variable}"]
     Log     ${actual}
     Should Be Empty     ${actual}
+
+
+List Files To Upload
 
 
 *** Variables ***

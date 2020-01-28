@@ -1,20 +1,17 @@
 *** Settings ***
 Documentation   This is the script for Create Sales Visit Repository
-#Library     AutoItLibrary
 Library     SeleniumLibrary
 Library     OperatingSystem
 Library     String
 Library     DateTime
 Library     Collections
-#Library     WhiteLibrary
-
 Resource        ../resources/create_sales_visit_resources/create_sales_visit_resource.robot
 Resource        ../../common_resources/web_common.robot
 Resource        create_sales_visit_form/create_sales_visit_variables.robot
 Resource        ../../common_resources/misc_resources.robot
 Resource        ../resources/user_login_resources/user_login_resource.robot
 Suite Setup     Open Chrome Browser
-#Suite Teardown  Close Browser
+Suite Teardown  Close Browser
 
 
 
@@ -60,11 +57,11 @@ Continue Running
     \   Save Created Sales Visit Data
     \   All Required Informations
     \   Click Add Image Button
-    \   Delete Data
+    #\   Delete Data
     \   Log     ${index}
     \   Log To Console      ${index}
-    \   Exit For Loop If        ${index}==50
-
+    \   Exit For Loop If        ${index}==0
+    Click Logout button
 
 Home Page Verify Then Select Sales Menu
     Verify Home Page
