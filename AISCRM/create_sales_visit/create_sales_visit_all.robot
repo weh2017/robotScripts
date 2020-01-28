@@ -15,7 +15,6 @@ Suite Teardown  Close Browser
 
 
 
-
 *** Test Cases ***
 AIS-CRM Website
     [Tags]      AIS-CRM SITE

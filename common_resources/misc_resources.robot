@@ -11,6 +11,15 @@ Launch Web System
     Go To   ${link}          # For the link. I saved it to user_login_resource.robot file
     Verify Title Page
 
+Select Menu
+    [Arguments]     ${menu}     ${select}
+    [Documentation]     Select Menu Header like Sales, Customer Service, Inventory
+    Wait Until Element Is Visible       ${menu}
+    Click Link      ${menu}
+    Wait Until Element Is Visible       ${select}
+    Click Link      ${select}
+
+
 Input Username
     [Documentation]     This is the  email username input text function.
     [Arguments]     ${user_name}
@@ -106,8 +115,6 @@ Verify Deleted Information
     Log     ${actual}
     Should Be Empty     ${actual}
 
-
-List Files To Upload
 
 
 *** Variables ***

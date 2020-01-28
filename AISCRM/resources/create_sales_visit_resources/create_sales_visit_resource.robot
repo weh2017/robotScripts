@@ -99,6 +99,20 @@ ${UPLOAD_OK_BUTTON}             //span[@class="l-btn-text"][contains(text(), 'OK
 
 *** Keywords ***
 
+Perform Create Sales Visit All Informations
+    [Documentation]     This function is to call the csv file and distribute the contents.
+    ${contents}=    Get File        ${CURDIR}${/}../resources/sales_visit.csv
+    @{lines}=   Split To Lines      ${contents}     1
+    :FOR    ${line}     IN      @{lines}
+    @{bm}=  Split String    ${lines}
+    # schedule
+    \   ${schedule}=    Set Variable    @{bm}[0]
+    # presentation
+    \   ${presentation}=    Set Variable    @{bm}[1]
+    # start date
+    \   ${start_date}=
+
+
 Select Sales Menu
     Wait Until Element Is Visible       ${HEADER_MENU_LOCATOR}
     Click Link       ${HEADER_MENU_LOCATOR}
@@ -350,9 +364,13 @@ Verify All Fields Informations
     ...         : ${USER} on ${today}
     #Plan Detail
     Element Should Contain      ${PLAN_DETAIL_VERIFY_LOCATOR}       ${PLAN_DETAIL_STRING}
+    #Report Detail
     Element Should Contain      ${REPORT_VERIFY_LOCATOR}            ${REPORT_STRING}
+    #Remaining Detail
     Element Should Contain      ${REMAINING_VERIFY_LOCATOR}         ${REMAINING_STRING}
+    #Competitor Detail
     Element Should Contain      ${COMPETITOR_VERIFY_LOCATOR}        ${COMPETITOR_STRING}
+    #Remark Detail
     Element Should Contain      ${REMARK_VERIFY_LOCATOR}            ${REMARK_STRING}
 
 Verify Required Fields Information
@@ -386,13 +404,17 @@ Click Add Image Button
     \   Wait Until Element Is Visible   ${FILE_UPLOAD_CONFIRMATION}
     \   Click Element       ${UPLOAD_OK_BUTTON}
     \   Select Window
+    ${count}=   Get Element Count   //button[@class="crmbutton small edit"][contains(text(), 'Remove')]
+    Run Keyword If      ${count} > 1        Log   ${count}
     Capture Page Screenshot     filename=Verify no.of pages uploaded.png
-
 
 Click Delete Button
     Sleep  2
     Click Button        Delete
     Alert Should Be Present     Are you sure you want to delete this record?    action=ACCEPT
+
+
+
 
 
 

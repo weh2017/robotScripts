@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 3.1.2 (Python 3.7.4 on win32)" generated="20200128 11:01:42.575" rpa="false">
+<suite id="s1" name="Create Sales Visit Require" source="C:\Users\ruela\Documents\robotScripts\AISCRM\create_sales_visit\create_sales_visit_require.robot">
+<kw name="Open Chrome Browser" library="web_common" type="setup">
+<doc>Open the Chrome Browser with maximize view, no infobars notification and no pop-ups.</doc>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>sys.modules['selenium.webdriver'].ChromeOptions()</arg>
+<arg>sys, selenium.webdriver</arg>
+</arguments>
+<assign>
+<var>${chrome_options}</var>
+</assign>
+<msg timestamp="20200128 11:01:42.807" level="INFO">${chrome_options} = &lt;selenium.webdriver.chrome.options.Options object at 0x03D7C630&gt;</msg>
+<status status="PASS" starttime="20200128 11:01:42.807" endtime="20200128 11:01:42.807"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>credentials_enable_service=${false}</arg>
+</arguments>
+<assign>
+<var>${prefs}</var>
+</assign>
+<msg timestamp="20200128 11:01:42.808" level="INFO">${prefs} = {'credentials_enable_service': False}</msg>
+<status status="PASS" starttime="20200128 11:01:42.808" endtime="20200128 11:01:42.808"></status>
+</kw>
+<kw name="Call Method" library="BuiltIn">
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<arguments>
+<arg>${chrome_options}</arg>
+<arg>add_experimental_option</arg>
+<arg>prefs</arg>
+<arg>${prefs}</arg>
+</arguments>
+<status status="PASS" starttime="20200128 11:01:42.808" endtime="20200128 11:01:42.808"></status>
+</kw>
+<kw name="Call Method" library="BuiltIn">
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<arguments>
+<arg>${chrome_options}</arg>
+<arg>add_argument</arg>
+<arg>--start-maximized</arg>
+</arguments>
+<status status="PASS" starttime="20200128 11:01:42.808" endtime="20200128 11:01:42.809"></status>
+</kw>
+<kw name="Call Method" library="BuiltIn">
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<arguments>
+<arg>${chrome_options}</arg>
+<arg>add_argument</arg>
+<arg>--disable-popup-blocking</arg>
+</arguments>
+<status status="PASS" starttime="20200128 11:01:42.809" endtime="20200128 11:01:42.809"></status>
+</kw>
+<kw name="Create Webdriver" library="SeleniumLibrary">
+<doc>Creates an instance of Selenium WebDriver.</doc>
+<arguments>
+<arg>Chrome</arg>
+<arg>chrome_options=${chrome_options}</arg>
+</arguments>
+<msg timestamp="20200128 11:01:42.809" level="INFO">Creating an instance of the Chrome WebDriver.</msg>
+<status status="PASS" starttime="20200128 11:01:42.809" endtime="20200128 11:01:47.939"></status>
+</kw>
+<status status="PASS" starttime="20200128 11:01:42.807" endtime="20200128 11:01:47.939"></status>
+</kw>
+<test id="s1-t1" name="AIS-CRM Website">
+<kw name="Launch Web System" library="misc_resources">
+<doc>Url of the web application</doc>
+<arguments>
+<arg>${URL}</arg>
+</arguments>
+<kw name="Go To" library="SeleniumLibrary">
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<arguments>
+<arg>${link}</arg>
+</arguments>
+<msg timestamp="20200128 11:01:47.940" level="INFO">Opening url 'http://192.168.0.24/aistcrm_uat/index.php?action=Login&amp;module=Users'</msg>
+<status status="PASS" starttime="20200128 11:01:47.940" endtime="20200128 11:01:48.322"></status>
+</kw>
+<kw name="Verify Title Page" library="misc_resources">
+<doc>Verify the title of the page after the login with username successfully entered.</doc>
+<kw name="Get Title" library="SeleniumLibrary">
+<doc>Returns the title of the current page.</doc>
+<status status="PASS" starttime="20200128 11:01:48.323" endtime="20200128 11:01:48.330"></status>
+</kw>
+<kw name="Title Should Be" library="SeleniumLibrary">
+<doc>Verifies that the current page title equals ``title``.</doc>
+<arguments>
+<arg>MOAI-CRM - The Premium CRM Solution</arg>
+</arguments>
+<msg timestamp="20200128 11:01:48.335" level="INFO">Page title is 'MOAI-CRM - The Premium CRM Solution'.</msg>
+<status status="PASS" starttime="20200128 11:01:48.330" endtime="20200128 11:01:48.335"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>Get Title</arg>
+</arguments>
+<msg timestamp="20200128 11:01:48.336" level="INFO">Get Title</msg>
+<status status="PASS" starttime="20200128 11:01:48.335" endtime="20200128 11:01:48.336"></status>
+</kw>
+<status status="PASS" starttime="20200128 11:01:48.322" endtime="20200128 11:01:48.336"></status>
+</kw>
+<status status="PASS" starttime="20200128 11:01:47.940" endtime="20200128 11:01:48.336"></status>
+</kw>
+<tags>
+<tag>AIS-CRM SITE</tag>
+</tags>
+<status status="PASS" starttime="20200128 11:01:47.939" endtime="20200128 11:01:48.336" critical="yes"></status>
+</test>
+<test id="s1-t2" name="Log-In User with Valid Username And Password">
+<kw name="Input Username" library="misc_resources">
+<doc>This is the email username input text function.</doc>
+<arguments>
+<arg>${USER}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${USERNAME_LOCATOR}</arg>
+</arguments>
+<status status="PASS" starttime="20200128 11:01:48.338" endtime="20200128 11:01:48.365"></status>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${USERNAME_LOCATOR}</arg>
+<arg>${user_name}</arg>
+<arg>clear=True</arg>
+</arguments>
+<msg timestamp="20200128 11:01:48.365" level="INFO">Typing text 'ruel.arb' into text field 'name:user_name'.</msg>
+<status status="PASS" starttime="20200128 11:01:48.365" endtime="20200128 11:01:48.444"></status>
+</kw>
+<status status="PASS" starttime="20200128 11:01:48.337" endtime="20200128 11:01:48.444"></status>
+</kw>
+<kw name="Input User's Password" library="misc_resources">
+<doc>This is the email password input text function.</doc>
+<arguments>
+<arg>${PASS}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${PASSWORD_LOCATOR}</arg>
+</arguments>
+<status status="PASS" starttime="20200128 11:01:48.445" endtime="20200128 11:01:48.473"></status>
+</kw>
+<kw name="Input Password" library="SeleniumLibrary">
+<doc>Types the given password into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${PASSWORD_LOCATOR}</arg>
+<arg>${user_pass}</arg>
+<arg>clear=True</arg>
+</arguments>
+<msg timestamp="20200128 11:01:48.474" level="INFO">Typing password into text field 'name:user_password'.</msg>
+<status status="PASS" starttime="20200128 11:01:48.473" endtime="20200128 11:01:48.553"></status>
+</kw>
+<status status="PASS" starttime="20200128 11:01:48.444" endtime="20200128 11:01:48.553"></status>
+</kw>
+<kw name="Click Login button" library="misc_resources">
+<doc>This is Sign In function from the system.</doc>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${SIGNIN_LOCATOR}</arg>
+</arguments>
+<status status="PASS" starttime="20200128 11:01:48.554" endtime="20200128 11:01:48.577"></status>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>${SIGNIN_LOCATOR}</arg>
+</arguments>
+<msg timestamp="20200128 11:01:48.578" level="INFO">Clicking element '//input[@value="Sign In"]'.</msg>
+<status status="PASS" starttime="20200128 11:01:48.578" endtime="20200128 11:01:53.874"></status>
+</kw>
+<status status="PASS" starttime="20200128 11:01:48.554" endtime="20200128 11:01:53.874"></status>
+</kw>
+<tags>
+<tag>User credentials</tag>
+</tags>
+<status status="PASS" starttime="20200128 11:01:48.337" endtime="20200128 11:01:53.874" critical="yes"></status>
+</test>
+<test id="s1-t3" name="Continue Running">
+<kw name="${index} IN RANGE [ 999999 ]" type="for">
+<kw name="${index} = 0" type="foritem">
+<kw name="Select Sales Menu" library="create_sales_visit_resource">
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${HEADER_MENU_LOCATOR}</arg>
+</arguments>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<msg timestamp="20200128 11:01:59.413" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-2.png"&gt;&lt;img src="selenium-screenshot-2.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20200128 11:01:59.068" endtime="20200128 11:01:59.413"></status>
+</kw>
+<msg timestamp="20200128 11:01:59.414" level="FAIL">Element '//td[@class="tabUnSelected"]/a[contains(text(), 'Sales')]' not visible after 5 seconds.</msg>
+<status status="FAIL" starttime="20200128 11:01:53.899" endtime="20200128 11:01:59.414"></status>
+</kw>
+<status status="FAIL" starttime="20200128 11:01:53.899" endtime="20200128 11:01:59.415"></status>
+</kw>
+<status status="FAIL" starttime="20200128 11:01:53.899" endtime="20200128 11:01:59.415"></status>
+</kw>
+<status status="FAIL" starttime="20200128 11:01:53.875" endtime="20200128 11:01:59.425"></status>
+</kw>
+<status status="FAIL" starttime="20200128 11:01:53.875" endtime="20200128 11:01:59.425" critical="yes">Element '//td[@class="tabUnSelected"]/a[contains(text(), 'Sales')]' not visible after 5 seconds.</status>
+</test>
+<kw name="Close Browser" library="SeleniumLibrary" type="teardown">
+<doc>Closes the current browser.</doc>
+<status status="PASS" starttime="20200128 11:01:59.426" endtime="20200128 11:02:01.543"></status>
+</kw>
+<doc>This is the script for Create Sales Visit Require Fields Only</doc>
+<status status="FAIL" starttime="20200128 11:01:42.576" endtime="20200128 11:02:01.543"></status>
+</suite>
+<statistics>
+<total>
+<stat pass="2" fail="1">Critical Tests</stat>
+<stat pass="2" fail="1">All Tests</stat>
+</total>
+<tag>
+<stat pass="1" fail="0">AIS-CRM SITE</stat>
+<stat pass="1" fail="0">User credentials</stat>
+</tag>
+<suite>
+<stat pass="2" fail="1" id="s1" name="Create Sales Visit Require">Create Sales Visit Require</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

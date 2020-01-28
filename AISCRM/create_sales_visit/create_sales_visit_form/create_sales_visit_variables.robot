@@ -16,8 +16,8 @@ ${IMAGE_PATH}               C://Users/ruela/Documents/Different images format
 ###############################################################
 # Required Informations
 ###############################################################
-${SCHEDULE_STRING}          Week
-${OBJECTIVE_STRING}         Presentation
+${SCHEDULE_STRING}          Week    Day     year        Month
+${OBJECTIVE_STRING}         Presentation  Visit
 ${START_DATE_STRING}        23-02-2020
 ${STATUS_STRING}            Cancel
 ${ACCOUNT_SEARCH_STRING}    A I SYSTEM CO., LTD.
