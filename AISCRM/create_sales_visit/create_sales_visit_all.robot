@@ -11,7 +11,7 @@ Resource        create_sales_visit_form/create_sales_visit_variables.robot
 Resource        ../../common_resources/misc_resources.robot
 Resource        ../resources/user_login_resources/user_login_resource.robot
 Suite Setup     Open Chrome Browser
-Suite Teardown  Close Browser
+#Suite Teardown  Close Browser
 
 
 
@@ -27,8 +27,9 @@ Log-In User with Valid Username And Password
     Click Login button
 
 Running
-    Continue Running
+    Perform Create Sales Visit All Informations     ALL     ${CURDIR}${/}../resources/sales_visit.csv
 
+#${CURDIR}${/}../resources/sales_visit.csv
 *** Keywords ***
 
 Continue Running

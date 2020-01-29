@@ -12,12 +12,16 @@ Launch Web System
     Verify Title Page
 
 Select Menu
-    [Arguments]     ${menu}     ${select}
+    [Arguments]        ${menu}
     [Documentation]     Select Menu Header like Sales, Customer Service, Inventory
-    Wait Until Element Is Visible       ${menu}
-    Click Link      ${menu}
-    Wait Until Element Is Visible       ${select}
-    Click Link      ${select}
+    Wait Until Element Is Visible      //td[@class="tabUnSelected"]/a[contains(text(), '${menu}')]
+    Click Link      //td[@class="tabUnSelected"]/a[contains(text(), '${menu}')]
+
+Select Dropdown Option From Menu
+    [Arguments]     ${select}
+    [Documentation]     Select Dropdown options from menu like sales visit, account,contacts, case.etc
+    Wait Until Element Is Visible       //a[contains(text(), '${select}')]
+    Click Link      //a[contains(text(), '${select}')]
 
 
 Input Username
@@ -85,7 +89,7 @@ Click Erase Button
     [Arguments]     ${account_delete}
     Wait Until Element Is Visible   ${account_delete}
     Click Element   ${account_delete}
-
+    Set Selenium Timeout    5 seconds
 
 Verify Added Information
     [Documentation]     This function is to check the added account name, contact name, project name.
