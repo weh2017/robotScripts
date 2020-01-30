@@ -5,6 +5,7 @@ Library     OperatingSystem
 Library     String
 Library     DateTime
 Library     Collections
+Library     Dialogs
 Resource        ../resources/create_sales_visit_resources/create_sales_visit_resource.robot
 Resource        ../../common_resources/web_common.robot
 Resource        create_sales_visit_form/create_sales_visit_variables.robot
@@ -26,9 +27,16 @@ Log-In User with Valid Username And Password
     Input User's Password      ${PASS}
     Click Login button
 
+Sales Visit
+    Select Menu     ${HEADER_MENU_STRING}
+#    Select Dropdown Option From Menu    ${SALES_VISIT_STRING}
+
 Running
     Perform Create Sales Visit All Informations     ALL     ${CURDIR}${/}../resources/sales_visit.csv
 
+
+Log Out
+    Click Logout button
 #${CURDIR}${/}../resources/sales_visit.csv
 *** Keywords ***
 

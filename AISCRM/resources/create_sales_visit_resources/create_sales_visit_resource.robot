@@ -124,61 +124,79 @@ Perform Create Sales Visit All Informations
     \   ${end_time}=        Set Variable    @{bm}[9]
     #   Email
     \   ${email}=           Set Variable    @{bm}[10]
+    #   Mobile
+    \   ${mobile}=          Set Variable    @{bm}[11]
+    #   Phone
+    \   ${phone}=           Set Variable    @{bm}[12]
     #   Department
-    \   ${department}=      Set Variable    @{bm}[11]
+    \   ${department}=      Set Variable    @{bm}[13]
     #   Position
-    \   ${position}=        Set Variable    @{bm}[12]
+    \   ${position}=        Set Variable    @{bm}[14]
     #   Plan Detail
-    \   ${plan}=            Set Variable    @{bm}[13]
+    \   ${plan}=            Set Variable    @{bm}[15]
     #   Comment
-    \   ${comment}=         Set Variable    @{bm}[14]
+    \   ${comment}=         Set Variable    @{bm}[16]
     #   Report
-    \   ${report}=          Set Variable    @{bm}[15]
+    \   ${report}=          Set Variable    @{bm}[17]
     #   Remaining
-    \   ${remaining}=       Set Variable    @{bm}[16]
+    \   ${remaining}=       Set Variable    @{bm}[18]
     #   Competitor
-    \   ${competitor}=      Set Variable    @{bm}[17]
+    \   ${competitor}=      Set Variable    @{bm}[19]
     #   Remark
-    \   ${remark}=          Set Variable    @{bm}[18]
+    \   ${remark}=          Set Variable    @{bm}[20]
     #   Lead No
-    \   ${lead_no}=         Set Variable    @{bm}[18]
+    \   ${lead_no}=         Set Variable    @{bm}[21]
     #   Lead name
-    \   ${lead_name}=       Set Variable    @{bm}[20]
+    \   ${lead_name}=       Set Variable    @{bm}[22]
     \   Run Keyword If  '${data}'=='ALL'    Navigate Creating Sales Visit All        ${schedule}  ${objective}
-    ...             ${start_date}   ${objective}    ${status}   ${account}  ${first_contact_name}   ${last_contact_name}
+    ...             ${start_date}      ${status}   ${account}  ${first_contact_name}   ${last_contact_name}
     ...             ${project_name}     ${end_time}     ${time_start}   ${department}   ${position}     ${email}    ${plan}     ${comment}
-    ...             ${report}       ${remaining}    ${remark}   ${competitor}
-
+    ...             ${report}       ${remaining}    ${remark}   ${competitor}     ${lead_no}    ${lead_name}    ${mobile}   ${phone}
 
 Navigate Creating Sales Visit All
     [Documentation]     All functions
     [Arguments]    ${schedule}  ${objective}    ${start_date}    ${status}   ${account}  ${first_contact_name}   ${last_contact_name}
     ...             ${project_name}     ${end_time}     ${time_start}   ${department}   ${position}     ${email}    ${plan}     ${comment}
-    ...             ${report}       ${remaining}    ${remark}   ${competitor}
-    Select Menu     ${HEADER_MENU_STRING}
-    Select Sales Visit Schedule Tab     ${schedule}
+    ...             ${report}       ${remaining}    ${remark}   ${competitor}       ${lead_no}      ${lead_name}    ${mobile}   ${phone}
+#    Select Menu     ${HEADER_MENU_STRING}
     Select Dropdown Option From Menu    ${SALES_VISIT_STRING}
+    Select Sales Visit Schedule Tab     ${schedule}
+    Sleep   3
     View Sales Visit Form       ${objective}
     Start And End Date Informations     ${start_date}   ${objective}
     Status Information      ${status}
+    ############################################################
     Adding Account Information     ${account}
     Verify Added Account Information        ${account}
     Click Erase Button      ${ACCOUNT_CLEAR_BUTTON}
     Verify Erased Account Information
     Adding Account Information     ${account}
     Sleep    2
+    #############################################################
     Adding Contact Name Information     ${first_contact_name}
     Verify Added Contact Information    ${first_contact_name}   ${last_contact_name}
     Click Erase Button      ${CONTACT_CLEAR_BUTTON}
     Verify Erased Contact Information
     Adding Contact Name Information     ${first_contact_name}
     Verify Added Contact Information    ${first_contact_name}   ${last_contact_name}
+    Sleep   2
+    ##############################################################
     Adding Project Information      ${project_name}
     Verify Added Project Information    ${project_name}
     Click Erase Button      ${PROJECT_CLEAR_BUTTON}
     Verify Erased Project Information
     Adding Project Information      ${project_name}
     Verify Added Project Information    ${project_name}
+    Sleep  2
+    ###############################################################
+    Adding Lead Information     ${lead_no}
+    Verify Added Lead Information       ${lead_name}
+    Click Erase Button      ${LEAD_CLEAR_BUTTON}
+    Verify Erased Lead Information
+    Adding Lead Information     ${lead_no}
+    Verify Added Lead Information       ${lead_name}
+    Sleep  2
+    ###################################################################
     Start Time and End Time Information     ${end_time}     ${time_start}
     Department Information      ${department}
     Position Information        ${position}
@@ -186,6 +204,7 @@ Navigate Creating Sales Visit All
     Click Save Button
     Email Text Alert
     Email Address Information   ${email}
+    Phone And Mobile Contacts Information       ${mobile}   ${phone}
     Plan Information        ${plan}
     Comment Information     ${comment}
     Report Information      ${report}
@@ -193,12 +212,13 @@ Navigate Creating Sales Visit All
     Remark Information      ${remark}
     Competitor Information      ${competitor}
     Click Save Button
-
+#    Verify All Fields Informations
+    Verify Objective Result     ${objective}
 Select Sales Visit Schedule Tab
     [Arguments]         ${schedule}
     ${selected}=    Run Keyword And Return Status   Wait Until Element Is Visible       //td/a[contains(text(), '${schedule}')]
     Run Keyword If      ${selected}       Click Element     //td/a[contains(text(), '${schedule}')]
-
+#    Pause Execution     Check the schedule
 View Sales Visit Form
     [Arguments]     ${objective}
     Wait Until Element Is Visible       ${SALES_VISIT_TAB}
@@ -214,7 +234,8 @@ Start And End Date Informations
     [Arguments]     ${start_date}   ${objective}
     Wait Until Element Is Visible   //option[@value="${objective}"]
     Press Keys      ${START_DATE_LOCATOR}       CTRL+a+DELETE
-    Input Text      ${START_DATE_LOCATOR}   ${start_date}
+    ${replace}=     Replace String    ${start_date}   /   -
+    Input Text      ${START_DATE_LOCATOR}   ${replace}
 
 
 Status Information
@@ -344,18 +365,20 @@ Verify Erased Project Information
 
 Adding Lead Information
     [Documentation]     Lead Information
+    [Arguments]     ${lead_no}
     Click Element       ${ADD_LEAD_NAME}
     Select Window       NEW
     Verify Pop-up Window Header     ${LEAD_HEADER}
     Verify and Set Drop Down From Search        ${LEAD_DROPDOWN}
-    Input Text To Search        ${LEAD_STRING}
+    Input Text To Search        ${lead_no}
     Click Search Button
-    Select The List Found       ${LEAD_STRING}
+    Select The List Found       ${lead_no}
     Select Window
 
 Verify Added Lead Information
     [Documentation]     Added Lead Information
-    Verify Added Information        ${CUSTOMER_NAME_STRING}      ${LEAD_VALUE}
+    [Arguments]     ${lead_name}
+    Verify Added Information        ${lead_name}      ${LEAD_VALUE}
 
 Verify Erased Lead Information
     [Documentation]     Deleted Lead Information
@@ -363,10 +386,13 @@ Verify Erased Lead Information
 
 Phone And Mobile Contacts Information
     [Documentation]   Phone And Mobile Contacts Information
-    #${contacts}=    Run Keyword And Return Status       Element Should Be Visible   ${PHONE_LOCATOR}
-    #Run Keyword If      ${contacts}     Pag
-    Input Text      ${PHONE_LOCATOR}    ${PHONE_STRING}     clear=True
-    Input Text      ${MOBILE_LOCATOR}   ${MOBILE_STRING}    clear=True
+    [Arguments]     ${mobile}       ${phone}
+    Input Text      ${PHONE_LOCATOR}    ${phone}     clear=True
+    Input Text      ${MOBILE_LOCATOR}   ${mobile}    clear=True
+    ${actual}=      Get Value       //input[@id="mobile"]
+    Should Be Equal     ${mobile}   ${actual}
+    ${actual_phone}=    Get Value   //input[@id="phone"]
+    Should Be Equal    ${actual_phone}      ${phone}
 
 Plan Information
     [Arguments]     ${plan}
@@ -426,68 +452,105 @@ Alert Should Be Found
     Capture Page Screenshot     filename= check if required fields are empty.png
     Wait Until Element Is Visible   ${SAVE_BUTTON_LOCATOR}
 
-#Verify All Fields Informations
+Verify All Fields Informations
     [Documentation]     To verify the created required informations
-Verify Objective Field
+    Verify Objective Result                 ${objective}
+    Verify Start Date Result                ${start_date}
+    Verify End Date Result                  ${start_date}
+    Verify Status Result                    ${status}
+    Verify Account Name Result              ${account}
+    Verify E-mail Result                    ${email}
+    Verify Phone Result                     ${phone}
+    Verify Mobile Result                    ${mobile}
+    Verify Start Time Result                ${time_start}
+    Verify End Time Result                  ${end_time}
+    Verify Contact Name Result              ${first_contact_name}   ${last_contact_name}
+    Verify Department Result                ${department}
+    Verify Position Result                  ${position}
+    Verify Project Name Result              ${project_name}
+    Verify Modified Time Result             ${start_date}
+    Verify Created Time Result              ${start_date}
+    Verify Comment Result                   ${comment}
+    Verify Plan Detail Result               ${plan}
+    Verify Report Detail Result             ${report}
+    Verify Remaining Detail Result          ${remaining}
+    Verify Competitor Detail Result         ${competitor}
+    Verify Remark Detail Result             ${remark}
+
+
+Verify Objective Result
     [Arguments]     ${objective}
-    Element Should Contain      //font[contains(text(), "${objective}")]         ${objective}
-Verify Start Date Field
+    ${actual}=      Get Text      //font[contains(text(), "${objective}")]
+    Should Be Equal     ${actual}       ${objective}
+    Log     contains text ${actual}
+Verify Start Date Result
     [Arguments]     ${start_date}
-    Element Should Contain      //div[@id='tblSalesVisitInfomation']//tr[2]//td[2]        ${start_date}
-Verify End Date Field
+    ${replace}=     Replace String    ${start_date}   /   -
+
+    Element Should Contain      //div[@id='tblSalesVisitInfomation']//tr[2]//td[2]        ${replace}
+Verify End Date Result
     [Arguments]     ${start_date}
-    Element Should Contain      //body[@class='small']//tr//tr//tr//tr//tr//tr[3]//td[2]          ${start_date}
-Verify Status Field
+    ${replace}=     Replace String    ${start_date}   /   -
+    Element Should Contain      //body[@class='small']//tr//tr//tr//tr//tr//tr[3]//td[2]     ${replace}
+Verify Status Result
     [Arguments]     ${status}
     Element Should Contain      //font[contains(text(), '${status}')]            ${status}
-Verify Account Name Field
+Verify Account Name Result
     [Arguments]     ${account}
     Element Should Contain      //td[contains(text(), '${account}')]      ${account}
-Verify E-mail Field
+Verify E-mail Result
     [Arguments]     ${email}
     Element Should Contain      //a[contains(text(), '${email}')]             ${email}
-Verify Phone Field
+Verify Phone Result
     Element Should Contain      //span[@id="dtlview_Phone"][contains(text(),'${PHONE_STRING}')]             ${PHONE_STRING}
-Verify Mobile Field
+Verify Mobile Result
     Element Should Contain     //span[@id="dtlview_Mobile"][contains(text(),'${MOBILE_STRING}')]            ${MOBILE_STRING}
-Verify Start Time Field
+Verify Start Time Result
     [Arguments]     ${time_start}
     Element Should Contain    //td[contains(text(), '${time_start}')]        ${time_start}
-Verify End Time Field
+Verify End Time Result
     [Arguments]     ${end_time}
     Element Should Contain     //td[contains(text(), '${end_time}')]          ${end_time}
-Verify Contact Name Field
+Verify Contact Name Result
     [Arguments]     ${first_contact_name}   ${last_contact_name}
     Element Should Contain     //a[contains(text(), '${first_contact_name} ${last_contact_name}')]      ${first_contact_name} ${last_contact_name}
-Verify Department Field
+Verify Department Result
     [Arguments]     ${department}
     Element Should Contain     //span[@id="dtlview_Department"][contains(text(), '${department}')]   ${department}
-Verify Position Field
+Verify Position Result
     [Arguments]     ${position}
     Element Should Contain     //span[@id="dtlview_Position"][contains(text(), '${position}')]  ${position}
-Verify Project Name Field
+Verify Project Name Result
     [Arguments]     ${project_name}
     Element Should Contain     //td[@id="mouseArea_Project Name"]/a[contains(text(), '${project_name}')]   ${project_name}
     ${today}=       Get Current Date    result_format=%d-%m-%Y %H:%M
-    #Modified Time
+Verify Modified Time Result
+    Replace / String To - String    ${start_date}
     Element Should Contain      //tr[8]//td[4][contains(text(), '${today}')]  ${today}
-    #Created Time
+Verify Created Time Result
+    Replace / String To - String    ${start_date}
     Element Should Contain      //tr[9]//td[2][contains(text(), '${today}')]    ${today}
-    #Comment
-    Element Should Contain      ${COMMENT_VERIFY_LOCATOR}       ${COMMENT_STRING}
+Verify Comment Result
+    [Arguments]     ${comment}
+    Element Should Contain      //div[@class="dataField"][contains(text(), '${comment}')]       ${comment}
     ${today}=   Get Current Date    result_format=%Y-%m-%d %H:%M
     Element Should Contain      //div[@class="dataLabel"]/font[contains(text(), ': ${USER} on ${today}')]
     ...         : ${USER} on ${today}
-    #Plan Detail
-    Element Should Contain      ${PLAN_DETAIL_VERIFY_LOCATOR}       ${PLAN_DETAIL_STRING}
-    #Report Detail
-    Element Should Contain      ${REPORT_VERIFY_LOCATOR}            ${REPORT_STRING}
-    #Remaining Detail
-    Element Should Contain      ${REMAINING_VERIFY_LOCATOR}         ${REMAINING_STRING}
-    #Competitor Detail
-    Element Should Contain      ${COMPETITOR_VERIFY_LOCATOR}        ${COMPETITOR_STRING}
-    #Remark Detail
-    Element Should Contain      ${REMARK_VERIFY_LOCATOR}            ${REMARK_STRING}
+Verify Plan Detail Result
+    [Arguments]  ${plan}
+    Element Should Contain     //div[@id='tblStep1PlanInformation']//tr[1]//td[2]       ${plan}
+Verify Report Detail Result
+    [Arguments]     ${report}
+    Element Should Contain      //div[@id='tblStep2ReportInformation']//tr[1]//td[2]       ${report}
+Verify Remaining Detail Result
+    [Arguments]     ${remaining}
+    Element Should Contain      //div[@id='tblStep2ReportInformation']//tr[2]//td[2]         ${remaining}
+Verify Competitor Detail Result
+    [Arguments]     ${competitor}
+    Element Should Contain      //div[@id='tblStep3OtherInformation']//tr[1]//td[2]        ${competitor}
+Verify Remark Detail Result
+    [Arguments]     ${remark}
+    Element Should Contain      //div[@id='tblStep3OtherInformation']//tr[2]//td[2]            ${remark}
 
 Verify Required Fields Information
     [Documentation]   Verify Required Fields Information
@@ -528,6 +591,8 @@ Click Delete Button
     Sleep  2
     Click Button        Delete
     Alert Should Be Present     Are you sure you want to delete this record?    action=ACCEPT
+
+
 
 
 

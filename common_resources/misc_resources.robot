@@ -20,9 +20,9 @@ Select Menu
 Select Dropdown Option From Menu
     [Arguments]     ${select}
     [Documentation]     Select Dropdown options from menu like sales visit, account,contacts, case.etc
-    Wait Until Element Is Visible       //a[contains(text(), '${select}')]
+    Wait Until Element Is Visible   //a[contains(text(), '${select}')]
     Click Link      //a[contains(text(), '${select}')]
-
+    Sleep   5
 
 Input Username
     [Documentation]     This is the  email username input text function.
@@ -96,8 +96,16 @@ Verify Added Information
     [Arguments]     ${expected}     ${variable}
     ${actual}=     Get Value       //input[@name="${variable}"]
     Should Be Equal As Strings     ${actual}      ${expected}
-    Log     ${actual} and ${expected} are both the same
+    Log     Contains text ${actual}
 
+Verify Result Information
+    [Documentation]  This function is to verify the result that contains text only from the system
+    [Arguments]     ${expected}     ${text}
+    ${font}=    Run Keyword If      '${text}'=='FONT'   Get Text    //font[contains(text(), '${expected}')]
+    Log   ${font}
+    ${data}=    Run Keyword If      '${text}'=='DATA'  Get Text    //td[contains(text(), '${expected}')]
+#    Get Value   ${data}
+    ${txt}=     Run Keyword If      '${text}'=='TEXT'     Get Text    //a[contains(text(), '${expected}')]
 
 Subtract Time Without Seconds
     [Documentation]     Subract Time From Time And Remove Seconds
@@ -111,6 +119,10 @@ Subtract Time Without Seconds
     ${list}=    Get From List   ${split}    0
     Log     ${list}
 
+Swap String
+    [Documentation]     This function is to replace from the original string to new string depending on the users.
+    [Arguments]     ${string}   ${original}     ${new}
+    Replace String      ${string}   ${original}     ${new}
 
 Verify Deleted Information
     [Documentation]  This function is to check if successfull deleting account after clicking the erase button.
