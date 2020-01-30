@@ -113,15 +113,17 @@ Perform Create Sales Visit All Informations
     #   Account name
     \   ${account}=   Set Variable    @{bm}[4]
     #   First Contact name
-    \   ${first_contact_name}=    Set Variable    @{bm}[5]
+    \   ${contact_name}=    Set Variable    @{bm}[5]
     #   Last Contact name
-    \   ${last_contact_name}=   Set Variable    @{bm}[6]
+#    \   ${last_contact_name}=   Set Variable    @{bm}[6]
     #   Project name
-    \   ${project_name}=    Set Variable    @{bm}[7]
+    \   ${project_name}=    Set Variable    @{bm}[6]
     #   Time Start
-    \   ${time_start}=      Set Variable    @{bm}[8]
+    \   ${time_start}=      Set Variable    @{bm}[7]
     #   End Time
-    \   ${end_time}=        Set Variable    @{bm}[9]
+    \   ${end_time}=        Set Variable    @{bm}[8]
+    #   Plan Detail
+    \   ${plan}=            Set Variable    @{bm}[9]
     #   Email
     \   ${email}=           Set Variable    @{bm}[10]
     #   Mobile
@@ -132,30 +134,28 @@ Perform Create Sales Visit All Informations
     \   ${department}=      Set Variable    @{bm}[13]
     #   Position
     \   ${position}=        Set Variable    @{bm}[14]
-    #   Plan Detail
-    \   ${plan}=            Set Variable    @{bm}[15]
     #   Comment
-    \   ${comment}=         Set Variable    @{bm}[16]
+    \   ${comment}=         Set Variable    @{bm}[15]
     #   Report
-    \   ${report}=          Set Variable    @{bm}[17]
+    \   ${report}=          Set Variable    @{bm}[16]
     #   Remaining
-    \   ${remaining}=       Set Variable    @{bm}[18]
+    \   ${remaining}=       Set Variable    @{bm}[17]
     #   Competitor
-    \   ${competitor}=      Set Variable    @{bm}[19]
+    \   ${competitor}=      Set Variable    @{bm}[18]
     #   Remark
-    \   ${remark}=          Set Variable    @{bm}[20]
+    \   ${remark}=          Set Variable    @{bm}[19]
     #   Lead No
-    \   ${lead_no}=         Set Variable    @{bm}[21]
+    \   ${lead_no}=         Set Variable    @{bm}[20]
     #   Lead name
-    \   ${lead_name}=       Set Variable    @{bm}[22]
+    \   ${lead_name}=       Set Variable    @{bm}[21]
     \   Run Keyword If  '${data}'=='ALL'    Navigate Creating Sales Visit All        ${schedule}  ${objective}
-    ...             ${start_date}      ${status}   ${account}  ${first_contact_name}   ${last_contact_name}
+    ...             ${start_date}      ${status}   ${account}  ${contact_name}
     ...             ${project_name}     ${end_time}     ${time_start}   ${department}   ${position}     ${email}    ${plan}     ${comment}
     ...             ${report}       ${remaining}    ${remark}   ${competitor}     ${lead_no}    ${lead_name}    ${mobile}   ${phone}
 
 Navigate Creating Sales Visit All
     [Documentation]     All functions
-    [Arguments]    ${schedule}  ${objective}    ${start_date}    ${status}   ${account}  ${first_contact_name}   ${last_contact_name}
+    [Arguments]    ${schedule}  ${objective}    ${start_date}    ${status}   ${account}  ${contact_name}
     ...             ${project_name}     ${end_time}     ${time_start}   ${department}   ${position}     ${email}    ${plan}     ${comment}
     ...             ${report}       ${remaining}    ${remark}   ${competitor}       ${lead_no}      ${lead_name}    ${mobile}   ${phone}
 #    Select Menu     ${HEADER_MENU_STRING}
@@ -173,12 +173,12 @@ Navigate Creating Sales Visit All
     Adding Account Information     ${account}
     Sleep    2
     #############################################################
-    Adding Contact Name Information     ${first_contact_name}
-    Verify Added Contact Information    ${first_contact_name}   ${last_contact_name}
+    Adding Contact Name Information     ${contact_name}
+    Verify Added Contact Information    ${contact_name}
     Click Erase Button      ${CONTACT_CLEAR_BUTTON}
     Verify Erased Contact Information
-    Adding Contact Name Information     ${first_contact_name}
-    Verify Added Contact Information    ${first_contact_name}   ${last_contact_name}
+    Adding Contact Name Information     ${contact_name}
+    Verify Added Contact Information    ${contact_name}
     Sleep   2
     ##############################################################
     Adding Project Information      ${project_name}
@@ -289,21 +289,23 @@ Start Time and End Time Information
 
 Adding Contact Name Information
     [Documentation]     This is start from Adding Contact Name
-    [Arguments]     ${first_contact_name}
+    [Arguments]     ${contact_name}
     Click Element   ${ADD_CONTACT_NAME}
     Select Window   NEW                 #To Focus Pop up Browser Window
     Verify Pop-up Window Header   ${ACCOUNT_HEADER}
     Verify and Set Drop Down From Search        ${FIRST_NAME_OPTION_STRING}
-    Input Text To Search    ${first_contact_name}
+    ${right}=   Split String From Right    ${contact_name}  -
+    ${remove}=      Remove String   ${right}
+    Input Text To Search    ${remove}
     Click Search Button
-    Select The List Found       ${first_contact_name}
+    Select The List Found       ${remove}
     Select Window
 
 Verify Added Contact Information
     [Documentation]     Contact Name Verification
-    [Arguments]     ${first_contact_name}   ${last_contact_name}
-    Verify Added Information        ${first_contact_name} ${last_contact_name}        ${CONTACT_VALUE}
-#    Page Should Contain     ${first_contact_name} ${last_contact_name}
+    [Arguments]     ${contact_name}
+#    Verify Added Information        ${contact_name}         ${CONTACT_VALUE}
+    Page Should Contain     ${contact_name}
 
 Verify Erased Contact Information
     [Documentation]     Contact Deleted Information
@@ -437,6 +439,7 @@ Click Search Button
 Select The List Found
     [Arguments]     ${found_list}
     Click Link      //a[contains(text(), '${found_list}')]
+#    Click Element   //a[@href="javascript:window.close();"][contains(text(), '${found_list}')]
 
 Click Save Button
     Click Element   ${SAVE_BUTTON_LOCATOR}
@@ -464,7 +467,7 @@ Verify All Fields Informations
     Verify Mobile Result                    ${mobile}
     Verify Start Time Result                ${time_start}
     Verify End Time Result                  ${end_time}
-    Verify Contact Name Result              ${first_contact_name}   ${last_contact_name}
+    Verify Contact Name Result              ${contact_name}
     Verify Department Result                ${department}
     Verify Position Result                  ${position}
     Verify Project Name Result              ${project_name}
@@ -480,9 +483,10 @@ Verify All Fields Informations
 
 Verify Objective Result
     [Arguments]     ${objective}
-    ${actual}=      Get Text      //font[contains(text(), "${objective}")]
-    Should Be Equal     ${actual}       ${objective}
-    Log     contains text ${actual}
+    Verify Result Information       ${objective}
+#    ${actual}=      Get Text      //font[contains(text(), "${objective}")]
+#    Should Be Equal     ${actual}       ${objective}
+#    Log     contains text ${actual}
 Verify Start Date Result
     [Arguments]     ${start_date}
     ${replace}=     Replace String    ${start_date}   /   -
@@ -512,8 +516,8 @@ Verify End Time Result
     [Arguments]     ${end_time}
     Element Should Contain     //td[contains(text(), '${end_time}')]          ${end_time}
 Verify Contact Name Result
-    [Arguments]     ${first_contact_name}   ${last_contact_name}
-    Element Should Contain     //a[contains(text(), '${first_contact_name} ${last_contact_name}')]      ${first_contact_name} ${last_contact_name}
+    [Arguments]     ${contact_name}
+    Element Should Contain     //a[contains(text(), '${contact_name} ')]      ${contact_name}
 Verify Department Result
     [Arguments]     ${department}
     Element Should Contain     //span[@id="dtlview_Department"][contains(text(), '${department}')]   ${department}

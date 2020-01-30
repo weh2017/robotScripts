@@ -19,7 +19,7 @@ Suite Setup     Open Chrome Browser
 *** Test Cases ***
 AIS-CRM Website
     [Tags]      AIS-CRM SITE
-    Launch Web System   ${URL}
+    Launch Web System   ${URL_2}
 
 Log-In User with Valid Username And Password
     [Tags]  User credentials
@@ -32,11 +32,11 @@ Sales Visit
 #    Select Dropdown Option From Menu    ${SALES_VISIT_STRING}
 
 Running
-    Perform Create Sales Visit All Informations     ALL     ${CURDIR}${/}../resources/sales_visit.csv
+    Perform Create Sales Visit All Informations     ALL     ${CURDIR}${/}../resources/sales_visit2.csv
 
 
-Log Out
-    Click Logout button
+#Log Out
+#    Click Logout button
 #${CURDIR}${/}../resources/sales_visit.csv
 *** Keywords ***
 

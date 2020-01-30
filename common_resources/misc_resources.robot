@@ -102,11 +102,14 @@ Verify Result Information
     [Documentation]  This function is to verify the result that contains text only from the system
     [Arguments]     ${expected}     ${text}
     ${font}=    Run Keyword If      '${text}'=='FONT'   Get Text    //font[contains(text(), '${expected}')]
-    Log   ${font}
+    Should Be Equal  ${font}     ${expected}
+    Log     contains text  ${font}
     ${data}=    Run Keyword If      '${text}'=='DATA'  Get Text    //td[contains(text(), '${expected}')]
-#    Get Value   ${data}
+    Should Be Equal     ${data}     ${expected}
+    Log     contains text   ${data}
     ${txt}=     Run Keyword If      '${text}'=='TEXT'     Get Text    //a[contains(text(), '${expected}')]
-
+    Should Be Equal     ${txt}    ${expected}
+    Log      contains     ${txt}
 Subtract Time Without Seconds
     [Documentation]     Subract Time From Time And Remove Seconds
     ${currrent_date}=   Get Current Date    result_format=%H:%M:%S
