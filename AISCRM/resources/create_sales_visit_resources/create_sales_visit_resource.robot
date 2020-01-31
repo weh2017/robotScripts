@@ -1,4 +1,5 @@
 *** Variables ***
+${IMAGE_PATH}               C://Users/ruela/Documents/Different images format
 ${SIGN_IN_TEXT}             //input[@class="save"]
 ${LOGIN_FORM}               //div[@class="login-form"]
 ${HEADER_MENU_STRING}       Sales
@@ -114,8 +115,6 @@ Perform Create Sales Visit All Informations
     \   ${account}=   Set Variable    @{bm}[4]
     #   First Contact name
     \   ${contact_name}=    Set Variable    @{bm}[5]
-    #   Last Contact name
-#    \   ${last_contact_name}=   Set Variable    @{bm}[6]
     #   Project name
     \   ${project_name}=    Set Variable    @{bm}[6]
     #   Time Start
@@ -148,20 +147,22 @@ Perform Create Sales Visit All Informations
     \   ${lead_no}=         Set Variable    @{bm}[20]
     #   Lead name
     \   ${lead_name}=       Set Variable    @{bm}[21]
+    #   Image file
+    \   ${image}=           Set Variable    @{bm}[22]
     \   Run Keyword If  '${data}'=='ALL'    Navigate Creating Sales Visit All        ${schedule}  ${objective}
     ...             ${start_date}      ${status}   ${account}  ${contact_name}
     ...             ${project_name}     ${end_time}     ${time_start}   ${department}   ${position}     ${email}    ${plan}     ${comment}
     ...             ${report}       ${remaining}    ${remark}   ${competitor}     ${lead_no}    ${lead_name}    ${mobile}   ${phone}
-
+    ...             ${image}
 Navigate Creating Sales Visit All
     [Documentation]     All functions
     [Arguments]    ${schedule}  ${objective}    ${start_date}    ${status}   ${account}  ${contact_name}
     ...             ${project_name}     ${end_time}     ${time_start}   ${department}   ${position}     ${email}    ${plan}     ${comment}
     ...             ${report}       ${remaining}    ${remark}   ${competitor}       ${lead_no}      ${lead_name}    ${mobile}   ${phone}
+    ...             ${image}
 #    Select Menu     ${HEADER_MENU_STRING}
     Select Dropdown Option From Menu    ${SALES_VISIT_STRING}
     Select Sales Visit Schedule Tab     ${schedule}
-    Sleep   3
     View Sales Visit Form       ${objective}
     Start And End Date Informations     ${start_date}   ${objective}
     Status Information      ${status}
@@ -171,7 +172,7 @@ Navigate Creating Sales Visit All
     Click Erase Button      ${ACCOUNT_CLEAR_BUTTON}
     Verify Erased Account Information
     Adding Account Information     ${account}
-    Sleep    2
+#    Sleep    2
     #############################################################
     Adding Contact Name Information     ${contact_name}
     Verify Added Contact Information    ${contact_name}
@@ -179,7 +180,7 @@ Navigate Creating Sales Visit All
     Verify Erased Contact Information
     Adding Contact Name Information     ${contact_name}
     Verify Added Contact Information    ${contact_name}
-    Sleep   2
+#    Sleep   2
     ##############################################################
     Adding Project Information      ${project_name}
     Verify Added Project Information    ${project_name}
@@ -187,7 +188,7 @@ Navigate Creating Sales Visit All
     Verify Erased Project Information
     Adding Project Information      ${project_name}
     Verify Added Project Information    ${project_name}
-    Sleep  2
+#    Sleep  2
     ###############################################################
     Adding Lead Information     ${lead_no}
     Verify Added Lead Information       ${lead_name}
@@ -195,7 +196,7 @@ Navigate Creating Sales Visit All
     Verify Erased Lead Information
     Adding Lead Information     ${lead_no}
     Verify Added Lead Information       ${lead_name}
-    Sleep  2
+#    Sleep  2
     ###################################################################
     Start Time and End Time Information     ${end_time}     ${time_start}
     Department Information      ${department}
@@ -212,8 +213,11 @@ Navigate Creating Sales Visit All
     Remark Information      ${remark}
     Competitor Information      ${competitor}
     Click Save Button
-#    Verify All Fields Informations
-    Verify Objective Result     ${objective}
+    Verify All Fields Informations     ${objective}    ${start_date}   ${status}   ${account}  ${email}    ${phone}
+    ...     ${mobile}   ${time_start}   ${end_time}     ${contact_name}     ${department}   ${position}
+    ...     ${project_name}     ${comment}  ${plan}     ${report}   ${remaining}    ${competitor}   ${remark}
+    Click Add Image Button      ${image}
+
 Select Sales Visit Schedule Tab
     [Arguments]         ${schedule}
     ${selected}=    Run Keyword And Return Status   Wait Until Element Is Visible       //td/a[contains(text(), '${schedule}')]
@@ -295,17 +299,18 @@ Adding Contact Name Information
     Verify Pop-up Window Header   ${ACCOUNT_HEADER}
     Verify and Set Drop Down From Search        ${FIRST_NAME_OPTION_STRING}
     ${right}=   Split String From Right    ${contact_name}  -
-    ${remove}=      Remove String   ${right}
-    Input Text To Search    ${remove}
+    ${remove}=      Set Variable   ${right}[0]
+    ${space_right}=   Split String From Right     ${remove}   ${SPACE}
+    ${right}=   Set Variable    ${space_right}[0]
+    Input Text To Search    ${right}
     Click Search Button
-    Select The List Found       ${remove}
+    Select The List Found       ${right}
     Select Window
 
 Verify Added Contact Information
     [Documentation]     Contact Name Verification
     [Arguments]     ${contact_name}
-#    Verify Added Information        ${contact_name}         ${CONTACT_VALUE}
-    Page Should Contain     ${contact_name}
+    Verify Added Information        ${contact_name}         ${CONTACT_VALUE}
 
 Verify Erased Contact Information
     [Documentation]     Contact Deleted Information
@@ -457,6 +462,10 @@ Alert Should Be Found
 
 Verify All Fields Informations
     [Documentation]     To verify the created required informations
+    [Arguments]     ${objective}    ${start_date}   ${status}   ${account}  ${email}    ${phone}
+    ...     ${mobile}   ${time_start}   ${end_time}     ${contact_name}     ${department}   ${position}
+    ...     ${project_name}     ${comment}  ${plan}     ${report}   ${remaining}    ${competitor}   ${remark}
+
     Verify Objective Result                 ${objective}
     Verify Start Date Result                ${start_date}
     Verify End Date Result                  ${start_date}
@@ -471,8 +480,8 @@ Verify All Fields Informations
     Verify Department Result                ${department}
     Verify Position Result                  ${position}
     Verify Project Name Result              ${project_name}
-    Verify Modified Time Result             ${start_date}
-    Verify Created Time Result              ${start_date}
+    Verify Modified Time Result
+    Verify Created Time Result
     Verify Comment Result                   ${comment}
     Verify Plan Detail Result               ${plan}
     Verify Report Detail Result             ${report}
@@ -481,12 +490,30 @@ Verify All Fields Informations
     Verify Remark Detail Result             ${remark}
 
 
+Verify //font Attribute Check Result
+    [Documentation]     This function is to verify the result that contains text only from the system
+    [Arguments]     ${expected}
+    ${font}=    Get Text    //font[contains(text(), "${expected}")]
+    Log     ${font}
+
+Verify //td Attribute Check Result
+    [Documentation]     This function is to verify the result that contains text only from the system
+    [Arguments]     ${expected}
+    ${font}=    Get Text    //td[contains(text(), "${expected}")]
+    Log     ${font}
+
+Verify //a Attribute Check Result
+    [Documentation]     This function is to verify the result that contains text only from the system
+    [Arguments]     ${expected}
+    ${font}=    Get Text    //a[contains(text(), "${expected}")]
+    Log     ${font}
+
+
+
 Verify Objective Result
     [Arguments]     ${objective}
-    Verify Result Information       ${objective}
-#    ${actual}=      Get Text      //font[contains(text(), "${objective}")]
-#    Should Be Equal     ${actual}       ${objective}
-#    Log     contains text ${actual}
+    Verify //font Attribute Check Result    ${objective}
+
 Verify Start Date Result
     [Arguments]     ${start_date}
     ${replace}=     Replace String    ${start_date}   /   -
@@ -498,41 +525,62 @@ Verify End Date Result
     Element Should Contain      //body[@class='small']//tr//tr//tr//tr//tr//tr[3]//td[2]     ${replace}
 Verify Status Result
     [Arguments]     ${status}
-    Element Should Contain      //font[contains(text(), '${status}')]            ${status}
+    Verify //font Attribute Check Result        ${status}
+
+#    Element Should Contain      //font[contains(text(), '${status}')]            ${status}
 Verify Account Name Result
     [Arguments]     ${account}
-    Element Should Contain      //td[contains(text(), '${account}')]      ${account}
+#    Element Should Contain    td  //td[contains(text(), '${account}')]      ${account}
+    Verify //td Attribute Check Result  ${account}
+
 Verify E-mail Result
     [Arguments]     ${email}
-    Element Should Contain      //a[contains(text(), '${email}')]             ${email}
+#    Element Should Contain   a   //a[contains(text(), '${email}')]             ${email}
+    ${email_verify}=    Get Text    //span[@id="dtlview_E-mail"][contains(text(),"${email}")]
+    Should Be Equal     ${email_verify}     ${email}
+    Log     ${email_verify}
 Verify Phone Result
-    Element Should Contain      //span[@id="dtlview_Phone"][contains(text(),'${PHONE_STRING}')]             ${PHONE_STRING}
+    [Arguments]     ${phone}
+    ${phone_text}=      Get Text    //span[@id="dtlview_Phone"][contains(text(),'${phone}')]
+    Should Be Equal     ${phone_text}   ${phone}
+#    Element Should Contain      //span[@id="dtlview_Phone"][contains(text(),'${phone}')]             ${phone}
 Verify Mobile Result
-    Element Should Contain     //span[@id="dtlview_Mobile"][contains(text(),'${MOBILE_STRING}')]            ${MOBILE_STRING}
+    [Arguments]     ${mobile}
+    ${mobile_text}=     Get Text    //span[@id="dtlview_Mobile"][contains(text(),'${mobile}')]
+    Should Be Equal     ${mobile_text}      ${mobile}
+#    Element Should Contain     //span[@id="dtlview_Mobile"][contains(text(),'${mobile}')]            ${mobile}
 Verify Start Time Result
     [Arguments]     ${time_start}
-    Element Should Contain    //td[contains(text(), '${time_start}')]        ${time_start}
+#    Element Should Contain    //td[contains(text(), '${time_start}')]        ${time_start}
+    Verify //td Attribute Check Result      ${time_start}
+
 Verify End Time Result
     [Arguments]     ${end_time}
-    Element Should Contain     //td[contains(text(), '${end_time}')]          ${end_time}
+#    Element Should Contain     //td[contains(text(), '${end_time}')]          ${end_time}
+    Verify //td Attribute Check Result   ${end_time}
+
 Verify Contact Name Result
     [Arguments]     ${contact_name}
-    Element Should Contain     //a[contains(text(), '${contact_name} ')]      ${contact_name}
+#    Element Should Contain     //a[contains(text(), '${contact_name} ')]      ${contact_name}
+    Verify //a Attribute Check Result   ${contact_name}
 Verify Department Result
     [Arguments]     ${department}
-    Element Should Contain     //span[@id="dtlview_Department"][contains(text(), '${department}')]   ${department}
+    ${dept_text}=     Get Text    //span[@id="dtlview_Department"][contains(text(), '${department}')]
+    Should Be Equal     ${dept_text}      ${department}
+    Log     ${dept_text}
+#    Element Should Contain     //span[@id="dtlview_Department"][contains(text(), '${department}')]   ${department}
 Verify Position Result
     [Arguments]     ${position}
     Element Should Contain     //span[@id="dtlview_Position"][contains(text(), '${position}')]  ${position}
 Verify Project Name Result
     [Arguments]     ${project_name}
     Element Should Contain     //td[@id="mouseArea_Project Name"]/a[contains(text(), '${project_name}')]   ${project_name}
-    ${today}=       Get Current Date    result_format=%d-%m-%Y %H:%M
+
 Verify Modified Time Result
-    Replace / String To - String    ${start_date}
+    ${today}=       Get Current Date    result_format=%d-%m-%Y %H:%M
     Element Should Contain      //tr[8]//td[4][contains(text(), '${today}')]  ${today}
 Verify Created Time Result
-    Replace / String To - String    ${start_date}
+    ${today}=       Get Current Date    result_format=%d-%m-%Y %H:%M
     Element Should Contain      //tr[9]//td[2][contains(text(), '${today}')]    ${today}
 Verify Comment Result
     [Arguments]     ${comment}
@@ -556,40 +604,21 @@ Verify Remark Detail Result
     [Arguments]     ${remark}
     Element Should Contain      //div[@id='tblStep3OtherInformation']//tr[2]//td[2]            ${remark}
 
-Verify Required Fields Information
-    [Documentation]   Verify Required Fields Information
-    #Objective
-    Element Should Contain      ${OBJECTIVE_VERIFY_LOCATOR}         ${OBJECTIVE_STRING}
-    #Start Date
-    Element Should Contain      ${START_DATE_VERIFY_LOCATOR}        ${START_DATE_STRING}
-    #End Date
-    Element Should Contain      ${END_DATE_VERIFY_LOCATOR}          ${START_DATE_STRING}
-    #Status
-    Element Should Contain      ${STATUS_VERIFY_LOCATOR}            ${STATUS_STRING}
-    #Account name
-    Element Should Contain      ${ACCOUNT_NAME_VERIFY_LOCATOR}      ${ACCOUNT_SEARCH_STRING}
-    #Time Start
-    Element Should Contain      ${TIME_START_VERIFY_LOCATOR}        ${TIME_START_STRING}
-    #Time End
-    Element Should Contain      ${TIME_END_VERIFY_LOCATOR}          ${TIME_END_STRING}
-    #Plan Detail
-    Element Should Contain      ${PLAN_DETAIL_VERIFY_LOCATOR}       ${PLAN_DETAIL_STRING}
 
 Click Add Image Button
+    [Arguments]     ${image}
     Scroll Down Page From The Browser
-#    @{image_list}=   Create List     BMP   #JPEG   PNG
-    :FOR   ${image}     IN    @{IMAGE_FILE_TYPE}
-    \   Click Button    Add Image
-    \   Select Window   NEW
-    \   Choose File     ${UPLOAD_FILE_BUTTON}        ${IMAGE_PATH}/${image}
+    Click Button    Add Image
+    Select Window   NEW
+    Choose File     ${UPLOAD_FILE_BUTTON}        ${IMAGE_PATH}/${image}
 #    Input Text     ${UPLOAD_FILE_BUTTON}        ${IMAGE_PATH}
-    \   Click Button    UPLOAD
-    \   Wait Until Element Is Visible   ${FILE_UPLOAD_CONFIRMATION}
-    \   Click Element       ${UPLOAD_OK_BUTTON}
-    \   Select Window
+    Click Button    UPLOAD
+    Wait Until Element Is Visible   ${FILE_UPLOAD_CONFIRMATION}
+    Click Element       ${UPLOAD_OK_BUTTON}
+    Select Window
     ${count}=   Get Element Count   //button[@class="crmbutton small edit"][contains(text(), 'Remove')]
     Run Keyword If      ${count} > 1        Log   ${count}
-    Capture Page Screenshot     filename=Verify no.of pages uploaded.png
+    Capture Page Screenshot     filename=My uploaded image.png
 
 Click Delete Button
     Sleep  2

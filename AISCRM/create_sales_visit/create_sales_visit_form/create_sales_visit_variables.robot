@@ -12,7 +12,7 @@
 #################################################################
 #     FILE PATH
 #################################################################
-${IMAGE_PATH}               C://Users/ruela/Documents/Different images format
+#${IMAGE_PATH}               C://Users/ruela/Documents/Different images format
 ###############################################################
 # Required Informations
 ###############################################################

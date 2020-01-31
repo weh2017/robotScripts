@@ -95,21 +95,26 @@ Verify Added Information
     [Documentation]     This function is to check the added account name, contact name, project name.
     [Arguments]     ${expected}     ${variable}
     ${actual}=     Get Value       //input[@name="${variable}"]
-    Should Be Equal As Strings     ${actual}      ${expected}
+#    Should Be Equal As Strings     ${actual}      ${expected}
     Log     Contains text ${actual}
 
 Verify Result Information
     [Documentation]  This function is to verify the result that contains text only from the system
-    [Arguments]     ${expected}     ${text}
-    ${font}=    Run Keyword If      '${text}'=='FONT'   Get Text    //font[contains(text(), '${expected}')]
-    Should Be Equal  ${font}     ${expected}
-    Log     contains text  ${font}
-    ${data}=    Run Keyword If      '${text}'=='DATA'  Get Text    //td[contains(text(), '${expected}')]
-    Should Be Equal     ${data}     ${expected}
-    Log     contains text   ${data}
-    ${txt}=     Run Keyword If      '${text}'=='TEXT'     Get Text    //a[contains(text(), '${expected}')]
-    Should Be Equal     ${txt}    ${expected}
-    Log      contains     ${txt}
+    [Arguments]     ${expected}  ${extend}
+#    ${font}=    Run Keyword And Return Status   Wait Until Element Is Visible   //font[contains(text(), "${expected}")]
+    ${font}=    Get Text    ${extend}[contains(text(), "${expected}")]
+#    Should Be Equal     ${font}     ${expected}
+#    ...     AND     Should Be Equal  ${font}     ${expected}  AND  Log     contains text  ${font}
+#    ${font}=    Run Keyword And Return Status   Wait Until Element Is Visible   //font[contains(text(), "${expected}")]
+#    Run Keyword If      ${font}   Run Keywords  Get Text    //font[contains(text(), "${expected}")]
+#    ...     AND     Should Be Equal  ${font}     ${expected}  AND  Log     contains text  ${font}
+#    ${text}=    Run Keyword And Return Status   Wait Until Element Is Visible   //td[contains(text(), "${expected}")]
+#    Run Keyword If      ${text}  Run Keywords   Get Text    //td[contains(text(), '${expected}')]
+#    ...     AND     Should Be Equal     ${text}     ${expected}     AND    Log     contains text   ${data}
+#    ${data}=    Run Keyword And Return Status   Wait Until Element Is Visible   //a[contains(text(), "${expected}")]
+#    Run Keyword If      ${data}    Run Keywords     Get Text    //a[contains(text(), '${expected}')]
+#    ...     AND     Should Be Equal     ${data}    ${expected}      AND     Log      contains     ${data}
+
 Subtract Time Without Seconds
     [Documentation]     Subract Time From Time And Remove Seconds
     ${currrent_date}=   Get Current Date    result_format=%H:%M:%S
