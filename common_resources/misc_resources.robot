@@ -127,6 +127,9 @@ Subtract Time Without Seconds
     ${list}=    Get From List   ${split}    0
     Log     ${list}
 
+Click Search Button
+    Click Element       name:search
+
 Swap String
     [Documentation]     This function is to replace from the original string to new string depending on the users.
     [Arguments]     ${string}   ${original}     ${new}

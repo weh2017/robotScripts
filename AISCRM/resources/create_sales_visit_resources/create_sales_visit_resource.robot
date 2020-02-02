@@ -1,5 +1,6 @@
 *** Variables ***
-${IMAGE_PATH}               C://Users/ruela/Documents/Different images format
+#${IMAGE_PATH}               C://Users/ruela/Documents/Different images format
+${IMAGE_PATH}               D://my_files/Robot_Framework/robotScripts/AISCRM/resources/images
 ${SIGN_IN_TEXT}             //input[@class="save"]
 ${LOGIN_FORM}               //div[@class="login-form"]
 ${HEADER_MENU_STRING}       Sales
@@ -102,6 +103,21 @@ Perform Create Sales Visit All Informations
     ${contents}=    Get File        ${csv}
     @{lines}=   Split To Lines      ${contents}     1
     :FOR    ${line}     IN      @{lines}
+    \   ${current_date}=   Get Current Date    result_format=%H:%M:%S
+    \   ${end_variable}=   Set Variable    ${current_date}
+    \   ${adjust}=      Add Time To Time    ${end_variable}     1 hour
+    \   ${add_convert}=     Convert Time    ${adjust}   Timer
+    \   ${add_set}=     Set Variable    ${add_convert}
+    \   ${add_split}=       Split String From Right     ${add_set}      :   max_split=1
+    \   ${add_get}=     Get From List       ${add_split}    0
+    \   Log     Adding Time ${add_get} without seconds
+    \   ${adj_subtract}=    Subtract Time From Time     ${adjust}     1 hour
+    \   ${sub_convert}=     Convert Time    ${adj_subtract}     Timer
+    \   ${sub_set}=     Set Variable    ${sub_convert}
+    \   ${sub_split}=   Split String From Right     ${sub_set}      :   max_split=1
+    \   ${sub_get}=     Get From List   ${sub_split}        0
+    \   Log     Subracting Time ${sub_get} without seconds
+    ##########################################################################
     \   @{bm}=  Split String    ${line}     |
     # schedule
     \   ${schedule}=    Set Variable    @{bm}[0]
@@ -118,9 +134,9 @@ Perform Create Sales Visit All Informations
     #   Project name
     \   ${project_name}=    Set Variable    @{bm}[6]
     #   Time Start
-    \   ${time_start}=      Set Variable    @{bm}[7]
-    #   End Time
-    \   ${end_time}=        Set Variable    @{bm}[8]
+    \   ${subtract}=        Set Variable    ${sub_get}
+#       End Time
+    \   ${add}=             Set Variable       ${add_get}
     #   Plan Detail
     \   ${plan}=            Set Variable    @{bm}[9]
     #   Email
@@ -151,13 +167,14 @@ Perform Create Sales Visit All Informations
     \   ${image}=           Set Variable    @{bm}[22]
     \   Run Keyword If  '${data}'=='ALL'    Navigate Creating Sales Visit All        ${schedule}  ${objective}
     ...             ${start_date}      ${status}   ${account}  ${contact_name}
-    ...             ${project_name}     ${end_time}     ${time_start}   ${department}   ${position}     ${email}    ${plan}     ${comment}
+    ...             ${project_name}    ${add}  ${subtract}    ${department}   ${position}     ${email}    ${plan}     ${comment}
     ...             ${report}       ${remaining}    ${remark}   ${competitor}     ${lead_no}    ${lead_name}    ${mobile}   ${phone}
     ...             ${image}
+
 Navigate Creating Sales Visit All
     [Documentation]     All functions
     [Arguments]    ${schedule}  ${objective}    ${start_date}    ${status}   ${account}  ${contact_name}
-    ...             ${project_name}     ${end_time}     ${time_start}   ${department}   ${position}     ${email}    ${plan}     ${comment}
+    ...             ${project_name}      ${add}   ${subtract}   ${department}   ${position}     ${email}    ${plan}     ${comment}
     ...             ${report}       ${remaining}    ${remark}   ${competitor}       ${lead_no}      ${lead_name}    ${mobile}   ${phone}
     ...             ${image}
 #    Select Menu     ${HEADER_MENU_STRING}
@@ -172,6 +189,8 @@ Navigate Creating Sales Visit All
     Click Erase Button      ${ACCOUNT_CLEAR_BUTTON}
     Verify Erased Account Information
     Adding Account Information     ${account}
+#    Start Time Information                 ${subtract}
+#    End Time Information   ${add}
 #    Sleep    2
     #############################################################
     Adding Contact Name Information     ${contact_name}
@@ -198,7 +217,6 @@ Navigate Creating Sales Visit All
     Verify Added Lead Information       ${lead_name}
 #    Sleep  2
     ###################################################################
-    Start Time and End Time Information     ${end_time}     ${time_start}
     Department Information      ${department}
     Position Information        ${position}
     Email Domain Remove     ${email}
@@ -213,16 +231,18 @@ Navigate Creating Sales Visit All
     Remark Information      ${remark}
     Competitor Information      ${competitor}
     Click Save Button
-    Verify All Fields Informations     ${objective}    ${start_date}   ${status}   ${account}  ${email}    ${phone}
-    ...     ${mobile}   ${time_start}   ${end_time}     ${contact_name}     ${department}   ${position}
-    ...     ${project_name}     ${comment}  ${plan}     ${report}   ${remaining}    ${competitor}   ${remark}
-    Click Add Image Button      ${image}
+#    Verify All Fields Informations     ${objective}    ${start_date}   ${status}   ${account}  ${email}    ${phone}
+#    ...     ${mobile}          ${add}   ${subtract}    ${contact_name}     ${department}   ${position}
+#    ...     ${project_name}     ${comment}  ${plan}     ${report}   ${remaining}    ${competitor}   ${remark}
+#    Click Add Image Button      ${image}
+    Perform If Has Image        ${image}
 
 Select Sales Visit Schedule Tab
     [Arguments]         ${schedule}
     ${selected}=    Run Keyword And Return Status   Wait Until Element Is Visible       //td/a[contains(text(), '${schedule}')]
     Run Keyword If      ${selected}       Click Element     //td/a[contains(text(), '${schedule}')]
 #    Pause Execution     Check the schedule
+
 View Sales Visit Form
     [Arguments]     ${objective}
     Wait Until Element Is Visible       ${SALES_VISIT_TAB}
@@ -237,6 +257,10 @@ View Sales Visit Form
 Start And End Date Informations
     [Arguments]     ${start_date}   ${objective}
     Wait Until Element Is Visible   //option[@value="${objective}"]
+    Press Keys      ${START_DATE_LOCATOR}       CTRL+a+DELETE
+    Input Text      ${START_DATE_LOCATOR}       ${start_date}
+    Press Keys      ${START_DATE_LOCATOR}       TAB
+    Alert Should Be Present     Date format is incorrect (dd-mm-yyyy)    action=ACCEPT
     Press Keys      ${START_DATE_LOCATOR}       CTRL+a+DELETE
     ${replace}=     Replace String    ${start_date}   /   -
     Input Text      ${START_DATE_LOCATOR}   ${replace}
@@ -267,9 +291,14 @@ Verify Erased Account Information
     [Documentation]     Erased the specific value from account field
     Verify Deleted Information     ${ACCOUNT_VALUE}
 
-Start Time and End Time Information
+Start Time Information
+    [Arguments]     ${subtract}
+    Press Keys      ${TIME_START_LOCATOR}       CTRL+a+DELETE
+    Input Text      ${TIME_START_LOCATOR}       ${subtract}
+
+End Time Information
     [Documentation]     Time Start and End Time Settings
-    [Arguments]     ${end_time}     ${time_start}
+    [Arguments]                ${add}
     ${current_date}=   Get Current Date    result_format=%H:%M:%S
     Log     ${current_date}
     ${set_var}=     Set Variable    ${current_date}
@@ -286,10 +315,11 @@ Start Time and End Time Information
     ${warning}=     Run Keyword And Return Status   Wait Until Element Is Visible   ${END_TIME_WARN_MSG}
     Run Keyword If   ${warning}   Run Keywords    Click Element       ${WARN_OK_BTN}
     ...     AND     Wait Until Element Is Not Visible   ${END_TIME_WARN_MSG}
+    Sleep   2
     Press Keys      ${TIME_END_LOCATOR}        CTRL+a+DELETE
-    Input Text      ${TIME_END_LOCATOR}     ${end_time}
-    Press Keys      ${TIME_START_LOCATOR}       CTRL+a+DELETE
-    Input Text      ${TIME_START_LOCATOR}       ${time_start}
+    Input Text      ${TIME_END_LOCATOR}         ${add}
+#    Press Keys      ${TIME_END_LOCATOR}         TAB
+
 
 Adding Contact Name Information
     [Documentation]     This is start from Adding Contact Name
@@ -438,8 +468,6 @@ Input Text To Search
     [Arguments]     ${search_text}
     Input Text      name:search_text     ${search_text}
 
-Click Search Button
-    Click Element       name:search
 
 Select The List Found
     [Arguments]     ${found_list}
@@ -448,7 +476,6 @@ Select The List Found
 
 Click Save Button
     Click Element   ${SAVE_BUTTON_LOCATOR}
-
 
 No Alert Should Be Found
     Alert Should Not Be Present
@@ -463,7 +490,7 @@ Alert Should Be Found
 Verify All Fields Informations
     [Documentation]     To verify the created required informations
     [Arguments]     ${objective}    ${start_date}   ${status}   ${account}  ${email}    ${phone}
-    ...     ${mobile}   ${time_start}   ${end_time}     ${contact_name}     ${department}   ${position}
+    ...     ${mobile}      ${add}  ${subtract}   ${contact_name}     ${department}   ${position}
     ...     ${project_name}     ${comment}  ${plan}     ${report}   ${remaining}    ${competitor}   ${remark}
 
     Verify Objective Result                 ${objective}
@@ -474,8 +501,8 @@ Verify All Fields Informations
     Verify E-mail Result                    ${email}
     Verify Phone Result                     ${phone}
     Verify Mobile Result                    ${mobile}
-    Verify Start Time Result                ${time_start}
-    Verify End Time Result                  ${end_time}
+    Verify End Time Result                  ${add}
+    Verify Start Time Result                ${subtract}
     Verify Contact Name Result              ${contact_name}
     Verify Department Result                ${department}
     Verify Position Result                  ${position}
@@ -508,8 +535,6 @@ Verify //a Attribute Check Result
     ${font}=    Get Text    //a[contains(text(), "${expected}")]
     Log     ${font}
 
-
-
 Verify Objective Result
     [Arguments]     ${objective}
     Verify //font Attribute Check Result    ${objective}
@@ -535,10 +560,10 @@ Verify Account Name Result
 
 Verify E-mail Result
     [Arguments]     ${email}
-#    Element Should Contain   a   //a[contains(text(), '${email}')]             ${email}
-    ${email_verify}=    Get Text    //span[@id="dtlview_E-mail"][contains(text(),"${email}")]
+    ${email_verify}=    Get Text    //span[@id="dtlview_E-mail"][contains(text(), '${email}')]
     Should Be Equal     ${email_verify}     ${email}
     Log     ${email_verify}
+
 Verify Phone Result
     [Arguments]     ${phone}
     ${phone_text}=      Get Text    //span[@id="dtlview_Phone"][contains(text(),'${phone}')]
@@ -550,14 +575,15 @@ Verify Mobile Result
     Should Be Equal     ${mobile_text}      ${mobile}
 #    Element Should Contain     //span[@id="dtlview_Mobile"][contains(text(),'${mobile}')]            ${mobile}
 Verify Start Time Result
-    [Arguments]     ${time_start}
+    [Arguments]     ${subtract}
 #    Element Should Contain    //td[contains(text(), '${time_start}')]        ${time_start}
-    Verify //td Attribute Check Result      ${time_start}
+    Verify //td Attribute Check Result      ${subtract}
 
 Verify End Time Result
-    [Arguments]     ${end_time}
+    [Arguments]     ${add}
 #    Element Should Contain     //td[contains(text(), '${end_time}')]          ${end_time}
-    Verify //td Attribute Check Result   ${end_time}
+    Verify //td Attribute Check Result   ${add}
+
 
 Verify Contact Name Result
     [Arguments]     ${contact_name}
@@ -605,20 +631,26 @@ Verify Remark Detail Result
     Element Should Contain      //div[@id='tblStep3OtherInformation']//tr[2]//td[2]            ${remark}
 
 
+Perform If Has Image
+    [Arguments]     ${image}=${None}
+    Run Keyword If      "${image}"!="${None}"     Click Add Image Button      ${image}
+
 Click Add Image Button
     [Arguments]     ${image}
     Scroll Down Page From The Browser
-    Click Button    Add Image
-    Select Window   NEW
-    Choose File     ${UPLOAD_FILE_BUTTON}        ${IMAGE_PATH}/${image}
-#    Input Text     ${UPLOAD_FILE_BUTTON}        ${IMAGE_PATH}
-    Click Button    UPLOAD
-    Wait Until Element Is Visible   ${FILE_UPLOAD_CONFIRMATION}
-    Click Element       ${UPLOAD_OK_BUTTON}
-    Select Window
-    ${count}=   Get Element Count   //button[@class="crmbutton small edit"][contains(text(), 'Remove')]
-    Run Keyword If      ${count} > 1        Log   ${count}
-    Capture Page Screenshot     filename=My uploaded image.png
+    @{img}=     Split String From Right     ${image}    ;
+    :FOR    ${img_line}     IN   @{img}
+#    \   Run Keyword If  "${img_line}"!="${None}"    Log  Test
+    \   Click Element   ${ADD_IMAGE_BUTTON}
+    \   Select Window   NEW
+    \   Choose File     ${UPLOAD_FILE_BUTTON}        ${IMAGE_PATH}${/}${img_line}
+    \   Click Button    UPLOAD
+    \   Wait Until Element Is Visible   ${FILE_UPLOAD_CONFIRMATION}
+    \   Click Element       ${UPLOAD_OK_BUTTON}
+    \   Select Window
+    \   ${count}=   Get Element Count   //button[@class="crmbutton small edit"][contains(text(), 'Remove')]
+    \   Run Keyword If      ${count} > 1        Log   ${count}
+    \   Capture Page Screenshot     filename=My uploaded image.png
 
 Click Delete Button
     Sleep  2
