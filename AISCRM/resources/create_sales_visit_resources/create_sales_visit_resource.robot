@@ -639,7 +639,7 @@ Click Add Image Button
     \   Select Window
     \   ${count}=   Get Element Count   //button[@class="crmbutton small edit"][contains(text(), 'Remove')]
     \   Run Keyword If      ${count} > 1        Log   ${count}
-    \   Capture Page Screenshot     filename=${count} ${account}.png
+    \   Capture Page Screenshot     filename=${count} from image ${account}.png
 #    \   Set Screenshot Directory    ${CURDIR}${/}../../create_sales_visit/create_sales_visit_all_results
 Click Delete Button
     Sleep  2
