@@ -1,6 +1,6 @@
 *** Variables ***
-#${IMAGE_PATH}               C://Users/ruela/Documents/Different images format
-${IMAGE_PATH}               D://my_files/Robot_Framework/robotScripts/AISCRM/resources/images
+${IMAGE_PATH}               C://Users/ruela/Documents/robotScripts/AISCRM/resources/images/
+#${IMAGE_PATH}               D://my_files/Robot_Framework/robotScripts/AISCRM/resources/images
 ${SIGN_IN_TEXT}             //input[@class="save"]
 ${LOGIN_FORM}               //div[@class="login-form"]
 ${HEADER_MENU_STRING}       Sales
@@ -101,7 +101,8 @@ Perform Create Sales Visit All Informations
     [Documentation]     This function is to call the csv file and distribute the contents.
     [Arguments]         ${data}     ${csv}
     ${contents}=    Get File        ${csv}
-    @{lines}=   Split To Lines      ${contents}     1
+    @{read}=    Create List     ${contents}
+    @{lines}=   Split To Lines      @{read}     1
     :FOR    ${line}     IN      @{lines}
     \   ${current_date}=   Get Current Date    result_format=%H:%M:%S
     \   ${end_variable}=   Set Variable    ${current_date}
@@ -119,6 +120,8 @@ Perform Create Sales Visit All Informations
     \   Log     Subracting Time ${sub_get} without seconds
     ##########################################################################
     \   @{bm}=  Split String    ${line}     |
+#    \   @{convert_line}=    Convert To String   @{bm}
+#    \   Exit For Loop If    "${convert_line}"=="${empty}"
     # schedule
     \   ${schedule}=    Set Variable    @{bm}[0]
     # presentation
@@ -189,8 +192,8 @@ Navigate Creating Sales Visit All
     Click Erase Button      ${ACCOUNT_CLEAR_BUTTON}
     Verify Erased Account Information
     Adding Account Information     ${account}
-#    Start Time Information                 ${subtract}
-#    End Time Information   ${add}
+    Start Time Information                 ${subtract}
+    End Time Information   ${add}
 #    Sleep    2
     #############################################################
     Adding Contact Name Information     ${contact_name}
@@ -231,17 +234,15 @@ Navigate Creating Sales Visit All
     Remark Information      ${remark}
     Competitor Information      ${competitor}
     Click Save Button
-#    Verify All Fields Informations     ${objective}    ${start_date}   ${status}   ${account}  ${email}    ${phone}
-#    ...     ${mobile}          ${add}   ${subtract}    ${contact_name}     ${department}   ${position}
-#    ...     ${project_name}     ${comment}  ${plan}     ${report}   ${remaining}    ${competitor}   ${remark}
-#    Click Add Image Button      ${image}
-    Perform If Has Image        ${image}
+    Verify All Fields Informations     ${objective}    ${start_date}   ${status}   ${account}  ${email}    ${phone}
+    ...     ${mobile}          ${add}   ${subtract}    ${contact_name}     ${department}   ${position}
+    ...     ${project_name}     ${comment}  ${plan}     ${report}   ${remaining}    ${competitor}   ${remark}
+    Click Add Image Button      ${image}    ${account}
 
 Select Sales Visit Schedule Tab
     [Arguments]         ${schedule}
     ${selected}=    Run Keyword And Return Status   Wait Until Element Is Visible       //td/a[contains(text(), '${schedule}')]
     Run Keyword If      ${selected}       Click Element     //td/a[contains(text(), '${schedule}')]
-#    Pause Execution     Check the schedule
 
 View Sales Visit Form
     [Arguments]     ${objective}
@@ -318,7 +319,6 @@ End Time Information
     Sleep   2
     Press Keys      ${TIME_END_LOCATOR}        CTRL+a+DELETE
     Input Text      ${TIME_END_LOCATOR}         ${add}
-#    Press Keys      ${TIME_END_LOCATOR}         TAB
 
 
 Adding Contact Name Information
@@ -350,7 +350,6 @@ Email Address Information
     [Documentation]     This is Valid Email Address
     [Arguments]     ${email}
     Input Text      ${EMAIL_TEXT_LOCATOR}       ${email}
-    #Should Not Be Empty     ${EMAIL_TEXT_STRING}
 
 Email Domain Remove
     [Documentation]     Email Domain Remove
@@ -363,7 +362,6 @@ Email Domain Remove
 
 Email Text Alert
     [Documentation]   Email Text Alert
-    Set Selenium Timeout    5 seconds
     Handle Alert  timeout=2
 #    Alert Should Be Present     Please enter a valid E-mail (E-MAIL)    action=ACCEPT
 
@@ -371,13 +369,11 @@ Department Information
     [Documentation]     Department Information
     [Arguments]     ${department}
     Input Text      ${DEPARTMENT_LOCATOR}       ${department}
-    #Should Not Be Empty     ${DEPARTMENT_STRING}
 
 Position Information
     [Documentation]     Position Information
     [Arguments]     ${position}
     Input Text      ${POSITION_LOCATOR}     ${position}
-    #Should Not Be Empty     ${POSITION_STRING}
 
 Adding Project Information
     [Documentation]     Project Name Information
@@ -493,6 +489,8 @@ Verify All Fields Informations
     ...     ${mobile}      ${add}  ${subtract}   ${contact_name}     ${department}   ${position}
     ...     ${project_name}     ${comment}  ${plan}     ${report}   ${remaining}    ${competitor}   ${remark}
 
+    Verify Modified Time Result
+    Verify Created Time Result
     Verify Objective Result                 ${objective}
     Verify Start Date Result                ${start_date}
     Verify End Date Result                  ${start_date}
@@ -507,8 +505,6 @@ Verify All Fields Informations
     Verify Department Result                ${department}
     Verify Position Result                  ${position}
     Verify Project Name Result              ${project_name}
-    Verify Modified Time Result
-    Verify Created Time Result
     Verify Comment Result                   ${comment}
     Verify Plan Detail Result               ${plan}
     Verify Report Detail Result             ${report}
@@ -542,8 +538,6 @@ Verify Objective Result
 Verify Start Date Result
     [Arguments]     ${start_date}
     ${replace}=     Replace String    ${start_date}   /   -
-
-    Element Should Contain      //div[@id='tblSalesVisitInfomation']//tr[2]//td[2]        ${replace}
 Verify End Date Result
     [Arguments]     ${start_date}
     ${replace}=     Replace String    ${start_date}   /   -
@@ -552,10 +546,8 @@ Verify Status Result
     [Arguments]     ${status}
     Verify //font Attribute Check Result        ${status}
 
-#    Element Should Contain      //font[contains(text(), '${status}')]            ${status}
 Verify Account Name Result
     [Arguments]     ${account}
-#    Element Should Contain    td  //td[contains(text(), '${account}')]      ${account}
     Verify //td Attribute Check Result  ${account}
 
 Verify E-mail Result
@@ -568,33 +560,27 @@ Verify Phone Result
     [Arguments]     ${phone}
     ${phone_text}=      Get Text    //span[@id="dtlview_Phone"][contains(text(),'${phone}')]
     Should Be Equal     ${phone_text}   ${phone}
-#    Element Should Contain      //span[@id="dtlview_Phone"][contains(text(),'${phone}')]             ${phone}
 Verify Mobile Result
     [Arguments]     ${mobile}
     ${mobile_text}=     Get Text    //span[@id="dtlview_Mobile"][contains(text(),'${mobile}')]
     Should Be Equal     ${mobile_text}      ${mobile}
-#    Element Should Contain     //span[@id="dtlview_Mobile"][contains(text(),'${mobile}')]            ${mobile}
 Verify Start Time Result
     [Arguments]     ${subtract}
-#    Element Should Contain    //td[contains(text(), '${time_start}')]        ${time_start}
     Verify //td Attribute Check Result      ${subtract}
 
 Verify End Time Result
     [Arguments]     ${add}
-#    Element Should Contain     //td[contains(text(), '${end_time}')]          ${end_time}
     Verify //td Attribute Check Result   ${add}
 
 
 Verify Contact Name Result
     [Arguments]     ${contact_name}
-#    Element Should Contain     //a[contains(text(), '${contact_name} ')]      ${contact_name}
     Verify //a Attribute Check Result   ${contact_name}
 Verify Department Result
     [Arguments]     ${department}
     ${dept_text}=     Get Text    //span[@id="dtlview_Department"][contains(text(), '${department}')]
     Should Be Equal     ${dept_text}      ${department}
     Log     ${dept_text}
-#    Element Should Contain     //span[@id="dtlview_Department"][contains(text(), '${department}')]   ${department}
 Verify Position Result
     [Arguments]     ${position}
     Element Should Contain     //span[@id="dtlview_Position"][contains(text(), '${position}')]  ${position}
@@ -603,16 +589,21 @@ Verify Project Name Result
     Element Should Contain     //td[@id="mouseArea_Project Name"]/a[contains(text(), '${project_name}')]   ${project_name}
 
 Verify Modified Time Result
-    ${today}=       Get Current Date    result_format=%d-%m-%Y %H:%M
+    ${today}=       Get Current Date    result_format=%d-%m-%Y      #%H:%M
+    Wait Until Element Is Visible       //tr[8]//td[4][contains(text(), '${today}')]         timeout=60
     Element Should Contain      //tr[8]//td[4][contains(text(), '${today}')]  ${today}
 Verify Created Time Result
-    ${today}=       Get Current Date    result_format=%d-%m-%Y %H:%M
+    ${today}=       Get Current Date    result_format=%d-%m-%Y      #%H:%M
+    Wait Until Element Is Visible   //tr[9]//td[2][contains(text(), '${today}')]          timeout=60
     Element Should Contain      //tr[9]//td[2][contains(text(), '${today}')]    ${today}
 Verify Comment Result
     [Arguments]     ${comment}
-    Element Should Contain      //div[@class="dataField"][contains(text(), '${comment}')]       ${comment}
-    ${today}=   Get Current Date    result_format=%Y-%m-%d %H:%M
-    Element Should Contain      //div[@class="dataLabel"]/font[contains(text(), ': ${USER} on ${today}')]
+    ${today}=   Get Current Date    result_format=%Y-%m-%d      #%H:%M
+    ${comment_verify}=      Run Keyword And Return Status   Element Should Be Enabled      //div[@class="dataField"][contains(text(), '${comment}')]
+    Run Keyword If      '${comment_verify}'=='True'   Element Should Contain      //div[@class="dataField"][contains(text(), '${comment}')]       ${comment}
+    Log     ${comment}
+    ${comment_date_verify}=     Run Keyword And Return Status   Element Should Be Enabled   //div[@class="dataLabel"]/font[contains(text(), ': ${USER} on ${today}')]
+    Run Keyword If      '${comment_date_verify}'=='True'    Element Should Contain      //div[@class="dataLabel"]/font[contains(text(), ': ${USER} on ${today}')]
     ...         : ${USER} on ${today}
 Verify Plan Detail Result
     [Arguments]  ${plan}
@@ -631,27 +622,25 @@ Verify Remark Detail Result
     Element Should Contain      //div[@id='tblStep3OtherInformation']//tr[2]//td[2]            ${remark}
 
 
-Perform If Has Image
-    [Arguments]     ${image}=${None}
-    Run Keyword If      "${image}"!="${None}"     Click Add Image Button      ${image}
-
 Click Add Image Button
-    [Arguments]     ${image}
+    [Documentation]     This Function is to upload images
+    [Arguments]     ${image}        ${account}
     Scroll Down Page From The Browser
     @{img}=     Split String From Right     ${image}    ;
     :FOR    ${img_line}     IN   @{img}
-#    \   Run Keyword If  "${img_line}"!="${None}"    Log  Test
+    \   ${string_convert}=      Convert To String   ${img_line}
+    \   Exit For Loop If      "${string_convert}"=="${empty}"
     \   Click Element   ${ADD_IMAGE_BUTTON}
     \   Select Window   NEW
-    \   Choose File     ${UPLOAD_FILE_BUTTON}        ${IMAGE_PATH}${/}${img_line}
+    \   Choose File     ${UPLOAD_FILE_BUTTON}        ${IMAGE_PATH}/${img_line}
     \   Click Button    UPLOAD
     \   Wait Until Element Is Visible   ${FILE_UPLOAD_CONFIRMATION}
     \   Click Element       ${UPLOAD_OK_BUTTON}
     \   Select Window
     \   ${count}=   Get Element Count   //button[@class="crmbutton small edit"][contains(text(), 'Remove')]
     \   Run Keyword If      ${count} > 1        Log   ${count}
-    \   Capture Page Screenshot     filename=My uploaded image.png
-
+    \   Capture Page Screenshot     filename=${count} ${account}.png
+#    \   Set Screenshot Directory    ${CURDIR}${/}../../create_sales_visit/create_sales_visit_all_results
 Click Delete Button
     Sleep  2
     Click Button        Delete
