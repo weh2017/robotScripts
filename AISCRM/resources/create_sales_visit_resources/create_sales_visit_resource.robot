@@ -1,6 +1,6 @@
 *** Variables ***
-${IMAGE_PATH}               C://Users/ruela/Documents/robotScripts/AISCRM/resources/images
-#${IMAGE_PATH}               D://my_files/Robot_Framework/robotScripts/AISCRM/resources/images
+#${IMAGE_PATH}               C://Users/ruela/Documents/robotScripts/AISCRM/resources/images
+${IMAGE_PATH}               D://my_files/Robot_Framework/robotScripts/AISCRM/resources/images
 ${SIGN_IN_TEXT}             //input[@class="save"]
 ${LOGIN_FORM}               //div[@class="login-form"]
 ${HEADER_MENU_STRING}       Sales
@@ -174,8 +174,7 @@ Perform Create Sales Visit All Informations
     ...             ${image}
     \   Run Keyword If  '${data}'=='REQUIRE'   Navigate Creating Sales Visit Required      ${schedule}  ${objective}
     ...             ${start_date}    ${status}   ${account}  ${contact_name}
-    ...             ${project_name}      ${add}   ${subtract}      ${plan}     ${comment}
-    ...             ${lead_no}    ${image}
+    ...             ${project_name}      ${add}   ${subtract}      ${plan}     ${comment}    ${image}
 
 Navigate Creating Sales Visit All
     [Documentation]     All functions
@@ -197,7 +196,7 @@ Navigate Creating Sales Visit All
     Verify Erased Account Information
     Adding Account Information     ${account}
     Start Time Information                 ${subtract}
-    End Time Information   ${add}
+#    End Time Information   ${add}
 #    Sleep    2
     #############################################################
     Adding Contact Name Information     ${contact_name}
@@ -246,9 +245,10 @@ Navigate Creating Sales Visit All
 Navigate Creating Sales Visit Required
     [Documentation]     This Function is compiled with required informations only to automate.Other fields that do not
     ...     are ignored.
-    [Arguments]    ${schedule}  ${objective}    ${start_date}    ${status}   ${account}  ${contact_name}
+    [Arguments]    ${schedule}  ${objective}
+    ...             ${start_date}    ${status}   ${account}  ${contact_name}
     ...             ${project_name}      ${add}   ${subtract}      ${plan}     ${comment}
-    ...             ${lead_no}    ${image}
+    ...             ${image}
     #    Select Menu     ${HEADER_MENU_STRING}
     Select Dropdown Option From Menu    ${SALES_VISIT_STRING}
     Select Sales Visit Schedule Tab     ${schedule}
@@ -263,7 +263,7 @@ Navigate Creating Sales Visit Required
     Verify Erased Account Information
     Adding Account Information     ${account}
     Start Time Information                 ${subtract}
-    End Time Information   ${add}
+#    End Time Information   ${add}
 #    Sleep    2
     #############################################################
     Adding Contact Name Information     ${contact_name}
@@ -280,23 +280,29 @@ Navigate Creating Sales Visit Required
     Verify Erased Project Information
     Adding Project Information      ${project_name}
     Verify Added Project Information    ${project_name}
+    Plan Information        ${plan}
+
 #    Sleep  2
     ###############################################################
 #    Sleep  2
     ###################################################################
     Click Save Button
-    Verify All Fields Informations      ${schedule}  ${objective}    ${start_date}    ${status}   ${account}  ${contact_name}
-    ...             ${project_name}      ${add}   ${subtract}      ${plan}     ${comment}
-    ...             ${lead_no}    ${image}
-
-
+    Verify Required Field Informations      ${objective}
+    ...             ${start_date}    ${status}   ${account}  ${contact_name}
+    ...             ${project_name}      ${add}   ${subtract}      ${plan}
     Click Add Image Button      ${image}    ${account}
 
 Select Sales Visit Schedule Tab
-    [Arguments]         ${schedule}
-    ${selected}=    Run Keyword And Return Status   Wait Until Element Is Visible       //td/a[contains(text(), '${schedule}')]
-    Run Keyword If      ${selected}       Click Element     //td/a[contains(text(), '${schedule}')]
-
+    [Arguments]         ${schedule}=${TRUE}
+#    ${selected}=    Run Keyword And Return Status   Wait Until Element Is Visible       //td/a[contains(text(), '${schedule}')]
+#    Run Keyword If      ${selected}       Click Element     //td/a[contains(text(), '${schedule}')]     run
+    Run Keyword If  "${schedule}"=="${TRUE}"       Click Element     //td/a[contains(text(), '${schedule}')]
+    Run Keyword If    "${schedule}"=="${TRUE}"     Click Element   //td[@class="calSel"][contains(text(), '${schedule}')]
+    Log    ${schedule} has been selected
+#    ...     ELSE        Log    Already Selected Month
+#    ${get_tab}=  Get Text    //td/a[contains(text(), '${schedule}')]
+#    ${convert_tab}=     Convert To String   ${get_tab}
+#    Log   Selecting ${convert_tab}
 View Sales Visit Form
     [Arguments]     ${objective}
     Wait Until Element Is Visible       ${SALES_VISIT_TAB}
@@ -558,8 +564,8 @@ Verify All Fields Informations
     Verify E-mail Result                    ${email}
     Verify Phone Result                     ${phone}
     Verify Mobile Result                    ${mobile}
-    Verify End Time Result                  ${add}
-    Verify Start Time Result                ${subtract}
+#    Verify End Time Result                  ${add}
+#    Verify Start Time Result                ${subtract}
     Verify Contact Name Result              ${contact_name}
     Verify Department Result                ${department}
     Verify Position Result                  ${position}
@@ -570,6 +576,26 @@ Verify All Fields Informations
     Verify Remaining Detail Result          ${remaining}
     Verify Competitor Detail Result         ${competitor}
     Verify Remark Detail Result             ${remark}
+
+Verify Required Field Informations
+    [Arguments]      ${objective}
+    ...             ${start_date}    ${status}   ${account}  ${contact_name}
+    ...             ${project_name}      ${add}   ${subtract}      ${plan}
+    Verify Modified Time Result
+    Verify Created Time Result
+    Verify Objective Result                 ${objective}
+    Verify User Full Name Result
+    Verify Start Date Result                ${start_date}
+    Verify End Date Result                  ${start_date}
+    Verify Status Result                    ${status}
+    Verify Account Name Result              ${account}
+    Verify Contact Name Result              ${contact_name}
+    Verify Project Name Result              ${project_name}
+    Verify Plan Detail Result               ${plan}
+#    Verify End Time Result                  ${add}
+#    Verify Start Time Result                ${subtract}
+
+
 
 
 Verify //font Attribute Check Result
@@ -587,10 +613,10 @@ Verify //td Attribute Check Result
 
 Verify Username Result
     [Documentation]  Verify the username registerd
-#    ${get_user}=    Get Text    //select[@name="assigned_user_id"]
-#    ${convert_user}=    Convert To String   ${get_user}
+    ${get_user}=    Get Text    //select[@name="assigned_user_id"]
+    ${convert_user}=    Convert To String   ${get_user}
     Wait Until Element Contains     //select[@name="assigned_user_id"]      ${USER}
-#    Log     ${convert_user}
+    Log     ${convert_user}
 
 Verify //a Attribute Check Result
     [Documentation]     This function is to verify the result that contains text only from the system
