@@ -24,13 +24,12 @@ Select Dropdown Option From Menu
     Click Link      //a[contains(text(), '${select}')]
     Sleep   5
 
+
 Input Username
     [Documentation]     This is the  email username input text function.
     [Arguments]     ${user_name}
     Wait Until Element Is Visible       ${USERNAME_LOCATOR}
     Input Text      ${USERNAME_LOCATOR}      ${user_name}     clear=True
-
-
 
 Input User's Password
     [Documentation]     This is the email password input text function.
@@ -55,6 +54,12 @@ Click Login button
     Click Element   ${SIGNIN_LOCATOR}
     #Wait Until Element Is Not Visible       ${SIGNIN_LOCATOR}
     #Log     Successfully entered credentials
+
+Select The List Found
+    [Documentation]  This function is to click the link element
+    [Arguments]     ${found_list}
+    Click Link      //a[contains(text(), '${found_list}')]
+#    Click Element   //a[@href="javascript:window.close();"][contains(text(), '${found_list}')]
 
 Click Button
     [Documentation]     Add Image Button
@@ -97,23 +102,6 @@ Verify Added Information
     ${actual}=     Get Value       //input[@name="${variable}"]
 #    Should Be Equal As Strings     ${actual}      ${expected}
     Log     Contains text ${actual}
-
-Verify Result Information
-    [Documentation]  This function is to verify the result that contains text only from the system
-    [Arguments]     ${expected}  ${extend}
-#    ${font}=    Run Keyword And Return Status   Wait Until Element Is Visible   //font[contains(text(), "${expected}")]
-    ${font}=    Get Text    ${extend}[contains(text(), "${expected}")]
-#    Should Be Equal     ${font}     ${expected}
-#    ...     AND     Should Be Equal  ${font}     ${expected}  AND  Log     contains text  ${font}
-#    ${font}=    Run Keyword And Return Status   Wait Until Element Is Visible   //font[contains(text(), "${expected}")]
-#    Run Keyword If      ${font}   Run Keywords  Get Text    //font[contains(text(), "${expected}")]
-#    ...     AND     Should Be Equal  ${font}     ${expected}  AND  Log     contains text  ${font}
-#    ${text}=    Run Keyword And Return Status   Wait Until Element Is Visible   //td[contains(text(), "${expected}")]
-#    Run Keyword If      ${text}  Run Keywords   Get Text    //td[contains(text(), '${expected}')]
-#    ...     AND     Should Be Equal     ${text}     ${expected}     AND    Log     contains text   ${data}
-#    ${data}=    Run Keyword And Return Status   Wait Until Element Is Visible   //a[contains(text(), "${expected}")]
-#    Run Keyword If      ${data}    Run Keywords     Get Text    //a[contains(text(), '${expected}')]
-#    ...     AND     Should Be Equal     ${data}    ${expected}      AND     Log      contains     ${data}
 
 Subtract Time Without Seconds
     [Documentation]     Subract Time From Time And Remove Seconds

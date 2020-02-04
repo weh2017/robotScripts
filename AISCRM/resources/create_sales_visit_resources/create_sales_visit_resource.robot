@@ -1,5 +1,5 @@
 *** Variables ***
-${IMAGE_PATH}               C://Users/ruela/Documents/robotScripts/AISCRM/resources/images/
+${IMAGE_PATH}               C://Users/ruela/Documents/robotScripts/AISCRM/resources/images
 #${IMAGE_PATH}               D://my_files/Robot_Framework/robotScripts/AISCRM/resources/images
 ${SIGN_IN_TEXT}             //input[@class="save"]
 ${LOGIN_FORM}               //div[@class="login-form"]
@@ -64,12 +64,12 @@ ${LEAD_VALUE}               lead_name
 ##############################################
 #  VERIFICATION LOCATORS
 ##############################################
-${OBJECTIVE_VERIFY_LOCATOR}     //font[contains(text(), "${OBJECTIVE_STRING}")]
-${STATUS_VERIFY_LOCATOR}        //font[contains(text(), '${STATUS_STRING}')]
-${ACCOUNT_NAME_VERIFY_LOCATOR}  //td[contains(text(), '${ACCOUNT_SEARCH_STRING}')]
+#${OBJECTIVE_VERIFY_LOCATOR}     //font[contains(text(), "${OBJECTIVE_STRING}")]
+#${STATUS_VERIFY_LOCATOR}        //font[contains(text(), '${STATUS_STRING}')]
+#${ACCOUNT_NAME_VERIFY_LOCATOR}  //td[contains(text(), '${ACCOUNT_SEARCH_STRING}')]
 ${ASSIGNED_TO_VERIFY_LOCATOR}   //td[contains(text(), '${ASSIGNED_TO}')]
-${TIME_START_VERIFY_LOCATOR}    //td[contains(text(), '${TIME_START_STRING}')]
-${TIME_END_VERIFY_LOCATOR}      //td[contains(text(), '${TIME_END_STRING}')]
+#${TIME_START_VERIFY_LOCATOR}    //td[contains(text(), '${TIME_START_STRING}')]
+#${TIME_END_VERIFY_LOCATOR}      //td[contains(text(), '${TIME_END_STRING}')]
 ${PLAN_DETAIL_VERIFY_LOCATOR}   //div[@id='tblStep1PlanInformation']//tr[1]//td[2]
 ${LEAD_VERIFY_LOCATOR}          //td[contains(text(), '${CUSTOMER_NAME_STRING}')]            #Not
 ${REPORT_VERIFY_LOCATOR}        //div[@id='tblStep2ReportInformation']//tr[1]//td[2]      #Not
@@ -102,6 +102,7 @@ Perform Create Sales Visit All Informations
     [Arguments]         ${data}     ${csv}
     ${contents}=    Get File        ${csv}
     @{read}=    Create List     ${contents}
+#    @{length}=  Get Length      @{read}
     @{lines}=   Split To Lines      @{read}     1
     :FOR    ${line}     IN      @{lines}
     \   ${current_date}=   Get Current Date    result_format=%H:%M:%S
@@ -120,8 +121,6 @@ Perform Create Sales Visit All Informations
     \   Log     Subracting Time ${sub_get} without seconds
     ##########################################################################
     \   @{bm}=  Split String    ${line}     |
-#    \   @{convert_line}=    Convert To String   @{bm}
-#    \   Exit For Loop If    "${convert_line}"=="${empty}"
     # schedule
     \   ${schedule}=    Set Variable    @{bm}[0]
     # presentation
@@ -173,6 +172,10 @@ Perform Create Sales Visit All Informations
     ...             ${project_name}    ${add}  ${subtract}    ${department}   ${position}     ${email}    ${plan}     ${comment}
     ...             ${report}       ${remaining}    ${remark}   ${competitor}     ${lead_no}    ${lead_name}    ${mobile}   ${phone}
     ...             ${image}
+    \   Run Keyword If  '${data}'=='REQUIRE'   Navigate Creating Sales Visit Required      ${schedule}  ${objective}
+    ...             ${start_date}    ${status}   ${account}  ${contact_name}
+    ...             ${project_name}      ${add}   ${subtract}      ${plan}     ${comment}
+    ...             ${lead_no}    ${image}
 
 Navigate Creating Sales Visit All
     [Documentation]     All functions
@@ -187,6 +190,7 @@ Navigate Creating Sales Visit All
     Start And End Date Informations     ${start_date}   ${objective}
     Status Information      ${status}
     ############################################################
+    Get Registered Username
     Adding Account Information     ${account}
     Verify Added Account Information        ${account}
     Click Erase Button      ${ACCOUNT_CLEAR_BUTTON}
@@ -239,6 +243,55 @@ Navigate Creating Sales Visit All
     ...     ${project_name}     ${comment}  ${plan}     ${report}   ${remaining}    ${competitor}   ${remark}
     Click Add Image Button      ${image}    ${account}
 
+Navigate Creating Sales Visit Required
+    [Documentation]     This Function is compiled with required informations only to automate.Other fields that do not
+    ...     are ignored.
+    [Arguments]    ${schedule}  ${objective}    ${start_date}    ${status}   ${account}  ${contact_name}
+    ...             ${project_name}      ${add}   ${subtract}      ${plan}     ${comment}
+    ...             ${lead_no}    ${image}
+    #    Select Menu     ${HEADER_MENU_STRING}
+    Select Dropdown Option From Menu    ${SALES_VISIT_STRING}
+    Select Sales Visit Schedule Tab     ${schedule}
+    View Sales Visit Form       ${objective}
+    Start And End Date Informations     ${start_date}   ${objective}
+    Status Information      ${status}
+    ############################################################
+    Get Registered Username
+    Adding Account Information     ${account}
+    Verify Added Account Information        ${account}
+    Click Erase Button      ${ACCOUNT_CLEAR_BUTTON}
+    Verify Erased Account Information
+    Adding Account Information     ${account}
+    Start Time Information                 ${subtract}
+    End Time Information   ${add}
+#    Sleep    2
+    #############################################################
+    Adding Contact Name Information     ${contact_name}
+    Verify Added Contact Information    ${contact_name}
+    Click Erase Button      ${CONTACT_CLEAR_BUTTON}
+    Verify Erased Contact Information
+    Adding Contact Name Information     ${contact_name}
+    Verify Added Contact Information    ${contact_name}
+#    Sleep   2
+    ##############################################################
+    Adding Project Information      ${project_name}
+    Verify Added Project Information    ${project_name}
+    Click Erase Button      ${PROJECT_CLEAR_BUTTON}
+    Verify Erased Project Information
+    Adding Project Information      ${project_name}
+    Verify Added Project Information    ${project_name}
+#    Sleep  2
+    ###############################################################
+#    Sleep  2
+    ###################################################################
+    Click Save Button
+    Verify All Fields Informations      ${schedule}  ${objective}    ${start_date}    ${status}   ${account}  ${contact_name}
+    ...             ${project_name}      ${add}   ${subtract}      ${plan}     ${comment}
+    ...             ${lead_no}    ${image}
+
+
+    Click Add Image Button      ${image}    ${account}
+
 Select Sales Visit Schedule Tab
     [Arguments]         ${schedule}
     ${selected}=    Run Keyword And Return Status   Wait Until Element Is Visible       //td/a[contains(text(), '${schedule}')]
@@ -247,6 +300,8 @@ Select Sales Visit Schedule Tab
 View Sales Visit Form
     [Arguments]     ${objective}
     Wait Until Element Is Visible       ${SALES_VISIT_TAB}
+#    ${count_me}=    Get Element Count       ${SALES_VISIT_TAB}
+#    Log      ${count_me}
     Mouse Over      ${CAL_ADD_BUTTON}
     #Scroll Down Page From The Browser
     #Scroll Element Into View    ${SALES_VISIT_OPTION}
@@ -254,6 +309,10 @@ View Sales Visit Form
     Click Link   //a[@id="add${objective}"]
     Log     Successfully entered ${objective}
 
+
+Get Registered Username
+    [Documentation]  This function is to check the registered username when creating the sales visit
+    Verify Username Result
 
 Start And End Date Informations
     [Arguments]     ${start_date}   ${objective}
@@ -398,15 +457,17 @@ Verify Erased Project Information
 
 Adding Lead Information
     [Documentation]     Lead Information
-    [Arguments]     ${lead_no}
-    Click Element       ${ADD_LEAD_NAME}
-    Select Window       NEW
-    Verify Pop-up Window Header     ${LEAD_HEADER}
-    Verify and Set Drop Down From Search        ${LEAD_DROPDOWN}
-    Input Text To Search        ${lead_no}
-    Click Search Button
-    Select The List Found       ${lead_no}
-    Select Window
+    [Arguments]     ${lead_no}=${EMPTY}
+    Run Keyword If      "${lead_no}"!="${EMPTY}"   Run Keywords
+    ...     Wait Until Element Is Visible   ${ADD_LEAD_NAME}
+    ...     AND     Click Element       ${ADD_LEAD_NAME}
+    ...     AND     Select Window       NEW
+    ...     AND     Verify Pop-up Window Header     ${LEAD_HEADER}
+    ...     AND     Verify and Set Drop Down From Search        ${LEAD_DROPDOWN}
+    ...     AND     Input Text To Search        ${lead_no}
+    ...     AND     Click Search Button
+    ...     AND     Select The List Found       ${lead_no}
+    ...     AND     Select Window
 
 Verify Added Lead Information
     [Documentation]     Added Lead Information
@@ -461,14 +522,11 @@ Verify and Set Drop Down From Search
     Click Element       //select[@name="search_field"]//option[@label="${dropdown}"]
 
 Input Text To Search
+    [Documentation]  This function is to input keywords to search textbox.
     [Arguments]     ${search_text}
     Input Text      name:search_text     ${search_text}
 
 
-Select The List Found
-    [Arguments]     ${found_list}
-    Click Link      //a[contains(text(), '${found_list}')]
-#    Click Element   //a[@href="javascript:window.close();"][contains(text(), '${found_list}')]
 
 Click Save Button
     Click Element   ${SAVE_BUTTON_LOCATOR}
@@ -492,6 +550,7 @@ Verify All Fields Informations
     Verify Modified Time Result
     Verify Created Time Result
     Verify Objective Result                 ${objective}
+    Verify User Full Name Result
     Verify Start Date Result                ${start_date}
     Verify End Date Result                  ${start_date}
     Verify Status Result                    ${status}
@@ -519,11 +578,19 @@ Verify //font Attribute Check Result
     ${font}=    Get Text    //font[contains(text(), "${expected}")]
     Log     ${font}
 
+
 Verify //td Attribute Check Result
     [Documentation]     This function is to verify the result that contains text only from the system
     [Arguments]     ${expected}
     ${font}=    Get Text    //td[contains(text(), "${expected}")]
     Log     ${font}
+
+Verify Username Result
+    [Documentation]  Verify the username registerd
+#    ${get_user}=    Get Text    //select[@name="assigned_user_id"]
+#    ${convert_user}=    Convert To String   ${get_user}
+    Wait Until Element Contains     //select[@name="assigned_user_id"]      ${USER}
+#    Log     ${convert_user}
 
 Verify //a Attribute Check Result
     [Documentation]     This function is to verify the result that contains text only from the system
@@ -531,9 +598,15 @@ Verify //a Attribute Check Result
     ${font}=    Get Text    //a[contains(text(), "${expected}")]
     Log     ${font}
 
+
+
 Verify Objective Result
     [Arguments]     ${objective}
     Verify //font Attribute Check Result    ${objective}
+
+Verify User Full Name Result
+    [Documentation]     The Assigned Sale Visit Full Name of the user
+    Wait Until Page Contains      ${USER_FULL_NAME}
 
 Verify Start Date Result
     [Arguments]     ${start_date}
@@ -597,14 +670,13 @@ Verify Created Time Result
     Wait Until Element Is Visible   //tr[9]//td[2][contains(text(), '${today}')]          timeout=60
     Element Should Contain      //tr[9]//td[2][contains(text(), '${today}')]    ${today}
 Verify Comment Result
-    [Arguments]     ${comment}
+    [Arguments]     ${comment}=${None}
     ${today}=   Get Current Date    result_format=%Y-%m-%d      #%H:%M
     ${comment_verify}=      Run Keyword And Return Status   Element Should Be Enabled      //div[@class="dataField"][contains(text(), '${comment}')]
-    Run Keyword If      '${comment_verify}'=='True'   Element Should Contain      //div[@class="dataField"][contains(text(), '${comment}')]       ${comment}
-    Log     ${comment}
-    ${comment_date_verify}=     Run Keyword And Return Status   Element Should Be Enabled   //div[@class="dataLabel"]/font[contains(text(), ': ${USER} on ${today}')]
-    Run Keyword If      '${comment_date_verify}'=='True'    Element Should Contain      //div[@class="dataLabel"]/font[contains(text(), ': ${USER} on ${today}')]
+    Run Keyword If      '${comment_verify}'=='True'   Run Keywords      Element Should Contain      //div[@class="dataField"][contains(text(), '${comment}')]       ${comment}
+    ...     AND     Element Should Contain      //div[@class="dataLabel"]/font[contains(text(), ': ${USER} on ${today}')]
     ...         : ${USER} on ${today}
+    Log     ${comment}
 Verify Plan Detail Result
     [Arguments]  ${plan}
     Element Should Contain     //div[@id='tblStep1PlanInformation']//tr[1]//td[2]       ${plan}
@@ -625,6 +697,7 @@ Verify Remark Detail Result
 Click Add Image Button
     [Documentation]     This Function is to upload images
     [Arguments]     ${image}        ${account}
+#    ${date_now}=    Get Current Date        result_format=result_format=%d-%m-%Y   %H:%M:%S
     Scroll Down Page From The Browser
     @{img}=     Split String From Right     ${image}    ;
     :FOR    ${img_line}     IN   @{img}
@@ -638,9 +711,10 @@ Click Add Image Button
     \   Click Element       ${UPLOAD_OK_BUTTON}
     \   Select Window
     \   ${count}=   Get Element Count   //button[@class="crmbutton small edit"][contains(text(), 'Remove')]
-    \   Run Keyword If      ${count} > 1        Log   ${count}
-    \   Capture Page Screenshot     filename=${count} from image ${account}.png
-#    \   Set Screenshot Directory    ${CURDIR}${/}../../create_sales_visit/create_sales_visit_all_results
+    \   Log     ${count}
+    \   Set Screenshot Directory    ${CURDIR}${/}../../create_sales_visit/create_sales_visit_all_results
+    \   ${file_exist}=  Capture Page Screenshot     filename=screenshots/${count}/screenshots from image ${account}.png
+    \   File Should Exist       ${file_exist}
 Click Delete Button
     Sleep  2
     Click Button        Delete

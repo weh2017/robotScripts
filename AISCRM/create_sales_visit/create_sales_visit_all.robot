@@ -1,5 +1,10 @@
 *** Settings ***
-Documentation   This is the script for Create Sales Visit Repository
+Documentation   This is the script for Create Sales Visit All Informations
+...             Prerequisites : Follow the steps below
+...             1. Open user_login_resource
+...             2. Input Username at variable ${USER}
+...             3. Input password at variable ${PASS}
+...             4. Input User's Full Name at variable ${USER_FULL_NAME}
 Library     SeleniumLibrary
 Library     OperatingSystem
 Library     String
@@ -29,8 +34,8 @@ Log-In User with Valid Username And Password
 
 Sales Visit
     Select Menu     ${HEADER_MENU_STRING}
-#    Select Dropdown Option From Menu    ${SALES_VISIT_STRING}
-
+##    Select Dropdown Option From Menu    ${SALES_VISIT_STRING}
+#
 Running
     Perform Create Sales Visit All Informations     ALL      ${CURDIR}${/}../resources/sales_visit2.csv
 
