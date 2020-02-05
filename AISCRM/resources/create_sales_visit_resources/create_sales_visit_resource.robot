@@ -1,6 +1,6 @@
 *** Variables ***
-#${IMAGE_PATH}               C://Users/ruela/Documents/robotScripts/AISCRM/resources/images
-${IMAGE_PATH}               D://my_files/Robot_Framework/robotScripts/AISCRM/resources/images
+${IMAGE_PATH}               C://Users/ruela/Documents/robotScripts/AISCRM/resources/images
+#${IMAGE_PATH}               D://my_files/Robot_Framework/robotScripts/AISCRM/resources/images
 ${SIGN_IN_TEXT}             //input[@class="save"]
 ${LOGIN_FORM}               //div[@class="login-form"]
 ${HEADER_MENU_STRING}       Sales
@@ -64,12 +64,7 @@ ${LEAD_VALUE}               lead_name
 ##############################################
 #  VERIFICATION LOCATORS
 ##############################################
-#${OBJECTIVE_VERIFY_LOCATOR}     //font[contains(text(), "${OBJECTIVE_STRING}")]
-#${STATUS_VERIFY_LOCATOR}        //font[contains(text(), '${STATUS_STRING}')]
-#${ACCOUNT_NAME_VERIFY_LOCATOR}  //td[contains(text(), '${ACCOUNT_SEARCH_STRING}')]
 ${ASSIGNED_TO_VERIFY_LOCATOR}   //td[contains(text(), '${ASSIGNED_TO}')]
-#${TIME_START_VERIFY_LOCATOR}    //td[contains(text(), '${TIME_START_STRING}')]
-#${TIME_END_VERIFY_LOCATOR}      //td[contains(text(), '${TIME_END_STRING}')]
 ${PLAN_DETAIL_VERIFY_LOCATOR}   //div[@id='tblStep1PlanInformation']//tr[1]//td[2]
 ${LEAD_VERIFY_LOCATOR}          //td[contains(text(), '${CUSTOMER_NAME_STRING}')]            #Not
 ${REPORT_VERIFY_LOCATOR}        //div[@id='tblStep2ReportInformation']//tr[1]//td[2]      #Not
@@ -102,7 +97,6 @@ Perform Create Sales Visit All Informations
     [Arguments]         ${data}     ${csv}
     ${contents}=    Get File        ${csv}
     @{read}=    Create List     ${contents}
-#    @{length}=  Get Length      @{read}
     @{lines}=   Split To Lines      @{read}     1
     :FOR    ${line}     IN      @{lines}
     \   ${current_date}=   Get Current Date    result_format=%H:%M:%S
@@ -175,7 +169,11 @@ Perform Create Sales Visit All Informations
     \   Run Keyword If  '${data}'=='REQUIRE'   Navigate Creating Sales Visit Required      ${schedule}  ${objective}
     ...             ${start_date}    ${status}   ${account}  ${contact_name}
     ...             ${project_name}      ${add}   ${subtract}      ${plan}     ${comment}    ${image}
-
+    \   Run Keyword If  '${data}'=='OPTION'     Navigate Creating Sales Visit Optional Fields    ${schedule}    ${objective}
+    ...              ${comment}  ${report}   ${remaining}    ${remark}
+    ...              ${competitor}  ${department}   ${position}     ${email}    ${mobile}   ${phone}
+    ...              ${lead_no}     ${lead_name}    ${contact_name}     ${project_name}     ${plan}     ${image}
+##################################################################################################################
 Navigate Creating Sales Visit All
     [Documentation]     All functions
     [Arguments]    ${schedule}  ${objective}    ${start_date}    ${status}   ${account}  ${contact_name}
@@ -196,7 +194,7 @@ Navigate Creating Sales Visit All
     Verify Erased Account Information
     Adding Account Information     ${account}
     Start Time Information                 ${subtract}
-#    End Time Information   ${add}
+    End Time Information   ${add}
 #    Sleep    2
     #############################################################
     Adding Contact Name Information     ${contact_name}
@@ -225,9 +223,9 @@ Navigate Creating Sales Visit All
     ###################################################################
     Department Information      ${department}
     Position Information        ${position}
-    Email Domain Remove     ${email}
-    Click Save Button
-    Email Text Alert
+#    Email Domain Remove     ${email}
+#    Click Save Button
+#    Email Text Alert
     Email Address Information   ${email}
     Phone And Mobile Contacts Information       ${mobile}   ${phone}
     Plan Information        ${plan}
@@ -240,7 +238,7 @@ Navigate Creating Sales Visit All
     Verify All Fields Informations     ${objective}    ${start_date}   ${status}   ${account}  ${email}    ${phone}
     ...     ${mobile}          ${add}   ${subtract}    ${contact_name}     ${department}   ${position}
     ...     ${project_name}     ${comment}  ${plan}     ${report}   ${remaining}    ${competitor}   ${remark}
-    Click Add Image Button      ${image}    ${account}
+    Click Add Image Button      ${image}    ${account}  ${objective}    ${schedule}
 
 Navigate Creating Sales Visit Required
     [Documentation]     This Function is compiled with required informations only to automate.Other fields that do not
@@ -263,15 +261,16 @@ Navigate Creating Sales Visit Required
     Verify Erased Account Information
     Adding Account Information     ${account}
     Start Time Information                 ${subtract}
-#    End Time Information   ${add}
+    End Time Information   ${add}
 #    Sleep    2
     #############################################################
-    Adding Contact Name Information     ${contact_name}
-    Verify Added Contact Information    ${contact_name}
+    Adding Contact Name Information      ${contact_name}
+    Verify Added Contact Information     ${contact_name}
     Click Erase Button      ${CONTACT_CLEAR_BUTTON}
     Verify Erased Contact Information
-    Adding Contact Name Information     ${contact_name}
-    Verify Added Contact Information    ${contact_name}
+    Adding Contact Name Information      ${contact_name}
+    Verify Added Contact Information     ${contact_name}
+
 #    Sleep   2
     ##############################################################
     Adding Project Information      ${project_name}
@@ -290,19 +289,68 @@ Navigate Creating Sales Visit Required
     Verify Required Field Informations      ${objective}
     ...             ${start_date}    ${status}   ${account}  ${contact_name}
     ...             ${project_name}      ${add}   ${subtract}      ${plan}
-    Click Add Image Button      ${image}    ${account}
+    Click Add Image Button      ${image}    ${account}  ${objective}    ${schedule}
+
+Navigate Creating Sales Visit Optional Fields
+    [Arguments]      ${schedule}    ${objective}    ${comment}  ${report}   ${remaining}    ${remark}
+    ...              ${competitor}  ${department}   ${position}     ${email}    ${mobile}   ${phone}
+    ...              ${lead_no}     ${lead_name}    ${contact_name}     ${project_name}     ${plan}     ${image}
+    Select Dropdown Option From Menu    ${SALES_VISIT_STRING}
+    Select Sales Visit Schedule Tab     ${schedule}
+    View Sales Visit Form       ${objective}
+    Get Registered Username
+    Comment Information     ${comment}
+    Report Information      ${report}
+    Remaining Information   ${remaining}
+    Remark Information      ${remark}
+    Competitor Information      ${competitor}
+    Department Information      ${department}
+    Position Information        ${position}
+    Email Address Information   ${email}
+    Phone And Mobile Contacts Information       ${mobile}   ${phone}
+    #######################################################################
+    Click Save Button
+    Alert Message Should Be Found       Contact Name cannot be none
+    Sleep  3
+    #############################################################
+    Adding Contact Name Information     ${contact_name}
+    Verify Added Contact Information    ${contact_name}
+    Click Erase Button      ${CONTACT_CLEAR_BUTTON}
+    Verify Erased Contact Information
+    Adding Contact Name Information     ${contact_name}
+    Verify Added Contact Information    ${contact_name}
+    Click Save Button
+    Alert Message Should Be Found       Project Name cannot be none
+    ##############################################################
+    Adding Lead Information     ${lead_no}
+    Verify Added Lead Information       ${lead_name}
+    Click Erase Button      ${LEAD_CLEAR_BUTTON}
+    Verify Erased Lead Information
+    Adding Lead Information     ${lead_no}
+    Verify Added Lead Information       ${lead_name}
+    #######################################################################
+    Adding Project Information      ${project_name}
+    Verify Added Project Information    ${project_name}
+    Click Erase Button      ${PROJECT_CLEAR_BUTTON}
+    Verify Erased Project Information
+    Adding Project Information      ${project_name}
+    Verify Added Project Information    ${project_name}
+    Alert Message Should Be Found   Plan Detail cannot be none
+    ########################################################################
+    Plan Information        ${plan}
+    Click Save Button
+    Verify Optional Fields Informations     ${account}  ${email}    ${phone}    ${mobile}   ${contact_name}     ${department}
+    ...             ${department}   ${position}     ${project_name}     ${comment}  ${plan}     ${report}
+    ...             ${remaining}    ${competitor}   ${remark}
+    Click Add Image Button      ${image}    ${account}  ${objective}    ${schedule}
+
 
 Select Sales Visit Schedule Tab
     [Arguments]         ${schedule}=${TRUE}
-#    ${selected}=    Run Keyword And Return Status   Wait Until Element Is Visible       //td/a[contains(text(), '${schedule}')]
-#    Run Keyword If      ${selected}       Click Element     //td/a[contains(text(), '${schedule}')]     run
     Run Keyword If  "${schedule}"=="${TRUE}"       Click Element     //td/a[contains(text(), '${schedule}')]
     Run Keyword If    "${schedule}"=="${TRUE}"     Click Element   //td[@class="calSel"][contains(text(), '${schedule}')]
     Log    ${schedule} has been selected
-#    ...     ELSE        Log    Already Selected Month
-#    ${get_tab}=  Get Text    //td/a[contains(text(), '${schedule}')]
-#    ${convert_tab}=     Convert To String   ${get_tab}
-#    Log   Selecting ${convert_tab}
+
 View Sales Visit Form
     [Arguments]     ${objective}
     Wait Until Element Is Visible       ${SALES_VISIT_TAB}
@@ -391,7 +439,7 @@ Adding Contact Name Information
     [Arguments]     ${contact_name}
     Click Element   ${ADD_CONTACT_NAME}
     Select Window   NEW                 #To Focus Pop up Browser Window
-    Verify Pop-up Window Header   ${ACCOUNT_HEADER}
+#    Verify Pop-up Window Header   ${ACCOUNT_HEADER}
     Verify and Set Drop Down From Search        ${FIRST_NAME_OPTION_STRING}
     ${right}=   Split String From Right    ${contact_name}  -
     ${remove}=      Set Variable   ${right}[0]
@@ -564,8 +612,8 @@ Verify All Fields Informations
     Verify E-mail Result                    ${email}
     Verify Phone Result                     ${phone}
     Verify Mobile Result                    ${mobile}
-#    Verify End Time Result                  ${add}
-#    Verify Start Time Result                ${subtract}
+    Verify End Time Result                  ${add}
+    Verify Start Time Result                ${subtract}
     Verify Contact Name Result              ${contact_name}
     Verify Department Result                ${department}
     Verify Position Result                  ${position}
@@ -592,10 +640,29 @@ Verify Required Field Informations
     Verify Contact Name Result              ${contact_name}
     Verify Project Name Result              ${project_name}
     Verify Plan Detail Result               ${plan}
-#    Verify End Time Result                  ${add}
-#    Verify Start Time Result                ${subtract}
+    Verify End Time Result                  ${add}
+    Verify Start Time Result                ${subtract}
 
-
+Verify Optional Fields Informations
+    [Arguments]     ${account}  ${email}    ${phone}    ${mobile}   ${contact_name}     ${department}
+    ...             ${department}   ${position}     ${project_name}     ${comment}  ${plan}     ${report}
+    ...             ${remaining}    ${competitor}   ${remark}
+    Verify Modified Time Result
+    Verify Created Time Result
+    Verify Account Name Result              ${account}
+    Verify E-mail Result                    ${email}
+    Verify Phone Result                     ${phone}
+    Verify Mobile Result                    ${mobile}
+    Verify Contact Name Result              ${contact_name}
+    Verify Department Result                ${department}
+    Verify Position Result                  ${position}
+    Verify Project Name Result              ${project_name}
+    Verify Comment Result                   ${comment}
+    Verify Plan Detail Result               ${plan}
+    Verify Report Detail Result             ${report}
+    Verify Remaining Detail Result          ${remaining}
+    Verify Competitor Detail Result         ${competitor}
+    Verify Remark Detail Result             ${remark}
 
 
 Verify //font Attribute Check Result
@@ -698,11 +765,11 @@ Verify Created Time Result
 Verify Comment Result
     [Arguments]     ${comment}=${None}
     ${today}=   Get Current Date    result_format=%Y-%m-%d      #%H:%M
-    ${comment_verify}=      Run Keyword And Return Status   Element Should Be Enabled      //div[@class="dataField"][contains(text(), '${comment}')]
-    Run Keyword If      '${comment_verify}'=='True'   Run Keywords      Element Should Contain      //div[@class="dataField"][contains(text(), '${comment}')]       ${comment}
+    ${xpath}=   Get Element Count   //div[@class="dataField"][contains(text(), '${comment}')]
+    Run Keyword And Return If   ${xpath}    Run Keywords    Element Should Contain      //div[@class="dataField"][contains(text(), '${comment}')]       ${comment}
     ...     AND     Element Should Contain      //div[@class="dataLabel"]/font[contains(text(), ': ${USER} on ${today}')]
     ...         : ${USER} on ${today}
-    Log     ${comment}
+
 Verify Plan Detail Result
     [Arguments]  ${plan}
     Element Should Contain     //div[@id='tblStep1PlanInformation']//tr[1]//td[2]       ${plan}
@@ -722,8 +789,7 @@ Verify Remark Detail Result
 
 Click Add Image Button
     [Documentation]     This Function is to upload images
-    [Arguments]     ${image}        ${account}
-#    ${date_now}=    Get Current Date        result_format=result_format=%d-%m-%Y   %H:%M:%S
+    [Arguments]     ${image}        ${account}      ${objective}    ${schedule}
     Scroll Down Page From The Browser
     @{img}=     Split String From Right     ${image}    ;
     :FOR    ${img_line}     IN   @{img}
@@ -738,8 +804,7 @@ Click Add Image Button
     \   Select Window
     \   ${count}=   Get Element Count   //button[@class="crmbutton small edit"][contains(text(), 'Remove')]
     \   Log     ${count}
-    \   Set Screenshot Directory    ${CURDIR}${/}../../create_sales_visit/create_sales_visit_all_results
-    \   ${file_exist}=  Capture Page Screenshot     filename=screenshots/${count}/screenshots from image ${account}.png
+    \   ${file_exist}=  Capture Page Screenshot     filename=${schedule}-${objective}-${account}/screenshot image from ${objective}-${account}.png
     \   File Should Exist       ${file_exist}
 Click Delete Button
     Sleep  2

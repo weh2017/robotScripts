@@ -66,7 +66,10 @@ Click Button
     [Arguments]         ${image}
     Click Element   //input[@value="${image}"]
 
-
+Alert Message Should Be Found
+    [Documentation]     This is for Alert Message
+    [Arguments]     ${alert}
+    Alert Should Be Present     ${alert}        action=ACCEPT
 
 Click Logout button
     [Documentation]  This is Log out function from the system.
