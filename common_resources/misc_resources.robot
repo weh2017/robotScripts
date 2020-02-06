@@ -59,7 +59,7 @@ Select The List Found
     [Documentation]  This function is to click the link element
     [Arguments]     ${found_list}
     Click Link      //a[contains(text(), '${found_list}')]
-#    Click Element   //a[@href="javascript:window.close();"][contains(text(), '${found_list}')]
+#    Click Element   //td/a[@href="javascript:window.close();"][contains(text(), '${found_list}')]
 
 Click Button
     [Documentation]     Add Image Button

@@ -170,7 +170,7 @@ Perform Create Sales Visit All Informations
     ...             ${start_date}    ${status}   ${account}  ${contact_name}
     ...             ${project_name}      ${add}   ${subtract}      ${plan}     ${comment}    ${image}
     \   Run Keyword If  '${data}'=='OPTION'     Navigate Creating Sales Visit Optional Fields    ${schedule}    ${objective}
-    ...              ${comment}  ${report}   ${remaining}    ${remark}
+    ...              ${comment}  ${report}   ${remaining}    ${remark}  ${account}
     ...              ${competitor}  ${department}   ${position}     ${email}    ${mobile}   ${phone}
     ...              ${lead_no}     ${lead_name}    ${contact_name}     ${project_name}     ${plan}     ${image}
 ##################################################################################################################
@@ -236,7 +236,7 @@ Navigate Creating Sales Visit All
     Competitor Information      ${competitor}
     Click Save Button
     Verify All Fields Informations     ${objective}    ${start_date}   ${status}   ${account}  ${email}    ${phone}
-    ...     ${mobile}          ${add}   ${subtract}    ${contact_name}     ${department}   ${position}
+    ...     ${mobile}          ${add}   ${subtract}    ${contact_name}     ${department}   ${position}  ${lead_name}
     ...     ${project_name}     ${comment}  ${plan}     ${report}   ${remaining}    ${competitor}   ${remark}
     Click Add Image Button      ${image}    ${account}  ${objective}    ${schedule}
 
@@ -292,7 +292,7 @@ Navigate Creating Sales Visit Required
     Click Add Image Button      ${image}    ${account}  ${objective}    ${schedule}
 
 Navigate Creating Sales Visit Optional Fields
-    [Arguments]      ${schedule}    ${objective}    ${comment}  ${report}   ${remaining}    ${remark}
+    [Arguments]      ${schedule}    ${objective}    ${comment}  ${report}   ${remaining}    ${remark}   ${account}
     ...              ${competitor}  ${department}   ${position}     ${email}    ${mobile}   ${phone}
     ...              ${lead_no}     ${lead_name}    ${contact_name}     ${project_name}     ${plan}     ${image}
     Select Dropdown Option From Menu    ${SALES_VISIT_STRING}
@@ -308,20 +308,6 @@ Navigate Creating Sales Visit Optional Fields
     Position Information        ${position}
     Email Address Information   ${email}
     Phone And Mobile Contacts Information       ${mobile}   ${phone}
-    #######################################################################
-    Click Save Button
-    Alert Message Should Be Found       Contact Name cannot be none
-    Sleep  3
-    #############################################################
-    Adding Contact Name Information     ${contact_name}
-    Verify Added Contact Information    ${contact_name}
-    Click Erase Button      ${CONTACT_CLEAR_BUTTON}
-    Verify Erased Contact Information
-    Adding Contact Name Information     ${contact_name}
-    Verify Added Contact Information    ${contact_name}
-    Click Save Button
-    Alert Message Should Be Found       Project Name cannot be none
-    ##############################################################
     Adding Lead Information     ${lead_no}
     Verify Added Lead Information       ${lead_name}
     Click Erase Button      ${LEAD_CLEAR_BUTTON}
@@ -329,19 +315,46 @@ Navigate Creating Sales Visit Optional Fields
     Adding Lead Information     ${lead_no}
     Verify Added Lead Information       ${lead_name}
     #######################################################################
+    Click Save Button
+    Sleep  3
+    Alert Message Should Be Found       Contact Name cannot be none
+    Sleep  3
+    #######################################################################
+    Adding Account Information     ${account}
+    Verify Added Account Information        ${account}
+    Click Erase Button      ${ACCOUNT_CLEAR_BUTTON}
+    Verify Erased Account Information
+    Adding Account Information     ${account}
+    #######################################################################
+    Adding Contact Name Information     ${contact_name}
+    Verify Added Contact Information    ${contact_name}
+    Click Erase Button      ${CONTACT_CLEAR_BUTTON}
+    Verify Erased Contact Information
+    Adding Contact Name Information     ${contact_name}
+    Verify Added Contact Information    ${contact_name}
+    Click Save Button
+    Sleep  3
+    ########################################################################
+    Alert Message Should Be Found       Project Name cannot be none
     Adding Project Information      ${project_name}
     Verify Added Project Information    ${project_name}
     Click Erase Button      ${PROJECT_CLEAR_BUTTON}
     Verify Erased Project Information
     Adding Project Information      ${project_name}
     Verify Added Project Information    ${project_name}
+    ###########################################################################
+    Click Save Button
+    Sleep  3
+    #######################################################################
     Alert Message Should Be Found   Plan Detail cannot be none
     ########################################################################
+    Department Information      ${department}
+    Position Information        ${position}
     Plan Information        ${plan}
     Click Save Button
-    Verify Optional Fields Informations     ${account}  ${email}    ${phone}    ${mobile}   ${contact_name}     ${department}
-    ...             ${department}   ${position}     ${project_name}     ${comment}  ${plan}     ${report}
-    ...             ${remaining}    ${competitor}   ${remark}
+    Verify Optional Fields Informations     ${objective}    ${account}  ${phone}    ${mobile}    ${contact_name}   ${contact_name}     ${department}
+    ...             ${position}     ${project_name}     ${lead_name}  ${comment}     ${report}  ${plan}
+    ...             ${report}    ${remaining}   ${competitor}   ${remark}   ${email}
     Click Add Image Button      ${image}    ${account}  ${objective}    ${schedule}
 
 
@@ -597,7 +610,7 @@ Alert Should Be Found
 
 Verify All Fields Informations
     [Documentation]     To verify the created required informations
-    [Arguments]     ${objective}    ${start_date}   ${status}   ${account}  ${email}    ${phone}
+    [Arguments]     ${objective}    ${start_date}   ${status}   ${account}  ${email}    ${phone}    ${lead_name}
     ...     ${mobile}      ${add}  ${subtract}   ${contact_name}     ${department}   ${position}
     ...     ${project_name}     ${comment}  ${plan}     ${report}   ${remaining}    ${competitor}   ${remark}
 
@@ -618,6 +631,7 @@ Verify All Fields Informations
     Verify Department Result                ${department}
     Verify Position Result                  ${position}
     Verify Project Name Result              ${project_name}
+    Verify Lead Name Result                 ${lead_name}
     Verify Comment Result                   ${comment}
     Verify Plan Detail Result               ${plan}
     Verify Report Detail Result             ${report}
@@ -644,25 +658,28 @@ Verify Required Field Informations
     Verify Start Time Result                ${subtract}
 
 Verify Optional Fields Informations
-    [Arguments]     ${account}  ${email}    ${phone}    ${mobile}   ${contact_name}     ${department}
-    ...             ${department}   ${position}     ${project_name}     ${comment}  ${plan}     ${report}
-    ...             ${remaining}    ${competitor}   ${remark}
+    [Arguments]     ${objective}    ${account}  ${phone}    ${mobile}    ${contact_name}   ${contact_name}     ${department}
+    ...             ${position}     ${project_name}     ${lead_name}  ${comment}     ${report}  ${plan}
+    ...             ${report}    ${remaining}   ${competitor}   ${remark}   ${email}
     Verify Modified Time Result
     Verify Created Time Result
+    Verify User Full Name Result
+    Verify Objective Result                 ${objective}
     Verify Account Name Result              ${account}
-    Verify E-mail Result                    ${email}
     Verify Phone Result                     ${phone}
     Verify Mobile Result                    ${mobile}
     Verify Contact Name Result              ${contact_name}
     Verify Department Result                ${department}
     Verify Position Result                  ${position}
     Verify Project Name Result              ${project_name}
+    Verify Lead Name Result                 ${lead_name}
     Verify Comment Result                   ${comment}
     Verify Plan Detail Result               ${plan}
     Verify Report Detail Result             ${report}
     Verify Remaining Detail Result          ${remaining}
     Verify Competitor Detail Result         ${competitor}
     Verify Remark Detail Result             ${remark}
+    Verify E-mail Result                    ${email}
 
 
 Verify //font Attribute Check Result
@@ -711,6 +728,10 @@ Verify End Date Result
 Verify Status Result
     [Arguments]     ${status}
     Verify //font Attribute Check Result        ${status}
+
+Verify Lead Name Result
+    [Arguments]     ${lead_name}
+    Verify //td Attribute Check Result      ${lead_name}
 
 Verify Account Name Result
     [Arguments]     ${account}
@@ -791,6 +812,7 @@ Click Add Image Button
     [Documentation]     This Function is to upload images
     [Arguments]     ${image}        ${account}      ${objective}    ${schedule}
     Scroll Down Page From The Browser
+    Run Keyword If  ${scroll} > 1   Log ${scroll}
     @{img}=     Split String From Right     ${image}    ;
     :FOR    ${img_line}     IN   @{img}
     \   ${string_convert}=      Convert To String   ${img_line}
@@ -803,7 +825,10 @@ Click Add Image Button
     \   Click Element       ${UPLOAD_OK_BUTTON}
     \   Select Window
     \   ${count}=   Get Element Count   //button[@class="crmbutton small edit"][contains(text(), 'Remove')]
-    \   Log     ${count}
+    \   Run Keyword If      ${count} > 1    Log     ${count}
+#    \   ${today}=       Get Current Date    result_format=%d-%m-%Y      %H:%M:%S
+#    \   ${set_today}=   Set Variable    ${today}
+#    \   Log     ${set_today}
     \   ${file_exist}=  Capture Page Screenshot     filename=${schedule}-${objective}-${account}/screenshot image from ${objective}-${account}.png
     \   File Should Exist       ${file_exist}
 Click Delete Button
