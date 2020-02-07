@@ -235,9 +235,9 @@ Navigate Creating Sales Visit All
     Remark Information      ${remark}
     Competitor Information      ${competitor}
     Click Save Button
-    Verify All Fields Informations     ${objective}    ${start_date}   ${status}   ${account}  ${email}    ${phone}
-    ...     ${mobile}          ${add}   ${subtract}    ${contact_name}     ${department}   ${position}  ${lead_name}
-    ...     ${project_name}     ${comment}  ${plan}     ${report}   ${remaining}    ${competitor}   ${remark}
+    Verify All Fields Informations      ${objective}    ${start_date}   ${status}   ${account}  ${email}    ${phone}    ${mobile}
+    ...     ${add}      ${subtract}  ${contact_name}    ${department}   ${position}     ${project_name}     ${lead_name}
+    ...     ${comment}  ${plan}     ${report}   ${remaining}    ${competitor}   ${remark}
     Click Add Image Button      ${image}    ${account}  ${objective}    ${schedule}
 
 Navigate Creating Sales Visit Required
@@ -262,7 +262,7 @@ Navigate Creating Sales Visit Required
     Adding Account Information     ${account}
     Start Time Information                 ${subtract}
     End Time Information   ${add}
-#    Sleep    2
+    Sleep    2
     #############################################################
     Adding Contact Name Information      ${contact_name}
     Verify Added Contact Information     ${contact_name}
@@ -271,7 +271,7 @@ Navigate Creating Sales Visit Required
     Adding Contact Name Information      ${contact_name}
     Verify Added Contact Information     ${contact_name}
 
-#    Sleep   2
+    Sleep   2
     ##############################################################
     Adding Project Information      ${project_name}
     Verify Added Project Information    ${project_name}
@@ -281,9 +281,7 @@ Navigate Creating Sales Visit Required
     Verify Added Project Information    ${project_name}
     Plan Information        ${plan}
 
-#    Sleep  2
-    ###############################################################
-#    Sleep  2
+    Sleep  2
     ###################################################################
     Click Save Button
     Verify Required Field Informations      ${objective}
@@ -306,8 +304,6 @@ Navigate Creating Sales Visit Optional Fields
     Competitor Information      ${competitor}
     Department Information      ${department}
     Position Information        ${position}
-    Email Address Information   ${email}
-    Phone And Mobile Contacts Information       ${mobile}   ${phone}
     Adding Lead Information     ${lead_no}
     Verify Added Lead Information       ${lead_name}
     Click Erase Button      ${LEAD_CLEAR_BUTTON}
@@ -348,6 +344,8 @@ Navigate Creating Sales Visit Optional Fields
     #######################################################################
     Alert Message Should Be Found   Plan Detail cannot be none
     ########################################################################
+    Phone And Mobile Contacts Information       ${mobile}   ${phone}
+    Email Address Information   ${email}
     Department Information      ${department}
     Position Information        ${position}
     Plan Information        ${plan}
@@ -367,8 +365,6 @@ Select Sales Visit Schedule Tab
 View Sales Visit Form
     [Arguments]     ${objective}
     Wait Until Element Is Visible       ${SALES_VISIT_TAB}
-#    ${count_me}=    Get Element Count       ${SALES_VISIT_TAB}
-#    Log      ${count_me}
     Mouse Over      ${CAL_ADD_BUTTON}
     #Scroll Down Page From The Browser
     #Scroll Element Into View    ${SALES_VISIT_OPTION}
@@ -554,6 +550,12 @@ Phone And Mobile Contacts Information
     Should Be Equal     ${mobile}   ${actual}
     ${actual_phone}=    Get Value   //input[@id="phone"]
     Should Be Equal    ${actual_phone}      ${phone}
+#    ${mobile}=      Get Value       //input[@id="mobile"]
+#    Log     ${mobile}
+#    ${phone}=    Get Value   //input[@id="phone"]
+#    Log   ${phone}
+#    Input Text      ${PHONE_LOCATOR}    ${phone}     clear=True
+#    Input Text      ${MOBILE_LOCATOR}   ${mobile}    clear=True
 
 Plan Information
     [Arguments]     ${plan}
@@ -610,9 +612,9 @@ Alert Should Be Found
 
 Verify All Fields Informations
     [Documentation]     To verify the created required informations
-    [Arguments]     ${objective}    ${start_date}   ${status}   ${account}  ${email}    ${phone}    ${lead_name}
-    ...     ${mobile}      ${add}  ${subtract}   ${contact_name}     ${department}   ${position}
-    ...     ${project_name}     ${comment}  ${plan}     ${report}   ${remaining}    ${competitor}   ${remark}
+    [Arguments]     ${objective}    ${start_date}   ${status}   ${account}  ${email}    ${phone}    ${mobile}
+    ...     ${add}      ${subtract}  ${contact_name}    ${department}   ${position}     ${project_name}     ${lead_name}
+    ...     ${comment}  ${plan}     ${report}   ${remaining}    ${competitor}   ${remark}
 
     Verify Modified Time Result
     Verify Created Time Result
@@ -812,7 +814,6 @@ Click Add Image Button
     [Documentation]     This Function is to upload images
     [Arguments]     ${image}        ${account}      ${objective}    ${schedule}
     Scroll Down Page From The Browser
-    Run Keyword If  ${scroll} > 1   Log ${scroll}
     @{img}=     Split String From Right     ${image}    ;
     :FOR    ${img_line}     IN   @{img}
     \   ${string_convert}=      Convert To String   ${img_line}
@@ -826,11 +827,13 @@ Click Add Image Button
     \   Select Window
     \   ${count}=   Get Element Count   //button[@class="crmbutton small edit"][contains(text(), 'Remove')]
     \   Run Keyword If      ${count} > 1    Log     ${count}
-#    \   ${today}=       Get Current Date    result_format=%d-%m-%Y      %H:%M:%S
-#    \   ${set_today}=   Set Variable    ${today}
-#    \   Log     ${set_today}
     \   ${file_exist}=  Capture Page Screenshot     filename=${schedule}-${objective}-${account}/screenshot image from ${objective}-${account}.png
     \   File Should Exist       ${file_exist}
+
+Check In Sales Visit Page
+    [Documentation]   This function is to verify if all created information are successfully saved or not
+    ...               in the schedule
+
 Click Delete Button
     Sleep  2
     Click Button        Delete
