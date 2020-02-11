@@ -5,7 +5,7 @@ Documentation   This is the script for Create Sales Visit Required Informations 
 ...             2. Input Username at variable ${USER}
 ...             3. Input password at variable ${PASS}
 ...             4. Input User's Full Name at variable ${USER_FULL_NAME}
-Library     SeleniumLibrary
+Library     Selenium2Library
 Library     OperatingSystem
 Library     String
 Library     DateTime

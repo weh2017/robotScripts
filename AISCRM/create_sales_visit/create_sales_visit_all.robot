@@ -5,7 +5,7 @@ Documentation   This is the script for Create Sales Visit All Informations
 ...             2. Input Username at variable ${USER}
 ...             3. Input password at variable ${PASS}
 ...             4. Input User's Full Name at variable ${USER_FULL_NAME}
-Library     SeleniumLibrary
+Library     Selenium2Library
 Library     OperatingSystem
 Library     String
 Library     DateTime
@@ -37,7 +37,7 @@ Sales Visit
 ##    Select Dropdown Option From Menu    ${SALES_VISIT_STRING}
 #
 All Informations
-    Repeat Keyword   5 times   Perform Create Sales Visit All Informations     ALL      ${CURDIR}${/}../resources/sales_visit2.csv
+    Perform Create Sales Visit All Informations     ALL      ${CURDIR}${/}../resources/sales_visit2.csv
 
 
 #Log Out

@@ -239,7 +239,8 @@ Navigate Creating Sales Visit All
     ...     ${add}      ${subtract}  ${contact_name}    ${department}   ${position}     ${project_name}     ${lead_name}
     ...     ${comment}  ${plan}     ${report}   ${remaining}    ${competitor}   ${remark}
     Click Add Image Button      ${image}    ${account}  ${objective}    ${schedule}
-
+    Check In Results Sales Visit Page       ${objective}     ${start_date}     ${add}    ${start_date}   ${subtract}
+    ...         ${status}   ${account}  ${plan}
 Navigate Creating Sales Visit Required
     [Documentation]     This Function is compiled with required informations only to automate.Other fields that do not
     ...     are ignored.
@@ -288,6 +289,8 @@ Navigate Creating Sales Visit Required
     ...             ${start_date}    ${status}   ${account}  ${contact_name}
     ...             ${project_name}      ${add}   ${subtract}      ${plan}
     Click Add Image Button      ${image}    ${account}  ${objective}    ${schedule}
+    Check In Results Sales Visit Page       ${objective}     ${start_date}     ${add}    ${start_date}   ${subtract}
+    ...         ${status}   ${account}  ${plan}
 
 Navigate Creating Sales Visit Optional Fields
     [Arguments]      ${schedule}    ${objective}    ${comment}  ${report}   ${remaining}    ${remark}   ${account}
@@ -354,12 +357,13 @@ Navigate Creating Sales Visit Optional Fields
     ...             ${position}     ${project_name}     ${lead_name}  ${comment}     ${report}  ${plan}
     ...             ${report}    ${remaining}   ${competitor}   ${remark}   ${email}
     Click Add Image Button      ${image}    ${account}  ${objective}    ${schedule}
-
+    Check In Results Sales Visit Page       ${objective}     ${start_date}     ${add}    ${start_date}   ${subtract}
+    ...         ${status}   ${account}  ${plan}
 
 Select Sales Visit Schedule Tab
     [Arguments]         ${schedule}=${TRUE}
-    Run Keyword If  "${schedule}"=="${TRUE}"       Click Element     //td/a[contains(text(), '${schedule}')]
-    Run Keyword If    "${schedule}"=="${TRUE}"     Click Element   //td[@class="calSel"][contains(text(), '${schedule}')]
+    Run Keyword If  "${schedule}"=="${TRUE}"       Click Element     //td[@class="calUnSel"]/a[contains(text(), '${schedule}')]
+    Run Keyword If    "${schedule}"=="${TRUE}"     Wait Until Element Is Visible   //td[@class="calSel"][contains(text(), '${schedule}')]
     Log    ${schedule} has been selected
 
 View Sales Visit Form
@@ -723,6 +727,7 @@ Verify User Full Name Result
 Verify Start Date Result
     [Arguments]     ${start_date}
     ${replace}=     Replace String    ${start_date}   /   -
+
 Verify End Date Result
     [Arguments]     ${start_date}
     ${replace}=     Replace String    ${start_date}   /   -
@@ -830,9 +835,23 @@ Click Add Image Button
     \   ${file_exist}=  Capture Page Screenshot     filename=${schedule}-${objective}-${account}/screenshot image from ${objective}-${account}.png
     \   File Should Exist       ${file_exist}
 
-Check In Sales Visit Page
+Check In Results Sales Visit Page
     [Documentation]   This function is to verify if all created information are successfully saved or not
     ...               in the schedule
+    [Arguments]         ${objective}     ${start_date}     ${add}    ${start_date}   ${subtract}
+    ...         ${status}   ${account}  ${plan}
+
+    Select Dropdown Option From Menu    ${SALES_VISIT_STRING}
+    Click Element     //td[@class="dvtUnSelectedCell"]/a[contains(text(), "All Events")]
+
+    @{create}=      Create List         ${objective}    ${USER}     ${start_date}     ${add}    ${start_date}   ${subtract}
+    ...         ${status}   ${account}  ${plan}
+    :FOR   ${index}     ${item}     IN ENUMERATE     @{create}
+    \  Run Keyword If    "${index}"=="${TRUE}"    Table Row Should Contain    //tr[@class="lvtColData"][1]/td[${index}][contains(text(), "${item}")]
+    ...     ${index}    ${item}
+    \  Run Keyword If    "${index}"=="${TRUE}"    Table Row Should Contain  //tr[@class="lvtColData"][1]/td[${index}]/a[contains(text(), "${item}")]
+    ...     ${index}    ${item}
+    \   Log    ${item}
 
 Click Delete Button
     Sleep  2
