@@ -645,6 +645,68 @@ Verify All Fields Informations
     Verify Competitor Detail Result         ${competitor}
     Verify Remark Detail Result             ${remark}
 
+#    @{all}=     Create List     ${objective}       ${USER_FULL_NAME}    ${start_date}   ${start_date}   ${account}  ${phone}
+#    ...             ${mobile}    ${add}     ${subtract}     ${contact_name}     ${department}
+#    ...             ${position}     ${project_name}     ${lead_name}  ${comment}     ${report}  ${plan}
+#    ...             ${report}    ${remaining}   ${competitor}   ${remark}   ${email}
+##
+#    :FOR    ${index}   ${item}     IN ENUMERATE         @{all}
+#    \   ${current_result}=      Get Current Date     result_format=%d-%m-%Y     #%H:%M
+    # Objective and status
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[${index}]/td[@class="dvtCellInfo"][${index}]/font[contains(text(), "${item}")]
+    # User, Stard Date, End Date, start time, end time, account,lead, modified time, created time
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[${index}/td[@class="dvtCellInfo"][${index}][contains(text(), "${item}")]
+#    ...     ${index}   ${item}
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[2]/td[@class="dvtCellInfo"][${index}][contains(text(), "${item}")]
+#    ...     ${index}   ${item}
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[3]/td[@class="dvtCellInfo"][${index}][contains(text(), "${item}")]
+#    ...     ${index}   ${item}
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[4]/td[@class="dvtCellInfo"]/font[${index}][contains(text(), "${item}")]
+#    ...     ${index}   ${item}
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[4]/td[@class="dvtCellInfo"][${index}][contains(text(), "${item}")]
+#    ...     ${index}   ${item}
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[5]/td[@class="dvtCellInfo"][${index}][contains(text(), "${item}")]
+#    ...     ${index}   ${item}
+    # Department, email, position, phone, mobile
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[${index}]/td[@class="dvtCellInfo"]/span[${index}][contains(text(), "${item}")]
+#    ...     ${index}   ${item}
+#    # Phone And Position
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[6]/td[@class="dvtCellInfo"]/span[${index}][contains(text(), "${item}")]
+#    ...     ${index}   ${item}
+#    # Phone
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[7]/td[@class="dvtCellInfo"]/span[${index}][contains(text(), "${item}")]
+#    ...     ${index}   ${item}
+    # Project Name, Contact name
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[${index}]/td[@class="dvtCellInfo"]/a[${index}][contains(text(), "${item}")]
+#    ...     ${index}   ${item}
+#    # Mobile
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[8]/td[@class="dvtCellInfo"]/span[1][contains(text(), "${item}")]
+#    ...     ${index}   ${item}
+#    # Modified Time
+#    \  Table Row Should Contain    //tr[8]/td[@class="dvtCellInfo"][2][contains(text(), "${current_result}")]
+#    ...     2   ${current_result}
+#    # Created Time
+#    \   Table Row Should Contain    //tr[9]/td[@class="dvtCellInfo"][1][contains(text(), "${current_result}")]
+#    ...     1       ${current_result}
+#    # Lead
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[9]/td[@class="dvtCellInfo"][${index}][contains(text(), "${item}")]
+#    ...     ${index}   ${item}
+    # Comment Information
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr/td[@class="dataField"][${index}][contains(text(), "${item}")]
+#    ...     ${index}   ${item}
+    # Comment Information With Date
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[2]/td[@class="dataField"]/font[${index}][contains(text(), ": ${USER} on ${current_result}")]
+#    ...     ${index}   ${USER}
+#    # Plan Information
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //div[@id="tblStep1PlanInformation"]//tr[1]/td[${index}]
+#    ...     ${index}   ${item}
+#    # Report And Remaining Information
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //div[@id="tblStep2ReportInformation"]//tr[${index}]/td[2]
+#    ...     ${index}   ${item}
+#    # Competitor And Remark Information
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //div[@id="tblStep3OtherInformation"]//tr[${index}]/td[2]
+#    ...     ${index}   ${item}
+
 Verify Required Field Informations
     [Arguments]      ${objective}
     ...             ${start_date}    ${status}   ${account}  ${contact_name}
@@ -687,10 +749,69 @@ Verify Optional Fields Informations
     Verify Remark Detail Result             ${remark}
     Verify E-mail Result                    ${email}
 
+#    @{all}=     Create List     ${objective}    ${USER_FULL_NAME}   ${account}  ${phone}    ${mobile}    ${contact_name}   ${contact_name}     ${department}
+#    ...             ${position}     ${project_name}     ${lead_name}  ${comment}     ${report}  ${plan}
+#    ...             ${report}    ${remaining}   ${competitor}   ${remark}   ${email}
+#
+#    :FOR    ${index}   ${item}     IN ENUMERATE         @{all}
+#    \   ${current_result}=      Get Current Date     result_format=%d-%m-%Y     #%H:%M
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr/td[@class="dvtCellInfo"][${index}]/font[contains(text(), "${item}")]
+#    ...     ${index}   ${item}
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr/td[@class="dvtCellInfo"][${index}][contains(text(), "${item}")]
+#    ...     ${index}   ${item}
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[2]/td[@class="dvtCellInfo"][${index}][contains(text(), "${item}")]
+#    ...     ${index}   ${item}
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[3]/td[@class="dvtCellInfo"][${index}][contains(text(), "${item}")]
+#    ...     ${index}   ${item}
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[4]/td[@class="dvtCellInfo"]/font[${index}][contains(text(), "${item}")]
+#    ...     ${index}   ${item}
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[4]/td[@class="dvtCellInfo"][${index}][contains(text(), "${item}")]
+#    ...     ${index}   ${item}
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[5]/td[@class="dvtCellInfo"][${index}][contains(text(), "${item}")]
+#    ...     ${index}   ${item}
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[5]/td[@class="dvtCellInfo"]/span[${index}][contains(text(), "${item}")]
+#    ...     ${index}   ${item}
+#    # Phone And Position
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[6]/td[@class="dvtCellInfo"]/span[${index}][contains(text(), "${item}")]
+#    ...     ${index}   ${item}
+#    # Phone
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[7]/td[@class="dvtCellInfo"]/span[${index}][contains(text(), "${item}")]
+#    ...     ${index}   ${item}
+#    # Project Name
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[7]/td[@class="dvtCellInfo"]/a[${index}][contains(text(), "${item}")]
+#    ...     ${index}   ${item}
+#    # Mobile
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[8]/td[@class="dvtCellInfo"]/span[1][contains(text(), "${item}")]
+#    ...     ${index}   ${item}
+#    # Modified Time
+#    \  Table Row Should Contain    //tr[8]/td[@class="dvtCellInfo"][2][contains(text(), "${current_result}")]
+#    ...     2   ${current_result}
+#    # Created Time
+#    \   Table Row Should Contain    //tr[9]/td[@class="dvtCellInfo"][1][contains(text(), "${current_result}")]
+#    ...     1       ${current_result}
+#    # Lead
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[9]/td[@class="dvtCellInfo"][${index}][contains(text(), "${item}")]
+#    ...     ${index}   ${item}
+#    # Comment Information
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr/td[@class="dataField"][${index}][contains(text(), "${item}")]
+#    ...     ${index}   ${item}
+#    # Comment Information With Date
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[2]/td[@class="dataField"]/font[${index}][contains(text(), ": ${USER} on ${current_result}")]
+#    ...     ${index}   ${USER}
+#    # Plan Information
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //div[@id="tblStep1PlanInformation"]//tr[1]/td[${index}]
+#    ...     ${index}   ${item}
+#    # Report And Remaining Information
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //div[@id="tblStep2ReportInformation"]//tr[${index}]/td[2]
+#    ...     ${index}   ${item}
+#    # Competitor And Remark Information
+#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //div[@id="tblStep3OtherInformation"]//tr[${index}]/td[2]
+#    ...     ${index}   ${item}
+
 
 Verify //font Attribute Check Result
     [Documentation]     This function is to verify the result that contains text only from the system
-    [Arguments]     ${expected}
+    [Arguments]        ${expected}
     ${font}=    Get Text    //font[contains(text(), "${expected}")]
     Log     ${font}
 
@@ -718,7 +839,7 @@ Verify //a Attribute Check Result
 
 Verify Objective Result
     [Arguments]     ${objective}
-    Verify //font Attribute Check Result    ${objective}
+    Verify //font Attribute Check Result     ${objective}
 
 Verify User Full Name Result
     [Documentation]     The Assigned Sale Visit Full Name of the user
@@ -734,7 +855,7 @@ Verify End Date Result
     Element Should Contain      //body[@class='small']//tr//tr//tr//tr//tr//tr[3]//td[2]     ${replace}
 Verify Status Result
     [Arguments]     ${status}
-    Verify //font Attribute Check Result        ${status}
+    Verify //font Attribute Check Result      ${status}
 
 Verify Lead Name Result
     [Arguments]     ${lead_name}
@@ -832,8 +953,8 @@ Click Add Image Button
     \   Select Window
     \   ${count}=   Get Element Count   //button[@class="crmbutton small edit"][contains(text(), 'Remove')]
     \   Run Keyword If      ${count} > 1    Log     ${count}
-    \   ${file_exist}=  Capture Page Screenshot     filename=${schedule}-${objective}-${account}/screenshot image from ${objective}-${account}.png
-    \   File Should Exist       ${file_exist}
+#    \   ${file_exist}=  Capture Page Screenshot     filename=${schedule}-${objective}-${account}/screenshot image from ${objective}-${account}.png
+#    \   File Should Exist       ${file_exist}
 
 Check In Results Sales Visit Page
     [Documentation]   This function is to verify if all created information are successfully saved or not
