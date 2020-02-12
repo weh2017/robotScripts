@@ -1,0 +1,55 @@
+//tr/td[@class="dvtCellInfo"][1]
+
+//tr/td[@class="dvtCellInfo"][1]/font[contains(text(), "Quotation")]
+
+//tr/td[@class="dvtCellInfo"][2][contains(text(), "Ruel Arbon")]
+
+-----------------------------------------------------------------------
+//tr[2]/td[@class="dvtCellInfo"][1][contains(text(), "23-02-2020")]
+
+//tr[2]/td[@class="dvtCellInfo"][2][contains(text(), "17:33")]
+------------------------------------------------------------------------
+
+//tr[3]/td[@class="dvtCellInfo"][1][contains(text(), "23-02-2020")]
+
+//tr[3]/td[@class="dvtCellInfo"][2][contains(text(), "18:33")]
+
+------------------------------------------------------------------------
+//tr[4]/td[@class="dvtCellInfo"][1]/font[contains(text(), "Cancel")]
+
+//tr[4]/td[@class="dvtCellInfo"][2]/a[contains(text(), "คุณวุฒิพงศ์ -")]
+
+-------------------------------------------------------------------------
+//tr[5]/td[@class="dvtCellInfo"][1][contains(text(), "Asia Biomass Co.,Ltd.")]
+
+//tr[5]/td[@class="dvtCellInfo"][2]/span[contains(text(), "Asia Biomass Co.")]
+
+----------------------------------------------------------------------------------
+
+//tr[6]/td[@class="dvtCellInfo"][1]/span[contains(text(), "it@asiabiomass.com")]
+
+//tr[6]/td[@class="dvtCellInfo"][2]/span[contains(text(), "Asia Biomass Co.")]
+
+
+-----------------------------------------------------------------------------------
+
+//tr[7]/td[@class="dvtCellInfo"][1]/span[contains(text(), "02-415-0054")]
+
+
+//tr[7]/td[@class="dvtCellInfo"][2]/a[contains(text(), "ABMC")]
+
+--------------------------------------------------------------------------------------
+
+//tr[8]/td[@class="dvtCellInfo"][1]/span[contains(text(), "02-415-0054")]
+
+//tr[8]/td[@class="dvtCellInfo"][2][contains(text(), "11-02-2020 17:34:59")]
+
+-----------------------------------------------------------------------------------------
+//tr[9]/td[@class="dvtCellInfo"][1][contains(text(), "11-02-2020 17:34:59")]
+
+//tr[9]/td[@class="dvtCellInfo"][2][contains(text(), "วุฒิพงศ์ มีจำรัส")]
+
+-----------------------------------------------------------------------------------------
+//div[@class="dataField"][contains(text(), "Asia Biomass Co.")]
+
+//div[2][@class="dataLabel"]/font[contains(text(), " : ruel.arb on 2020-02-11 17:34:59")]
