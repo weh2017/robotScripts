@@ -28,13 +28,13 @@ ${EMAIL_TEXT_LOCATOR}       id:email
 ${TIME_START_LOCATOR}       //tbody/tr[4]/td/span/input[1]         #this is a start time locator
 ${TIME_END_LOCATOR}         //tbody/tr[5]/td[4]/span/input[1]      #this is an end time locator
 ${ADD_CONTACT_NAME}         //table/tbody/tr[6]/td[4]/table/tbody/tr/td[2]/img     #this is a contact button.opens new window
-${ADD_PROJECT_NAME}         //tr[9]//td[4]//table[1]//tbody[1]//tr[1]//td[3]//img[1]    #this is a project button.open new window
+${ADD_PROJECT_NAME}         //td[@class='showPanelBg']//td[2]//table[1]//tbody[1]//tr[1]//td[3]//img[1]   #this is a project button.open new window
 ${CONTACT_LIST_LOCATOR}     //a[@href="javascript:window.close();"][contains(text(), '${FIRST_NAME_STRING}')]
 ${DEPARTMENT_LOCATOR}       id:con_department
 ${POSITION_LOCATOR}         id:con_position
 ${PHONE_LOCATOR}            id:phone
 ${MOBILE_LOCATOR}           id:mobile
-${ADD_LEAD_NAME}            //tr[10]//td[4]//table[1]//tbody[1]//tr[1]//td[3]//img[1]   #this is adding lead information button
+${ADD_LEAD_NAME}            //td[4]//table[1]//tbody[1]//tr[1]//td[3]//img[1]   #this is adding lead information button
 ############################################
 # PLAN INFORMATION LOCATORS
 ############################################
@@ -55,8 +55,8 @@ ${CHOOSE_FILE_BUTTON}       //form[@id="frmUpload"]
 ${ACCOUNT_CLEAR_BUTTON}     //td[@class='showPanelBg']//td[2]//table[1]//tbody[1]//tr[1]//td[3]//input[1]                  #this is an clear button of add account
 ${ADD_ACCOUNT_NAME}         //table/tbody/tr[7]/td[2]/table/tbody/tr/td[2]/img     #this is an add account button.opens new window
 ${CONTACT_CLEAR_BUTTON}     //td[4]//table[1]//tbody[1]//tr[1]//td[3]//input[1]
-${PROJECT_CLEAR_BUTTON}     //tr[9]//td[4]//table[1]//tbody[1]//tr[1]//td[4]//input[1]
-${LEAD_CLEAR_BUTTON}        //tr[10]//td[4]//table[1]//tbody[1]//tr[1]//td[4]//input[1]
+${PROJECT_CLEAR_BUTTON}     //td[@class='showPanelBg']//td[2]//table[1]//tbody[1]//tr[1]//td[4]//input[1]
+${LEAD_CLEAR_BUTTON}        //td[4]//table[1]//tbody[1]//tr[1]//td[4]//input[1]
 ${ACCOUNT_VALUE}            account_name
 ${CONTACT_VALUE}            contact_name
 ${PROJECT_VALUE}            project_no
@@ -87,6 +87,10 @@ ${END_TIME_WARN_MSG}            //div[contains(text(), 'End time is more than th
 ${WARN_OK_BTN}                  //span[@class="l-btn-text"][contains(text(), 'Ok')]
 ${FILE_UPLOAD_CONFIRMATION}     //div[contains(text(), 'อัพโหลดไฟล์สำเร็จ')]
 ${UPLOAD_OK_BUTTON}             //span[@class="l-btn-text"][contains(text(), 'OK')]
+##################################
+#  CONTACT NAME OTHER
+##################################
+${CONTACT_NAME_OTHER_LOCATOR}    id:contactnameother
 
 
 
@@ -135,6 +139,8 @@ Perform Create Sales Visit All Informations
     \   ${add}=             Set Variable       ${add_get}
     #   Plan Detail
     \   ${plan}=            Set Variable    @{bm}[9]
+#    #   Contact Other Name
+#    \   ${contact_other}=   Set Variable    @{bm}[10]
     #   Email
     \   ${email}=           Set Variable    @{bm}[10]
     #   Mobile
@@ -163,8 +169,8 @@ Perform Create Sales Visit All Informations
     \   ${image}=           Set Variable    @{bm}[22]
     \   Run Keyword If  '${data}'=='ALL'    Navigate Creating Sales Visit All        ${schedule}  ${objective}
     ...             ${start_date}      ${status}   ${account}  ${contact_name}
-    ...             ${project_name}    ${add}  ${subtract}    ${department}   ${position}     ${email}    ${plan}     ${comment}
-    ...             ${report}       ${remaining}    ${remark}   ${competitor}     ${lead_no}    ${lead_name}    ${mobile}   ${phone}
+    ...             ${project_name}    ${add}  ${subtract}    ${department}   ${position}     ${email}    ${plan}
+    ...             ${comment}  ${report}       ${remaining}    ${remark}   ${competitor}     ${lead_no}    ${lead_name}    ${mobile}   ${phone}
     ...             ${image}
     \   Run Keyword If  '${data}'=='REQUIRE'   Navigate Creating Sales Visit Required      ${schedule}  ${objective}
     ...             ${start_date}    ${status}   ${account}  ${contact_name}
@@ -172,13 +178,13 @@ Perform Create Sales Visit All Informations
     \   Run Keyword If  '${data}'=='OPTION'     Navigate Creating Sales Visit Optional Fields    ${schedule}    ${objective}
     ...              ${comment}  ${report}   ${remaining}    ${remark}  ${account}
     ...              ${competitor}  ${department}   ${position}     ${email}    ${mobile}   ${phone}
-    ...              ${lead_no}     ${lead_name}    ${contact_name}     ${project_name}     ${plan}     ${image}
+    ...              ${lead_no}     ${lead_name}    ${contact_name}     ${project_name}     ${plan}     ${contact_other}  ${image}
 ##################################################################################################################
 Navigate Creating Sales Visit All
     [Documentation]     All functions
     [Arguments]    ${schedule}  ${objective}    ${start_date}    ${status}   ${account}  ${contact_name}
-    ...             ${project_name}      ${add}   ${subtract}   ${department}   ${position}     ${email}    ${plan}     ${comment}
-    ...             ${report}       ${remaining}    ${remark}   ${competitor}       ${lead_no}      ${lead_name}    ${mobile}   ${phone}
+    ...    ${project_name}      ${add}   ${subtract}   ${department}   ${position}     ${email}    ${plan}
+    ...    ${comment}   ${report}       ${remaining}    ${remark}   ${competitor}       ${lead_no}      ${lead_name}    ${mobile}   ${phone}
     ...             ${image}
 #    Select Menu     ${HEADER_MENU_STRING}
     Select Dropdown Option From Menu    ${SALES_VISIT_STRING}
@@ -193,6 +199,7 @@ Navigate Creating Sales Visit All
     Click Erase Button      ${ACCOUNT_CLEAR_BUTTON}
     Verify Erased Account Information
     Adding Account Information     ${account}
+#    Adding Contact Name Other Information       ${contact_other}
     Start Time Information                 ${subtract}
     End Time Information   ${add}
 #    Sleep    2
@@ -295,7 +302,8 @@ Navigate Creating Sales Visit Required
 Navigate Creating Sales Visit Optional Fields
     [Arguments]      ${schedule}    ${objective}    ${comment}  ${report}   ${remaining}    ${remark}   ${account}
     ...              ${competitor}  ${department}   ${position}     ${email}    ${mobile}   ${phone}
-    ...              ${lead_no}     ${lead_name}    ${contact_name}     ${project_name}     ${plan}     ${image}
+    ...              ${lead_no}     ${lead_name}    ${contact_name}     ${project_name}     ${plan}
+    ...              ${image}
     Select Dropdown Option From Menu    ${SALES_VISIT_STRING}
     Select Sales Visit Schedule Tab     ${schedule}
     View Sales Visit Form       ${objective}
@@ -347,6 +355,7 @@ Navigate Creating Sales Visit Optional Fields
     #######################################################################
     Alert Message Should Be Found   Plan Detail cannot be none
     ########################################################################
+#    Adding Contact Name Other Information       ${contact_other}
     Phone And Mobile Contacts Information       ${mobile}   ${phone}
     Email Address Information   ${email}
     Department Information      ${department}
@@ -396,7 +405,7 @@ Start And End Date Informations
 Status Information
     [Documentation]     Plan, Cancel, Completed
     [Arguments]     ${status}
-    Click Element   //option[@value="${status}"]
+    Click This Option    ${status}
 
 
 Adding Account Information
@@ -490,6 +499,11 @@ Email Text Alert
     [Documentation]   Email Text Alert
     Handle Alert  timeout=2
 #    Alert Should Be Present     Please enter a valid E-mail (E-MAIL)    action=ACCEPT
+
+Adding Contact Name Other Information
+    [Arguments]     ${contact_other}
+    Input Text      ${CONTACT_NAME_OTHER_LOCATOR}   ${contact_other}
+
 
 Department Information
     [Documentation]     Department Information
@@ -645,67 +659,6 @@ Verify All Fields Informations
     Verify Competitor Detail Result         ${competitor}
     Verify Remark Detail Result             ${remark}
 
-#    @{all}=     Create List     ${objective}       ${USER_FULL_NAME}    ${start_date}   ${start_date}   ${account}  ${phone}
-#    ...             ${mobile}    ${add}     ${subtract}     ${contact_name}     ${department}
-#    ...             ${position}     ${project_name}     ${lead_name}  ${comment}     ${report}  ${plan}
-#    ...             ${report}    ${remaining}   ${competitor}   ${remark}   ${email}
-##
-#    :FOR    ${index}   ${item}     IN ENUMERATE         @{all}
-#    \   ${current_result}=      Get Current Date     result_format=%d-%m-%Y     #%H:%M
-    # Objective and status
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[${index}]/td[@class="dvtCellInfo"][${index}]/font[contains(text(), "${item}")]
-    # User, Stard Date, End Date, start time, end time, account,lead, modified time, created time
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[${index}/td[@class="dvtCellInfo"][${index}][contains(text(), "${item}")]
-#    ...     ${index}   ${item}
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[2]/td[@class="dvtCellInfo"][${index}][contains(text(), "${item}")]
-#    ...     ${index}   ${item}
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[3]/td[@class="dvtCellInfo"][${index}][contains(text(), "${item}")]
-#    ...     ${index}   ${item}
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[4]/td[@class="dvtCellInfo"]/font[${index}][contains(text(), "${item}")]
-#    ...     ${index}   ${item}
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[4]/td[@class="dvtCellInfo"][${index}][contains(text(), "${item}")]
-#    ...     ${index}   ${item}
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[5]/td[@class="dvtCellInfo"][${index}][contains(text(), "${item}")]
-#    ...     ${index}   ${item}
-    # Department, email, position, phone, mobile
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[${index}]/td[@class="dvtCellInfo"]/span[${index}][contains(text(), "${item}")]
-#    ...     ${index}   ${item}
-#    # Phone And Position
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[6]/td[@class="dvtCellInfo"]/span[${index}][contains(text(), "${item}")]
-#    ...     ${index}   ${item}
-#    # Phone
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[7]/td[@class="dvtCellInfo"]/span[${index}][contains(text(), "${item}")]
-#    ...     ${index}   ${item}
-    # Project Name, Contact name
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[${index}]/td[@class="dvtCellInfo"]/a[${index}][contains(text(), "${item}")]
-#    ...     ${index}   ${item}
-#    # Mobile
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[8]/td[@class="dvtCellInfo"]/span[1][contains(text(), "${item}")]
-#    ...     ${index}   ${item}
-#    # Modified Time
-#    \  Table Row Should Contain    //tr[8]/td[@class="dvtCellInfo"][2][contains(text(), "${current_result}")]
-#    ...     2   ${current_result}
-#    # Created Time
-#    \   Table Row Should Contain    //tr[9]/td[@class="dvtCellInfo"][1][contains(text(), "${current_result}")]
-#    ...     1       ${current_result}
-#    # Lead
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[9]/td[@class="dvtCellInfo"][${index}][contains(text(), "${item}")]
-#    ...     ${index}   ${item}
-    # Comment Information
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr/td[@class="dataField"][${index}][contains(text(), "${item}")]
-#    ...     ${index}   ${item}
-    # Comment Information With Date
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[2]/td[@class="dataField"]/font[${index}][contains(text(), ": ${USER} on ${current_result}")]
-#    ...     ${index}   ${USER}
-#    # Plan Information
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //div[@id="tblStep1PlanInformation"]//tr[1]/td[${index}]
-#    ...     ${index}   ${item}
-#    # Report And Remaining Information
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //div[@id="tblStep2ReportInformation"]//tr[${index}]/td[2]
-#    ...     ${index}   ${item}
-#    # Competitor And Remark Information
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //div[@id="tblStep3OtherInformation"]//tr[${index}]/td[2]
-#    ...     ${index}   ${item}
 
 Verify Required Field Informations
     [Arguments]      ${objective}
@@ -748,65 +701,6 @@ Verify Optional Fields Informations
     Verify Competitor Detail Result         ${competitor}
     Verify Remark Detail Result             ${remark}
     Verify E-mail Result                    ${email}
-
-#    @{all}=     Create List     ${objective}    ${USER_FULL_NAME}   ${account}  ${phone}    ${mobile}    ${contact_name}   ${contact_name}     ${department}
-#    ...             ${position}     ${project_name}     ${lead_name}  ${comment}     ${report}  ${plan}
-#    ...             ${report}    ${remaining}   ${competitor}   ${remark}   ${email}
-#
-#    :FOR    ${index}   ${item}     IN ENUMERATE         @{all}
-#    \   ${current_result}=      Get Current Date     result_format=%d-%m-%Y     #%H:%M
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr/td[@class="dvtCellInfo"][${index}]/font[contains(text(), "${item}")]
-#    ...     ${index}   ${item}
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr/td[@class="dvtCellInfo"][${index}][contains(text(), "${item}")]
-#    ...     ${index}   ${item}
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[2]/td[@class="dvtCellInfo"][${index}][contains(text(), "${item}")]
-#    ...     ${index}   ${item}
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[3]/td[@class="dvtCellInfo"][${index}][contains(text(), "${item}")]
-#    ...     ${index}   ${item}
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[4]/td[@class="dvtCellInfo"]/font[${index}][contains(text(), "${item}")]
-#    ...     ${index}   ${item}
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[4]/td[@class="dvtCellInfo"][${index}][contains(text(), "${item}")]
-#    ...     ${index}   ${item}
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[5]/td[@class="dvtCellInfo"][${index}][contains(text(), "${item}")]
-#    ...     ${index}   ${item}
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[5]/td[@class="dvtCellInfo"]/span[${index}][contains(text(), "${item}")]
-#    ...     ${index}   ${item}
-#    # Phone And Position
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[6]/td[@class="dvtCellInfo"]/span[${index}][contains(text(), "${item}")]
-#    ...     ${index}   ${item}
-#    # Phone
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[7]/td[@class="dvtCellInfo"]/span[${index}][contains(text(), "${item}")]
-#    ...     ${index}   ${item}
-#    # Project Name
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[7]/td[@class="dvtCellInfo"]/a[${index}][contains(text(), "${item}")]
-#    ...     ${index}   ${item}
-#    # Mobile
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[8]/td[@class="dvtCellInfo"]/span[1][contains(text(), "${item}")]
-#    ...     ${index}   ${item}
-#    # Modified Time
-#    \  Table Row Should Contain    //tr[8]/td[@class="dvtCellInfo"][2][contains(text(), "${current_result}")]
-#    ...     2   ${current_result}
-#    # Created Time
-#    \   Table Row Should Contain    //tr[9]/td[@class="dvtCellInfo"][1][contains(text(), "${current_result}")]
-#    ...     1       ${current_result}
-#    # Lead
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[9]/td[@class="dvtCellInfo"][${index}][contains(text(), "${item}")]
-#    ...     ${index}   ${item}
-#    # Comment Information
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr/td[@class="dataField"][${index}][contains(text(), "${item}")]
-#    ...     ${index}   ${item}
-#    # Comment Information With Date
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //tr[2]/td[@class="dataField"]/font[${index}][contains(text(), ": ${USER} on ${current_result}")]
-#    ...     ${index}   ${USER}
-#    # Plan Information
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //div[@id="tblStep1PlanInformation"]//tr[1]/td[${index}]
-#    ...     ${index}   ${item}
-#    # Report And Remaining Information
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //div[@id="tblStep2ReportInformation"]//tr[${index}]/td[2]
-#    ...     ${index}   ${item}
-#    # Competitor And Remark Information
-#    \   Run Keyword If      "${index}"=="${TRUE}"   Table Row Should Contain    //div[@id="tblStep3OtherInformation"]//tr[${index}]/td[2]
-#    ...     ${index}   ${item}
 
 
 Verify //font Attribute Check Result
@@ -905,12 +799,12 @@ Verify Project Name Result
 
 Verify Modified Time Result
     ${today}=       Get Current Date    result_format=%d-%m-%Y      #%H:%M
-    Wait Until Element Is Visible       //tr[8]//td[4][contains(text(), '${today}')]         timeout=60
-    Element Should Contain      //tr[8]//td[4][contains(text(), '${today}')]  ${today}
+    Wait Until Element Is Visible       //tr[9]/td[4][@class="dvtCellInfo"][contains(text(), '${today}')]         timeout=60
+    Element Should Contain      //tr[9]/td[4][@class="dvtCellInfo"][contains(text(), '${today}')]  ${today}
 Verify Created Time Result
     ${today}=       Get Current Date    result_format=%d-%m-%Y      #%H:%M
-    Wait Until Element Is Visible   //tr[9]//td[2][contains(text(), '${today}')]          timeout=60
-    Element Should Contain      //tr[9]//td[2][contains(text(), '${today}')]    ${today}
+    Wait Until Element Is Visible   //tr[10]/td[2][@class="dvtCellInfo"][contains(text(), '${today}')]          timeout=60
+    Element Should Contain      //tr[10]/td[2][@class="dvtCellInfo"][contains(text(), '${today}')]    ${today}
 Verify Comment Result
     [Arguments]     ${comment}=${None}
     ${today}=   Get Current Date    result_format=%Y-%m-%d      #%H:%M
@@ -948,7 +842,7 @@ Click Add Image Button
     \   Select Window   NEW
     \   Choose File     ${UPLOAD_FILE_BUTTON}        ${IMAGE_PATH}/${img_line}
     \   Click Button    UPLOAD
-    \   Wait Until Element Is Visible   ${FILE_UPLOAD_CONFIRMATION}
+    \   Wait Until Element Is Visible   ${FILE_UPLOAD_CONFIRMATION}     60
     \   Click Element       ${UPLOAD_OK_BUTTON}
     \   Select Window
     \   ${count}=   Get Element Count   //button[@class="crmbutton small edit"][contains(text(), 'Remove')]

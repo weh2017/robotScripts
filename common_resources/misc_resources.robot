@@ -66,6 +66,11 @@ Click Button
     [Arguments]         ${image}
     Click Element   //input[@value="${image}"]
 
+Click This Option
+    [Documentation]   Can be used for Dropdown selection
+    [Arguments]     ${option}
+    Click Element   //option[@value="${option}"]
+
 Alert Message Should Be Found
     [Documentation]     This is for Alert Message
     [Arguments]     ${alert}
