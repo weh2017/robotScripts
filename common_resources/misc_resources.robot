@@ -22,8 +22,14 @@ Select Dropdown Option From Menu
     [Documentation]     Select Dropdown options from menu like sales visit, account,contacts, case.etc
     Wait Until Element Is Visible   //a[contains(text(), '${select}')]
     Click Link      //a[contains(text(), '${select}')]
-    Sleep   5
 
+
+Click Button To Create Page
+    [Documentation]   This is specific button for creating Case, Jobs, Contacts, Leads, Documents, Projects.
+    ...     cannot use in sales visit.
+    [Arguments]     ${button_create}
+    Wait Until Element Is Visible       //img[@title="Create ${button_create}..."]
+    Click Image     //img[@title="Create ${button_create}..."]
 
 Input Username
     [Documentation]     This is the  email username input text function.
