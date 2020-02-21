@@ -144,6 +144,14 @@ Verify Deleted Information
     Log     ${actual}
     Should Be Empty     ${actual}
 
+Input Date Calendar Text
+    [Documentation]    This function is used to input the specific type of text of Date Calendar Text
+    [Arguments]     ${locator}  ${calendar_text}
+    Click Element   name:${locator}
+    Press Keys      name:${locator}      CTRL+a+DELETE
+    ${replace}=     Replace String       ${calendar_text}   /    -
+    Input Text      name:${locator}      ${replace}
+
 
 
 *** Variables ***
