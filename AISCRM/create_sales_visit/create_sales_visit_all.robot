@@ -33,6 +33,7 @@ Log-In User with Valid Username And Password
     Click Login button
 
 Sales Visit
+    [Tags]  Sales Visit
     Select Menu     ${HEADER_MENU_STRING}
 ##    Select Dropdown Option From Menu    ${SALES_VISIT_STRING}
 #
