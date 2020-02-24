@@ -405,7 +405,7 @@ Start And End Date Informations
 Status Information
     [Documentation]     Plan, Cancel, Completed
     [Arguments]     ${status}
-    Click This Option    ${status}
+    Select From Option Search Field    ${status}
 
 
 Adding Account Information

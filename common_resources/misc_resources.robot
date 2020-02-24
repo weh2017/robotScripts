@@ -73,10 +73,10 @@ Click Button
     [Arguments]         ${image}
     Click Element   //input[@value="${image}"]
 
-Click This Option
+Select From Option Search Field
     [Documentation]   Can be used for Dropdown selection
     [Arguments]     ${option}
-    Click Element   //option[@value="${option}"]
+    Click Element   ${SEARCH_FIELD}/option[@value="${option}"]
 
 Alert Message Should Be Found
     [Documentation]     This is for Alert Message
@@ -103,7 +103,11 @@ Verify Home Page
     Wait Until Element Is Visible       ${HOME_PAGE_LOCATOR}        timeout=10
     Log     Home Page Found
 
-
+Input Data To TextBox
+    [Documentation]   This function is to locate the element of the textbox and Input the desired text in this location.
+    [Arguments]     ${locator}      ${string}
+    Wait Until Element Is Visible       ${locator}
+    Input Text      ${locator}      ${string}
 Click Erase Button
     [Documentation]  This function is to erase the added account name, contact name, etc. example in creating sales visit.
     [Arguments]     ${account_delete}

@@ -24,7 +24,7 @@ Suite Teardown  Close Browser
 *** Test Cases ***
 AIS-CRM Website
     [Tags]      AIS-CRM SITE
-    Launch Web System   ${URL}
+    Launch Web System   ${URL_2}
 
 Log-In User with Valid Username And Password
     [Tags]  User credentials
