@@ -130,7 +130,7 @@ Case Open Date
     Input Date Calendar Text    case_open_date      ${OPEN_DATE_STRING}
 
 Select Case Type
-    [Arguments]     ${case_type}
+    [Arguments]   ${case_type}
     @{create_case_type}=     Create List      //select[@name="ticket_type"]
     :FOR   ${text}  IN    @{create_case_type}
     \       ${get}=     Get Text     ${text}
