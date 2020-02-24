@@ -23,6 +23,17 @@ Select Dropdown Option From Menu
     Wait Until Element Is Visible   //a[contains(text(), '${select}')]
     Click Link      //a[contains(text(), '${select}')]
 
+Select Data On Basic Search Mode
+    [Documentation]  This Function is to Add some data. It has a plus button and erase Button
+    [Arguments]     ${plus_button_locator}      ${option}   ${string_reference}
+    Scroll Down Page From The Browser
+    Click Element              ${plus_button_locator}
+    Switch Window   NEW
+    Select From Option Search Field   ${option}
+    Input Text To Search        ${string_reference}
+    Click Search Button
+    Select The List Found       ${string_reference}
+    Switch Window
 
 Click Button To Create Page
     [Documentation]   This is specific button for creating Case, Jobs, Contacts, Leads, Documents, Projects.

@@ -1,0 +1,698 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 3.1.2 (Python 3.7.4 on win32)" generated="20200224 23:37:31.843" rpa="false">
+<suite id="s1" name="Create Case Module" source="D:\my_files\Robot_Framework\robotScripts\AISCRM\create_case_module\create_case_module.robot">
+<kw name="Open Chrome Browser" library="web_common" type="setup">
+<doc>Open the Chrome Browser with maximize view, no infobars notification and no pop-ups.</doc>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>sys.modules['selenium.webdriver'].ChromeOptions()</arg>
+<arg>sys, selenium.webdriver</arg>
+</arguments>
+<assign>
+<var>${chrome_options}</var>
+</assign>
+<msg timestamp="20200224 23:37:32.087" level="INFO">${chrome_options} = &lt;selenium.webdriver.chrome.options.Options object at 0x03B489B0&gt;</msg>
+<status status="PASS" starttime="20200224 23:37:32.087" endtime="20200224 23:37:32.087"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>credentials_enable_service=${false}</arg>
+</arguments>
+<assign>
+<var>${prefs}</var>
+</assign>
+<msg timestamp="20200224 23:37:32.087" level="INFO">${prefs} = {'credentials_enable_service': False}</msg>
+<status status="PASS" starttime="20200224 23:37:32.087" endtime="20200224 23:37:32.087"></status>
+</kw>
+<kw name="Call Method" library="BuiltIn">
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<arguments>
+<arg>${chrome_options}</arg>
+<arg>add_experimental_option</arg>
+<arg>prefs</arg>
+<arg>${prefs}</arg>
+</arguments>
+<status status="PASS" starttime="20200224 23:37:32.088" endtime="20200224 23:37:32.088"></status>
+</kw>
+<kw name="Call Method" library="BuiltIn">
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<arguments>
+<arg>${chrome_options}</arg>
+<arg>add_argument</arg>
+<arg>--start-maximized</arg>
+</arguments>
+<status status="PASS" starttime="20200224 23:37:32.088" endtime="20200224 23:37:32.088"></status>
+</kw>
+<kw name="Call Method" library="BuiltIn">
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<arguments>
+<arg>${chrome_options}</arg>
+<arg>add_argument</arg>
+<arg>--disable-popup-blocking</arg>
+</arguments>
+<status status="PASS" starttime="20200224 23:37:32.088" endtime="20200224 23:37:32.088"></status>
+</kw>
+<kw name="Create Webdriver" library="Selenium2Library">
+<doc>Creates an instance of Selenium WebDriver.</doc>
+<arguments>
+<arg>Chrome</arg>
+<arg>chrome_options=${chrome_options}</arg>
+</arguments>
+<msg timestamp="20200224 23:37:32.089" level="INFO">Creating an instance of the Chrome WebDriver.</msg>
+<status status="PASS" starttime="20200224 23:37:32.088" endtime="20200224 23:37:37.176"></status>
+</kw>
+<status status="PASS" starttime="20200224 23:37:32.086" endtime="20200224 23:37:37.176"></status>
+</kw>
+<test id="s1-t1" name="AIS-CRM Website">
+<kw name="Launch Web System" library="misc_resources">
+<doc>Url of the web application</doc>
+<arguments>
+<arg>${URL_2}</arg>
+</arguments>
+<kw name="Go To" library="Selenium2Library">
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<arguments>
+<arg>${link}</arg>
+</arguments>
+<msg timestamp="20200224 23:37:37.181" level="INFO">Opening url 'http://aisystem.dyndns.biz:8090/aistcrm_uat/'</msg>
+<status status="PASS" starttime="20200224 23:37:37.180" endtime="20200224 23:37:38.009"></status>
+</kw>
+<kw name="Verify Title Page" library="misc_resources">
+<doc>Verify the title of the page after the login with username successfully entered.</doc>
+<kw name="Get Title" library="Selenium2Library">
+<doc>Returns the title of the current page.</doc>
+<status status="PASS" starttime="20200224 23:37:38.010" endtime="20200224 23:37:38.015"></status>
+</kw>
+<kw name="Title Should Be" library="Selenium2Library">
+<doc>Verifies that the current page title equals ``title``.</doc>
+<arguments>
+<arg>MOAI-CRM - The Premium CRM Solution</arg>
+</arguments>
+<msg timestamp="20200224 23:37:38.019" level="INFO">Page title is 'MOAI-CRM - The Premium CRM Solution'.</msg>
+<status status="PASS" starttime="20200224 23:37:38.015" endtime="20200224 23:37:38.019"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>Get Title</arg>
+</arguments>
+<msg timestamp="20200224 23:37:38.019" level="INFO">Get Title</msg>
+<status status="PASS" starttime="20200224 23:37:38.019" endtime="20200224 23:37:38.019"></status>
+</kw>
+<status status="PASS" starttime="20200224 23:37:38.010" endtime="20200224 23:37:38.019"></status>
+</kw>
+<status status="PASS" starttime="20200224 23:37:37.179" endtime="20200224 23:37:38.020"></status>
+</kw>
+<tags>
+<tag>AIS-CRM SITE</tag>
+</tags>
+<status status="PASS" starttime="20200224 23:37:37.177" endtime="20200224 23:37:38.020" critical="yes"></status>
+</test>
+<test id="s1-t2" name="Log-In User with Valid Username And Password">
+<kw name="Input Username" library="misc_resources">
+<doc>This is the email username input text function.</doc>
+<arguments>
+<arg>${USER}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="Selenium2Library">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${USERNAME_LOCATOR}</arg>
+</arguments>
+<status status="PASS" starttime="20200224 23:37:38.021" endtime="20200224 23:37:38.047"></status>
+</kw>
+<kw name="Input Text" library="Selenium2Library">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${USERNAME_LOCATOR}</arg>
+<arg>${user_name}</arg>
+<arg>clear=True</arg>
+</arguments>
+<msg timestamp="20200224 23:37:38.047" level="INFO">Typing text 'ruel.arb' into text field 'name:user_name'.</msg>
+<status status="PASS" starttime="20200224 23:37:38.047" endtime="20200224 23:37:38.115"></status>
+</kw>
+<status status="PASS" starttime="20200224 23:37:38.021" endtime="20200224 23:37:38.115"></status>
+</kw>
+<kw name="Input User's Password" library="misc_resources">
+<doc>This is the email password input text function.</doc>
+<arguments>
+<arg>${PASS}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="Selenium2Library">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${PASSWORD_LOCATOR}</arg>
+</arguments>
+<status status="PASS" starttime="20200224 23:37:38.115" endtime="20200224 23:37:38.140"></status>
+</kw>
+<kw name="Input Password" library="Selenium2Library">
+<doc>Types the given password into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${PASSWORD_LOCATOR}</arg>
+<arg>${user_pass}</arg>
+<arg>clear=True</arg>
+</arguments>
+<msg timestamp="20200224 23:37:38.141" level="INFO">Typing password into text field 'name:user_password'.</msg>
+<status status="PASS" starttime="20200224 23:37:38.140" endtime="20200224 23:37:38.223"></status>
+</kw>
+<status status="PASS" starttime="20200224 23:37:38.115" endtime="20200224 23:37:38.223"></status>
+</kw>
+<kw name="Click Login button" library="misc_resources">
+<doc>This is Sign In function from the system.</doc>
+<kw name="Wait Until Element Is Visible" library="Selenium2Library">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${SIGNIN_LOCATOR}</arg>
+</arguments>
+<status status="PASS" starttime="20200224 23:37:38.223" endtime="20200224 23:37:38.248"></status>
+</kw>
+<kw name="Click Element" library="Selenium2Library">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>${SIGNIN_LOCATOR}</arg>
+</arguments>
+<msg timestamp="20200224 23:37:38.249" level="INFO">Clicking element '//input[@value="Sign In"]'.</msg>
+<status status="PASS" starttime="20200224 23:37:38.248" endtime="20200224 23:37:39.423"></status>
+</kw>
+<status status="PASS" starttime="20200224 23:37:38.223" endtime="20200224 23:37:39.423"></status>
+</kw>
+<tags>
+<tag>User credentials</tag>
+</tags>
+<status status="PASS" starttime="20200224 23:37:38.020" endtime="20200224 23:37:39.423" critical="yes"></status>
+</test>
+<test id="s1-t3" name="Select Customer Service">
+<kw name="Select Menu" library="misc_resources">
+<doc>Select Menu Header like Sales, Customer Service, Inventory</doc>
+<arguments>
+<arg>${CUSTOMER_SERVICE}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="Selenium2Library">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>//td[@class="tabUnSelected"]/a[contains(text(), '${menu}')]</arg>
+</arguments>
+<status status="PASS" starttime="20200224 23:37:39.424" endtime="20200224 23:37:39.447"></status>
+</kw>
+<kw name="Click Link" library="Selenium2Library">
+<doc>Clicks a link identified by ``locator``.</doc>
+<arguments>
+<arg>//td[@class="tabUnSelected"]/a[contains(text(), '${menu}')]</arg>
+</arguments>
+<msg timestamp="20200224 23:37:39.448" level="INFO">Clicking link '//td[@class="tabUnSelected"]/a[contains(text(), 'Customer Service')]'.</msg>
+<status status="PASS" starttime="20200224 23:37:39.448" endtime="20200224 23:37:40.544"></status>
+</kw>
+<status status="PASS" starttime="20200224 23:37:39.424" endtime="20200224 23:37:40.544"></status>
+</kw>
+<kw name="Select Dropdown Option From Menu" library="misc_resources">
+<doc>Select Dropdown options from menu like sales visit, account,contacts, case.etc</doc>
+<arguments>
+<arg>${CASE_STRING}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="Selenium2Library">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>//a[contains(text(), '${select}')]</arg>
+</arguments>
+<status status="PASS" starttime="20200224 23:37:40.544" endtime="20200224 23:37:40.566"></status>
+</kw>
+<kw name="Click Link" library="Selenium2Library">
+<doc>Clicks a link identified by ``locator``.</doc>
+<arguments>
+<arg>//a[contains(text(), '${select}')]</arg>
+</arguments>
+<msg timestamp="20200224 23:37:40.566" level="INFO">Clicking link '//a[contains(text(), 'Case')]'.</msg>
+<status status="PASS" starttime="20200224 23:37:40.566" endtime="20200224 23:37:41.459"></status>
+</kw>
+<status status="PASS" starttime="20200224 23:37:40.544" endtime="20200224 23:37:41.460"></status>
+</kw>
+<kw name="Click Button To Create Page" library="misc_resources">
+<doc>This is specific button for creating Case, Jobs, Contacts, Leads, Documents, Projects.
+cannot use in sales visit.</doc>
+<arguments>
+<arg>${CASE_STRING}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="Selenium2Library">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>//img[@title="Create ${button_create}..."]</arg>
+</arguments>
+<status status="PASS" starttime="20200224 23:37:41.460" endtime="20200224 23:37:41.484"></status>
+</kw>
+<kw name="Click Image" library="Selenium2Library">
+<doc>Clicks an image identified by ``locator``.</doc>
+<arguments>
+<arg>//img[@title="Create ${button_create}..."]</arg>
+</arguments>
+<msg timestamp="20200224 23:37:41.484" level="INFO">Clicking image '//img[@title="Create Case..."]'.</msg>
+<status status="PASS" starttime="20200224 23:37:41.484" endtime="20200224 23:37:43.344"></status>
+</kw>
+<status status="PASS" starttime="20200224 23:37:41.460" endtime="20200224 23:37:43.344"></status>
+</kw>
+<status status="PASS" starttime="20200224 23:37:39.423" endtime="20200224 23:37:43.344" critical="yes"></status>
+</test>
+<test id="s1-t4" name="Create Case Data Informations">
+<kw name="Case Data Informations">
+<arguments>
+<arg>D:\\my_files\\Robot_Framework\\robotScripts\\AISCRM\\create_case_module${/}create_case_module.csv</arg>
+</arguments>
+<kw name="Get File" library="OperatingSystem">
+<doc>Returns the contents of a specified file.</doc>
+<arguments>
+<arg>${csv}</arg>
+</arguments>
+<assign>
+<var>${contents}</var>
+</assign>
+<msg timestamp="20200224 23:37:43.346" level="INFO" html="yes">Getting file '&lt;a href="file://D:\my_files\Robot_Framework\robotScripts\AISCRM\create_case_module\create_case_module.csv"&gt;D:\my_files\Robot_Framework\robotScripts\AISCRM\create_case_module\create_case_module.csv&lt;/a&gt;'.</msg>
+<msg timestamp="20200224 23:37:43.347" level="INFO">${contents} = ﻿Case Name|Priority|Person|Case Type|Status |Project|Case Open Date|Case Close Date|Plan Due Date|Waiting For|Partner Account|Partner Contact|Closed Reason|Description|Solution|Prevention|Contact name...</msg>
+<status status="PASS" starttime="20200224 23:37:43.345" endtime="20200224 23:37:43.347"></status>
+</kw>
+<kw name="Create List" library="BuiltIn">
+<doc>Returns a list containing given items.</doc>
+<arguments>
+<arg>${contents}</arg>
+</arguments>
+<assign>
+<var>@{read}</var>
+</assign>
+<msg timestamp="20200224 23:37:43.348" level="INFO">@{read} = [ ﻿Case Name|Priority|Person|Case Type|Status |Project|Case Open Date|Case Close Date|Plan Due Date|Waiting For|Partner Account|Partner Contact|Closed Reason|Description|Solution|Prevention|Contact na...</msg>
+<status status="PASS" starttime="20200224 23:37:43.347" endtime="20200224 23:37:43.348"></status>
+</kw>
+<kw name="Split To Lines" library="String">
+<doc>Splits the given string to lines.</doc>
+<arguments>
+<arg>@{read}</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>@{lines}</var>
+</assign>
+<msg timestamp="20200224 23:37:43.348" level="INFO">42 lines returned</msg>
+<msg timestamp="20200224 23:37:43.348" level="INFO">@{lines} = [ --None--|Urgent|Kanchawat Chan-ngom|แจ้งปัญหา|เปิดงาน|Saint Test|||||||||||||||||||||||| | --None--|--None--|Account Manager and PM|ร้องเรียน|ส่งต่อ||||||||||||||||||||||||| | Low|Low|Business Devel...</msg>
+<status status="PASS" starttime="20200224 23:37:43.348" endtime="20200224 23:37:43.348"></status>
+</kw>
+<kw name="${line} IN [ @{lines} + 1 ]" type="for">
+<kw name="${line} = ['--None--|Urgent|Kanchawat Chan-ngom|แจ้งปัญหา|เปิดงาน|Saint Test||||||||||||||||||||||||', '--None--|--None--|Account Manager and PM|ร้องเรียน|ส่งต่อ|||||||||||||||||||||||||', 'Low|Low|Business Dev..." type="foritem">
+<kw name="Split String" library="String">
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<arguments>
+<arg>${line}</arg>
+<arg>|</arg>
+</arguments>
+<assign>
+<var>@{bm}</var>
+</assign>
+<msg timestamp="20200224 23:37:43.350" level="INFO">@{bm} = [ ['--None-- | Urgent | Kanchawat Chan-ngom | แจ้งปัญหา | เปิดงาน | Saint Test |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | ', '--None-- | --None-- | Account Manager and PM |...</msg>
+<status status="PASS" starttime="20200224 23:37:43.349" endtime="20200224 23:37:43.350"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[0]</arg>
+</arguments>
+<assign>
+<var>${case_name}</var>
+</assign>
+<msg timestamp="20200224 23:37:43.350" level="INFO">${case_name} = ['--None--</msg>
+<status status="PASS" starttime="20200224 23:37:43.350" endtime="20200224 23:37:43.350"></status>
+</kw>
+<kw name="Remove String" library="String">
+<doc>Removes all ``removables`` from the given ``string``.</doc>
+<arguments>
+<arg>${case_name}</arg>
+<arg>['</arg>
+</arguments>
+<assign>
+<var>${remove_case}</var>
+</assign>
+<msg timestamp="20200224 23:37:43.351" level="INFO">${remove_case} = --None--</msg>
+<status status="PASS" starttime="20200224 23:37:43.351" endtime="20200224 23:37:43.351"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[1]</arg>
+</arguments>
+<assign>
+<var>${priority}</var>
+</assign>
+<msg timestamp="20200224 23:37:43.351" level="INFO">${priority} = Urgent</msg>
+<status status="PASS" starttime="20200224 23:37:43.351" endtime="20200224 23:37:43.351"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[2]</arg>
+</arguments>
+<assign>
+<var>${responsible}</var>
+</assign>
+<msg timestamp="20200224 23:37:43.351" level="INFO">${responsible} = Kanchawat Chan-ngom</msg>
+<status status="PASS" starttime="20200224 23:37:43.351" endtime="20200224 23:37:43.352"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[3]</arg>
+</arguments>
+<assign>
+<var>${case_type}</var>
+</assign>
+<msg timestamp="20200224 23:37:43.352" level="INFO">${case_type} = แจ้งปัญหา</msg>
+<status status="PASS" starttime="20200224 23:37:43.352" endtime="20200224 23:37:43.352"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[4]</arg>
+</arguments>
+<assign>
+<var>${status}</var>
+</assign>
+<msg timestamp="20200224 23:37:43.352" level="INFO">${status} = เปิดงาน</msg>
+<status status="PASS" starttime="20200224 23:37:43.352" endtime="20200224 23:37:43.353"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[5]</arg>
+</arguments>
+<assign>
+<var>${project}</var>
+</assign>
+<msg timestamp="20200224 23:37:43.353" level="INFO">${project} = Saint Test</msg>
+<status status="PASS" starttime="20200224 23:37:43.353" endtime="20200224 23:37:43.353"></status>
+</kw>
+<kw name="Case Name">
+<arguments>
+<arg>${remove_case}</arg>
+</arguments>
+<kw name="Input Data To TextBox" library="misc_resources">
+<doc>This function is to locate the element of the textbox and Input the desired text in this location.</doc>
+<arguments>
+<arg>${CASE_TXTBOX}</arg>
+<arg>${remove_case}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="Selenium2Library">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${locator}</arg>
+</arguments>
+<status status="PASS" starttime="20200224 23:37:43.354" endtime="20200224 23:37:43.376"></status>
+</kw>
+<kw name="Input Text" library="Selenium2Library">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>${string}</arg>
+</arguments>
+<msg timestamp="20200224 23:37:43.376" level="INFO">Typing text '--None--' into text field 'name:ticket_title'.</msg>
+<status status="PASS" starttime="20200224 23:37:43.376" endtime="20200224 23:37:43.513"></status>
+</kw>
+<status status="PASS" starttime="20200224 23:37:43.354" endtime="20200224 23:37:43.513"></status>
+</kw>
+<status status="PASS" starttime="20200224 23:37:43.353" endtime="20200224 23:37:43.513"></status>
+</kw>
+<kw name="Priority Case">
+<arguments>
+<arg>${priority}</arg>
+</arguments>
+<kw name="Get WebElements" library="Selenium2Library">
+<doc>Returns a list of WebElement objects matching the ``locator``.</doc>
+<arguments>
+<arg>${PRIORITY_LOC}</arg>
+</arguments>
+<assign>
+<var>${prior}</var>
+</assign>
+<msg timestamp="20200224 23:37:43.524" level="INFO">${prior} = [&lt;selenium.webdriver.remote.webelement.WebElement (session="8583724778d25c6c7b00ae588affaffe", element="75e0fa02-b25a-4673-bdd8-d1628de5051d")&gt;]</msg>
+<status status="PASS" starttime="20200224 23:37:43.514" endtime="20200224 23:37:43.524"></status>
+</kw>
+<kw name="${item} IN [ @{prior} ]" type="for">
+<kw name="${item} = &lt;selenium.webdriver.remote.webelement.WebElement (session=&quot;8583724778d25c6c7b00ae588affaffe&quot;, element=&quot;75e0fa02-b25a-4673-bdd8-d1628de5051d&quot;)&gt;" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${item.text}</arg>
+</arguments>
+<msg timestamp="20200224 23:37:43.542" level="INFO">                    
+                
+                                                                 
+                                --None--
+                        
+                        
+                                                                    
+                                Low
+                        
+                        
+                                                                    
+                                Medium
+                        
+                        
+                                                                    
+                                High
+                        
+                        
+                                                                    
+                                Urgent
+                        
+                        
+                    
+
+                
+
+                   </msg>
+<status status="PASS" starttime="20200224 23:37:43.524" endtime="20200224 23:37:43.542"></status>
+</kw>
+<status status="PASS" starttime="20200224 23:37:43.524" endtime="20200224 23:37:43.542"></status>
+</kw>
+<status status="PASS" starttime="20200224 23:37:43.524" endtime="20200224 23:37:43.542"></status>
+</kw>
+<kw name="Click Element" library="Selenium2Library">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>//select[@name="ticket_important"]/option[@value="${priority}"]</arg>
+</arguments>
+<msg timestamp="20200224 23:37:43.543" level="INFO">Clicking element '//select[@name="ticket_important"]/option[@value="Urgent"]'.</msg>
+<status status="PASS" starttime="20200224 23:37:43.542" endtime="20200224 23:37:43.589"></status>
+</kw>
+<status status="PASS" starttime="20200224 23:37:43.514" endtime="20200224 23:37:43.590"></status>
+</kw>
+<kw name="Responsible Person">
+<doc>This is to set the person to assign Case</doc>
+<arguments>
+<arg>${responsible}</arg>
+</arguments>
+<kw name="Get Element Count" library="Selenium2Library">
+<doc>Returns the number of elements matching ``locator``.</doc>
+<arguments>
+<arg>//select[@name="assigned_user_id"]/option[contains(text(), "${responsible}")]</arg>
+</arguments>
+<assign>
+<var>${xpath_user}</var>
+</assign>
+<msg timestamp="20200224 23:37:43.602" level="INFO">${xpath_user} = 1</msg>
+<status status="PASS" starttime="20200224 23:37:43.590" endtime="20200224 23:37:43.602"></status>
+</kw>
+<kw name="Get Element Count" library="Selenium2Library">
+<doc>Returns the number of elements matching ``locator``.</doc>
+<arguments>
+<arg>//select[@name="assigned_group_id"]/option[contains(text(), "${responsible}")]</arg>
+</arguments>
+<assign>
+<var>${xpath_group}</var>
+</assign>
+<msg timestamp="20200224 23:37:43.613" level="INFO">${xpath_group} = 0</msg>
+<status status="PASS" starttime="20200224 23:37:43.602" endtime="20200224 23:37:43.613"></status>
+</kw>
+<kw name="Run Keyword And Return If" library="BuiltIn">
+<doc>Runs the specified keyword and returns from the enclosing user keyword.</doc>
+<arguments>
+<arg>${xpath_user}</arg>
+<arg>Click Element</arg>
+<arg>//select[@name="assigned_user_id"]/option[contains(text(), "${responsible}")]</arg>
+</arguments>
+<kw name="Click Element" library="Selenium2Library">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>//select[@name="assigned_user_id"]/option[contains(text(), "${responsible}")]</arg>
+</arguments>
+<msg timestamp="20200224 23:37:43.615" level="INFO">Clicking element '//select[@name="assigned_user_id"]/option[contains(text(), "Kanchawat Chan-ngom")]'.</msg>
+<status status="PASS" starttime="20200224 23:37:43.614" endtime="20200224 23:37:43.645"></status>
+</kw>
+<msg timestamp="20200224 23:37:43.645" level="INFO">Returning from the enclosing user keyword.</msg>
+<status status="PASS" starttime="20200224 23:37:43.613" endtime="20200224 23:37:43.645"></status>
+</kw>
+<status status="PASS" starttime="20200224 23:37:43.590" endtime="20200224 23:37:43.645"></status>
+</kw>
+<kw name="Case Type">
+<arguments>
+<arg>${case_type}</arg>
+</arguments>
+<kw name="Get WebElements" library="Selenium2Library">
+<doc>Returns a list of WebElement objects matching the ``locator``.</doc>
+<arguments>
+<arg>${CASE_TYPE_LOC}</arg>
+</arguments>
+<assign>
+<var>${ticket}</var>
+</assign>
+<msg timestamp="20200224 23:37:43.657" level="INFO">${ticket} = [&lt;selenium.webdriver.remote.webelement.WebElement (session="8583724778d25c6c7b00ae588affaffe", element="58808515-e70f-4df3-8199-1fbb9e2fe284")&gt;]</msg>
+<status status="PASS" starttime="20200224 23:37:43.646" endtime="20200224 23:37:43.657"></status>
+</kw>
+<kw name="${item} IN [ @{ticket} ]" type="for">
+<kw name="${item} = &lt;selenium.webdriver.remote.webelement.WebElement (session=&quot;8583724778d25c6c7b00ae588affaffe&quot;, element=&quot;58808515-e70f-4df3-8199-1fbb9e2fe284&quot;)&gt;" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${item.text}</arg>
+</arguments>
+<msg timestamp="20200224 23:37:43.673" level="INFO">                    
+                
+                                                                 
+                                แจ้งปัญหา
+                        
+                        
+                                                                    
+                                ร้องเรียน
+                        
+                        
+                                                                    
+                                แจ้งซ่อม
+                        
+                        
+                                                                    
+                                ร้องขอสนับสนุน
+                        
+                        
+                                                                    
+                                แจ้งเคลม
+                        
+                        
+                                                                    
+                                อื่นๆ
+                        
+                        
+                    
+
+                
+
+                   </msg>
+<status status="PASS" starttime="20200224 23:37:43.657" endtime="20200224 23:37:43.673"></status>
+</kw>
+<status status="PASS" starttime="20200224 23:37:43.657" endtime="20200224 23:37:43.673"></status>
+</kw>
+<status status="PASS" starttime="20200224 23:37:43.657" endtime="20200224 23:37:43.674"></status>
+</kw>
+<kw name="Click Element" library="Selenium2Library">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>//select[@name="ticket_type"]/option[@value="${case_type}"]</arg>
+</arguments>
+<msg timestamp="20200224 23:37:43.674" level="INFO">Clicking element '//select[@name="ticket_type"]/option[@value="แจ้งปัญหา"]'.</msg>
+<status status="PASS" starttime="20200224 23:37:43.674" endtime="20200224 23:37:43.708"></status>
+</kw>
+<status status="PASS" starttime="20200224 23:37:43.646" endtime="20200224 23:37:43.708"></status>
+</kw>
+<kw name="Status">
+<arguments>
+<arg>${status}</arg>
+</arguments>
+<kw name="Get WebElements" library="Selenium2Library">
+<doc>Returns a list of WebElement objects matching the ``locator``.</doc>
+<arguments>
+<arg>${STATUS_LOC}</arg>
+</arguments>
+<assign>
+<var>${status_case}</var>
+</assign>
+<msg timestamp="20200224 23:37:43.721" level="INFO">${status_case} = [&lt;selenium.webdriver.remote.webelement.WebElement (session="8583724778d25c6c7b00ae588affaffe", element="eceb7ce0-2007-4985-80d6-0fe4eda9cf46")&gt;]</msg>
+<status status="PASS" starttime="20200224 23:37:43.709" endtime="20200224 23:37:43.721"></status>
+</kw>
+<kw name="${item} IN [ @{status_case} ]" type="for">
+<kw name="${item} = &lt;selenium.webdriver.remote.webelement.WebElement (session=&quot;8583724778d25c6c7b00ae588affaffe&quot;, element=&quot;eceb7ce0-2007-4985-80d6-0fe4eda9cf46&quot;)&gt;" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${item.text}</arg>
+</arguments>
+<msg timestamp="20200224 23:37:43.738" level="INFO">                    
+                
+                                                                 
+                                เปิดงาน
+                        
+                        
+                                                                    
+                                ส่งต่อ
+                        
+                        
+                                                                    
+                                รับงาน
+                        
+                        
+                                                                    
+                                เช็คอิน
+                        
+                        
+                                                                    
+                                อยู่ระหว่างดำเนินการ
+                        
+                        
+                                                                    
+                                ปิดงาน
+                        
+                        
+                                                                    
+                                ยกเลิก
+                        
+                        
+                    
+
+                
+
+                   </msg>
+<status status="PASS" starttime="20200224 23:37:43.721" endtime="20200224 23:37:43.738"></status>
+</kw>
+<status status="PASS" starttime="20200224 23:37:43.721" endtime="20200224 23:37:43.738"></status>
+</kw>
+<status status="PASS" starttime="20200224 23:37:43.721" endtime="20200224 23:37:43.738"></status>
+</kw>
+<kw name="Click Element" library="Selenium2Library">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>//select[@name="ticketstatus"]/option[@value="${status}"]</arg>
+</arguments>
+<msg timestamp="20200224 23:37:43.738" level="INFO">Clicking element '//select[@name="ticketstatus"]/option[@value="เปิดงาน"]'.</msg>
+<status status="PASS" starttime="20200224 23:37:43.738" endtime="20200224 23:37:43.772"></status>
+</kw>
+<status status="PASS" starttime="20200224 23:37:43.709" endtime="20200224 23:37:43.773"></status>
+</kw>
+<status status="PASS" starttime="20200224 23:37:43.349" endtime="20200224 23:37:43.773"></status>
+</kw>
+<status status="PASS" starttime="20200224 23:37:43.349" endtime="20200224 23:37:43.773"></status>
+</kw>
+<status status="PASS" starttime="20200224 23:37:43.345" endtime="20200224 23:37:43.773"></status>
+</kw>
+<status status="PASS" starttime="20200224 23:37:43.344" endtime="20200224 23:37:43.773" critical="yes"></status>
+</test>
+<status status="PASS" starttime="20200224 23:37:31.845" endtime="20200224 23:37:43.773"></status>
+</suite>
+<statistics>
+<total>
+<stat pass="4" fail="0">Critical Tests</stat>
+<stat pass="4" fail="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="1" fail="0">AIS-CRM SITE</stat>
+<stat pass="1" fail="0">User credentials</stat>
+</tag>
+<suite>
+<stat pass="4" fail="0" id="s1" name="Create Case Module">Create Case Module</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

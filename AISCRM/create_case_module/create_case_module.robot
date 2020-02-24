@@ -56,6 +56,7 @@ Case Data Informations
     \   @{bm}=      Split String    ${line}     |
     # Case Name
     \   ${case_name}=   Set Variable    @{bm}[0]
+    \   ${remove_case}=  Remove String   ${case_name}    ['
     # Priority
     \   ${priority}=    Set Variable    @{bm}[1]
     # Responsble Person
@@ -66,16 +67,16 @@ Case Data Informations
     \   ${status}=      Set Variable    @{bm}[4]
     # Project Name
     \   ${project}=     Set Variable    @{bm}[5]
-    \   Case Name               ${case_name}
+    \   Case Name               ${remove_case}
     \   Priority Case           ${priority}
     \   Responsible Person      ${responsible}
     \   Case Type               ${case_type}
     \   Status                  ${status}
-#    \   Project Name            ${project}
+    \   Project Name            ${project}
 
 Case Name
-    [Arguments]     ${case_name}
-    Input Data To TextBox   ${CASE_TXTBOX}      ${case_name}
+    [Arguments]     ${remove_case}
+    Input Data To TextBox   ${CASE_TXTBOX}      ${remove_case}
 
 Priority Case
     [Arguments]   ${priority}
@@ -116,12 +117,5 @@ Project Name
     ${project_case}=    Get Web Elements    //a[@href="javascript:window.close();"]
     :FOR  ${item}   IN      @{project_case}
     \   Log     ${item.text}
-
     Scroll Down Page From The Browser
-    Click Element              ${PROJECT_ADD_BTN}
-    Switch Window   NEW
-    Select From Option Search Field   ${NAME_SEARCH_FIELD}
-    Input Text To Search        ${project}
-    Click Search Button
-    Select The List Found       ${project}
-    Switch Window
+    Select Data On Basic Search Mode    ${PROJECT_ADD_BTN}      ${NAME_SEARCH_FIELD}    ${project}
