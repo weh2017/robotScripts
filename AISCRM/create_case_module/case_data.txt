@@ -1,0 +1,59 @@
+ADMIN ADMIN
+FF WP
+FF2 WP2
+Jureeporn Katakhob
+Kanchawat Chan-ngom
+Kanlaya Srinakorn
+Kitsalak Admin
+Kitsalak Sales
+Kitsalak services
+Kitsalak Wanghan
+Kriengkrai Suthinarathorn
+Maneerat Leewasirinan
+Nichapat Charatarcha
+Noppawat Vichayapornjarat
+Nutthawat Taruensorn
+nutthawat taruensorn
+nutthawat taruensorn
+nutthawat taruensorn
+Phumsiri Sirimuratha
+Ruel Arbon
+Sateanpong Jariyawuttipong
+Supphanan Homhual
+Supphanan2 Homhual2
+Supphanan2 Homhual2
+Thammarong Ngamchitsitthichai
+wannapa Sale1
+Warakrit Teerarungsikul
+Worawut pukkom
+Wuttipong Mejumras
+Wuttipong Mejumras
+Nichapata T
+                    
+
+=============================
+CASE TYPE
+
+แจ้งปัญหา
+ร้องเรียน
+แจ้งซ่อม
+ร้องขอสนับสนุน
+แจ้งเคลม
+อื่นๆ                         
+
+=============================
+PRIORITY
+--None--
+Low
+Medium
+High
+Urgent
+=============================
+STATUS
+เปิดงาน
+ส่งต่อ
+รับงาน
+เช็คอิน
+อยู่ระหว่างดำเนินการ
+ปิดงาน
+ยกเลิก

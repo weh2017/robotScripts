@@ -1,39 +1,43 @@
 ﻿Case Name|Priority|Person|Case Type|Status |Project|Case Open Date|Case Close Date|Plan Due Date|Waiting For|Partner Account|Partner Contact|Closed Reason|Description|Solution|Prevention|Contact name|Contact Mobile|Contact E-mail|Account Name|Serial Name|Product name|Product Brand|Product Model|Delivery Date|Warranty|Warranty Active Date|Check Product Date|Warranty Expired Date|Sent Product Date
-Robot 1|Urgent|Account Manager|||||||||||||||||||||||||||
-||Account Manager and PM|||||||||||||||||||||||||||
-||Business Development and PM|||||||||||||||||||||||||||
-||Business Development Team|||||||||||||||||||||||||||
-||Email To Group|||||||||||||||||||||||||||
-||Sales Team|||||||||||||||||||||||||||
-||ADMIN ADMIN|||||||||||||||||||||||||||
-||FF WP|||||||||||||||||||||||||||
-||FF2 WP2|||||||||||||||||||||||||||
-||Jureeporn Katakhob|||||||||||||||||||||||||||
-||Kanchawat Chan-ngom|||||||||||||||||||||||||||
-||Kanlaya Srinakorn|||||||||||||||||||||||||||
-||Kitsalak Admin|||||||||||||||||||||||||||
-||Kitsalak Sales|||||||||||||||||||||||||||
-||Kitsalak services|||||||||||||||||||||||||||
-||Kitsalak Wanghan|||||||||||||||||||||||||||
-||Kriengkrai Suthinarathorn|||||||||||||||||||||||||||
-||Maneerat Leewasirinan|||||||||||||||||||||||||||
-||Nichapat Charatarcha|||||||||||||||||||||||||||
-||Noppawat Vichayapornjarat|||||||||||||||||||||||||||
-||Nutthawat Taruensorn|||||||||||||||||||||||||||
-||nutthawat taruensorn|||||||||||||||||||||||||||
-||nutthawat taruensorn|||||||||||||||||||||||||||
-||nutthawat taruensorn|||||||||||||||||||||||||||
-||Phumsiri Sirimuratha|||||||||||||||||||||||||||
-||Ruel Arbon|||||||||||||||||||||||||||
-||Sateanpong Jariyawuttipong|||||||||||||||||||||||||||
-||Supphanan Homhual|||||||||||||||||||||||||||
-||Supphanan2 Homhual2|||||||||||||||||||||||||||
-||Supphanan2 Homhual2|||||||||||||||||||||||||||
-||Thammarong Ngamchitsitthichai|||||||||||||||||||||||||||
-||wannapa Sale1|||||||||||||||||||||||||||
-||Warakrit Teerarungsikul|||||||||||||||||||||||||||
-||Worawut pukkom|||||||||||||||||||||||||||
-||Wuttipong Mejumras|||||||||||||||||||||||||||
-||Wuttipong Mejumras|||||||||||||||||||||||||||
-||Nichapata T|||||||||||||||||||||||||||
-||                                             |||||||||||||||||||||||||||
+robot|Urgent|Kanchawat Chan-ngom|แจ้งปัญหา|เปิดงาน|Saint Test||||||||||||||||||||||||
+--None--|--None--|Account Manager and PM|ร้องเรียน|ส่งต่อ|||||||||||||||||||||||||
+Low|Low|Business Development and PM|แจ้งซ่อม|รับงาน|||||||||||||||||||||||||
+Medium|Medium|Business Development Team|ร้องขอสนับสนุน|เช็คอิน|||||||||||||||||||||||||
+High|High|Email To Group|แจ้งเคลม|อยู่ระหว่างดำเนินการ|||||||||||||||||||||||||
+Urgent|Urgent|Sales Team|อื่นๆ          |ปิดงาน|||||||||||||||||||||||||
+--None--|--None--|ADMIN ADMIN|แจ้งปัญหา|เปิดงาน|||||||||||||||||||||||||
+Low|Low|FF WP|ร้องเรียน|ส่งต่อ|||||||||||||||||||||||||
+Medium|Medium|FF2 WP2|แจ้งซ่อม|รับงาน|||||||||||||||||||||||||
+High|High|Jureeporn Katakhob|ร้องขอสนับสนุน|เช็คอิน|||||||||||||||||||||||||
+Urgent|Urgent|Kanchawat Chan-ngom|แจ้งเคลม|อยู่ระหว่างดำเนินการ|||||||||||||||||||||||||
+--None--|--None--|Kanlaya Srinakorn|อื่นๆ          |ปิดงาน|||||||||||||||||||||||||
+Low|Low|Kitsalak Admin|แจ้งปัญหา|เปิดงาน|||||||||||||||||||||||||
+Medium|Medium|Kitsalak Sales|ร้องเรียน|ส่งต่อ|||||||||||||||||||||||||
+High|High|Kitsalak services|แจ้งซ่อม|รับงาน|||||||||||||||||||||||||
+Urgent|Urgent|Kitsalak Wanghan|ร้องขอสนับสนุน|เช็คอิน|||||||||||||||||||||||||
+--None--|--None--|Kriengkrai Suthinarathorn|แจ้งเคลม|อยู่ระหว่างดำเนินการ|||||||||||||||||||||||||
+Low|Low|Maneerat Leewasirinan|อื่นๆ          |ปิดงาน|||||||||||||||||||||||||
+Medium|Medium|Nichapat Charatarcha|แจ้งปัญหา|เปิดงาน|||||||||||||||||||||||||
+High|High|Noppawat Vichayapornjarat|ร้องเรียน|ส่งต่อ|||||||||||||||||||||||||
+Urgent|Urgent|Nutthawat Taruensorn|แจ้งซ่อม|รับงาน|||||||||||||||||||||||||
+--None--|--None--|nutthawat taruensorn|ร้องขอสนับสนุน|เช็คอิน|||||||||||||||||||||||||
+Low|Low|nutthawat taruensorn|แจ้งเคลม|อยู่ระหว่างดำเนินการ|||||||||||||||||||||||||
+Medium|Medium|nutthawat taruensorn|อื่นๆ          |ปิดงาน|||||||||||||||||||||||||
+High|High|Phumsiri Sirimuratha|แจ้งปัญหา|เปิดงาน|||||||||||||||||||||||||
+Urgent|Urgent|Ruel Arbon|ร้องเรียน|ส่งต่อ|||||||||||||||||||||||||
+--None--|--None--|Sateanpong Jariyawuttipong|แจ้งซ่อม|รับงาน|||||||||||||||||||||||||
+Low|Low|Supphanan Homhual|ร้องขอสนับสนุน|เช็คอิน|||||||||||||||||||||||||
+Medium|Medium|Supphanan2 Homhual2|แจ้งเคลม|อยู่ระหว่างดำเนินการ|||||||||||||||||||||||||
+High|High|Supphanan2 Homhual2|อื่นๆ          |ปิดงาน|||||||||||||||||||||||||
+Urgent|Urgent|Thammarong Ngamchitsitthichai|แจ้งปัญหา|เปิดงาน|||||||||||||||||||||||||
+--None--|--None--|wannapa Sale1|ร้องเรียน|ส่งต่อ|||||||||||||||||||||||||
+Low|Low|Warakrit Teerarungsikul|แจ้งซ่อม|รับงาน|||||||||||||||||||||||||
+Medium|Medium|Worawut pukkom|ร้องขอสนับสนุน|เช็คอิน|||||||||||||||||||||||||
+High|High|Wuttipong Mejumras|แจ้งเคลม|อยู่ระหว่างดำเนินการ|||||||||||||||||||||||||
+Urgent|Urgent|Wuttipong Mejumras|อื่นๆ          |ปิดงาน|||||||||||||||||||||||||
+--None--|--None--|Nichapata T|แจ้งปัญหา|เปิดงาน|||||||||||||||||||||||||
+||                                             ||ส่งต่อ|||||||||||||||||||||||||
+||||รับงาน|||||||||||||||||||||||||
+||||เช็คอิน|||||||||||||||||||||||||
+||||อยู่ระหว่างดำเนินการ|||||||||||||||||||||||||
+||||ปิดงาน|||||||||||||||||||||||||

@@ -47,6 +47,7 @@ Scroll Down Page From The Browser
     [Documentation]     This function will perform to scroll down to bottom.
     #Execute Javascript      window.scrollTo(0, 1500)       # Can also use this to scroll down page
     Execute Javascript      window.scrollTo(0,document.body.scrollHeight)
+
 Verify Error Message
     [Documentation]  This is to test the error message if prompted or not.
     [Arguments]     ${error_message}
@@ -64,8 +65,8 @@ Click Login button
 Select The List Found
     [Documentation]  This function is to click the link element
     [Arguments]     ${found_list}
-    Click Link      //a[contains(text(), '${found_list}')]
-#    Click Element   //td/a[@href="javascript:window.close();"][contains(text(), '${found_list}')]
+#    Click Link      //a[contains(text(), '${found_list}')]
+    Click Link   //a[@href="javascript:window.close();"][contains(text(), '${found_list}')]
 
 Click Button
     [Documentation]     Add Image Button
@@ -129,6 +130,11 @@ Subtract Time Without Seconds
     ${list}=    Get From List   ${split}    0
     Log     ${list}
 
+Input Text To Search
+    [Documentation]  This function is to input keywords to search textbox.
+    [Arguments]     ${search_text}
+    Input Text      name:search_text     ${search_text}
+
 Click Search Button
     Click Element       name:search
 
@@ -164,5 +170,5 @@ ${LOGOUT_LOCATOR}           //td[@class="user-signout"]/a[contains(text(), "Sign
 ${MODIFIED_TIME_LOCATOR}    //td[@class="dvtCellInfo"][contains(text(), "21-01-2020 16:05:28")]
 ${LOGIN_ERROR_MSG}          //*[@id="form"]/div[5]/font
 ${ERROR_LOGIN_MSG}          //font[contains(text(),'i')
-
+${SEARCH_FIELD}             //select[@name="search_field"]
 

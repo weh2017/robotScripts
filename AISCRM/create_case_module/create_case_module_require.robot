@@ -32,7 +32,7 @@ Case Module Page
     Select Menu     ${MENU_NAME}
     Select Dropdown Option From Menu    ${MODULE_NAME}
     Click Button To Create Page     ${MODULE_NAME}
-#    Case Information Data
+    Case Information Data
 #    Input Case Name
 #    Select Priority
 #    Select Responsible Person
@@ -59,9 +59,6 @@ ${COLLECT_USER}     name:assigned_user_id
 ${COLLECT_GROUP}    name:assigned_group_id
 ${GROUP_RESPONSIBLE}    Kanlaya Srinakorn
 ${GROUP_DROPDOWN}       //select[@name="assigned_group_id"]/option[contains(text(), "${NAME}")]
-${OPEN_DATE_STRING}     28/02/2020
-${CASE_TYPE_TICKET}     name:ticket_type
-${STATUS_TICKET}        name:ticketstatus
 ${PARTNER_TICKET}       name:ticket_del_name
 
 
@@ -72,7 +69,7 @@ Case Information Data
     ${contents}=    Get File      ${CASE_CSV}
     @{read}=    Create List     ${contents}
     @{lines}=   Split To Lines      @{read}     1
-    :FOR    ${line}    IN      @{lines}
+    :FOR    ${line}    IN      @{lines} + 1
     \   @{bm}=    Split String  ${line}     |
     # case_name
     \   ${case_name}=   Set Variable    @{bm}[0]
@@ -80,13 +77,20 @@ Case Information Data
     \   ${priority}=    Set Variable    @{bm}[1]
     # Responsible
     \   ${responsible}=     Set Variable    @{bm}[2]
+    # Case Type
+    \   ${case_type}=   Set Variable        @{bm}[3]
+    # Status
+    \    ${status}=  Set Variable    @{bm}[4]
+    # Project name
+    \   ${project_name}=    Set Variable    @{bm}[5]
     \   Input Case Name     ${case_name}
-#    \   Select Priority     ${priority}
+    \   Select Priority     ${priority}
     \   Select Responsible Person   ${responsible}
 #    \   Case Open Date
-#    \   Case Type
-#    \   Case Status
+    \   Select Case Type      ${case_type}
+    \   Select Case Status    ${status}
 #    \   Partner Account
+    \   Select Project Name   ${project_name}
 
 Input Case Name
     [Documentation]     Input the desired case name
@@ -96,9 +100,9 @@ Input Case Name
 Select Priority
     [Documentation]   Select the desired Priority : Low, Medium, High, Urgent
     [Arguments]     ${priority}
-    Run Keyword If      "${priority}"!=
+#    Run Keyword If      "${priority}"!=
     #Click Element   //select[@name="ticket_important"]/option[@value="${priority}"]
-    ...     Click Element   //select[@name="ticket_important"]/option[@value="${priority}"]
+    Click Element   //select[@name="ticket_important"]/option[@value="${priority}"]
 
 Select Responsible Person
     [Documentation]  This is to set the person to assign Case
@@ -112,24 +116,34 @@ Select Responsible Person
     ...   AND     Wait Until Element Is Visible   //select[@name="assigned_group_id"]/option[contains(text(), "${responsible}")]
     ...   AND     Click Element       //select[@name="assigned_group_id"]/option[contains(text(), "${responsible}")]
 
-
+Select Project Name
+    [Arguments]   ${project_name}
+    Scroll Down Page From The Browser
+    Click Element       //td[4]//table[1]//tbody[1]//tr[1]//td[3]//img[1]
+    Select Window   NEW
+    Click This Option     project_name
+    Input Text To Search        ${project_name}
+    Select The List Found    ${project_name}
+    Click Search Button
+    Select Window
 Case Open Date
     Input Date Calendar Text    case_open_date      ${OPEN_DATE_STRING}
 
-Case Type
-    @{create_case_type}=     Create List      ${CASE_TYPE_TICKET}
-
+Select Case Type
+    [Arguments]     ${case_type}
+    @{create_case_type}=     Create List      //select[@name="ticket_type"]
     :FOR   ${text}  IN    @{create_case_type}
     \       ${get}=     Get Text     ${text}
     \       Log     ${get}
+    Click Element     //select[@name="ticket_type"]/option[@value="${case_type}"]
 
-Case Status
-    @{create_case_status}=  Create List     ${STATUS_TICKET}
-
+Select Case Status
+    [Arguments]     ${status}
+    @{create_case_status}=  Create List     //select[@name="ticketstatus"]
     :FOR    ${case_status}   IN       @{create_case_status}
     \       ${get_status}=      Get Text        ${case_status}
     \       Log   ${get_status}
-
+    Click Element   //select[@name="ticketstatus"]/option[@value="${status}"]
 
 Partner Account
     @{create_partner}=  Create List     ${PARTNER_TICKET}

@@ -608,10 +608,7 @@ Verify and Set Drop Down From Search
     [Arguments]  ${dropdown}
     Click Element       //select[@name="search_field"]//option[@label="${dropdown}"]
 
-Input Text To Search
-    [Documentation]  This function is to input keywords to search textbox.
-    [Arguments]     ${search_text}
-    Input Text      name:search_text     ${search_text}
+
 
 
 
