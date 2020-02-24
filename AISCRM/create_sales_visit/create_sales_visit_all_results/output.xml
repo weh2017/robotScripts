@@ -1,0 +1,768 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 3.1.2 (Python 3.7.4 on win32)" generated="20200222 23:09:48.744" rpa="false">
+<suite id="s1" name="Create Sales Visit All" source="D:\my_files\Robot_Framework\robotScripts\AISCRM\create_sales_visit\create_sales_visit_all.robot">
+<kw name="Open Chrome Browser" library="web_common" type="setup">
+<doc>Open the Chrome Browser with maximize view, no infobars notification and no pop-ups.</doc>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>sys.modules['selenium.webdriver'].ChromeOptions()</arg>
+<arg>sys, selenium.webdriver</arg>
+</arguments>
+<assign>
+<var>${chrome_options}</var>
+</assign>
+<msg timestamp="20200222 23:09:49.039" level="INFO">${chrome_options} = &lt;selenium.webdriver.chrome.options.Options object at 0x0422E270&gt;</msg>
+<status status="PASS" starttime="20200222 23:09:49.039" endtime="20200222 23:09:49.039"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>credentials_enable_service=${false}</arg>
+</arguments>
+<assign>
+<var>${prefs}</var>
+</assign>
+<msg timestamp="20200222 23:09:49.040" level="INFO">${prefs} = {'credentials_enable_service': False}</msg>
+<status status="PASS" starttime="20200222 23:09:49.040" endtime="20200222 23:09:49.040"></status>
+</kw>
+<kw name="Call Method" library="BuiltIn">
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<arguments>
+<arg>${chrome_options}</arg>
+<arg>add_experimental_option</arg>
+<arg>prefs</arg>
+<arg>${prefs}</arg>
+</arguments>
+<status status="PASS" starttime="20200222 23:09:49.040" endtime="20200222 23:09:49.040"></status>
+</kw>
+<kw name="Call Method" library="BuiltIn">
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<arguments>
+<arg>${chrome_options}</arg>
+<arg>add_argument</arg>
+<arg>--start-maximized</arg>
+</arguments>
+<status status="PASS" starttime="20200222 23:09:49.040" endtime="20200222 23:09:49.041"></status>
+</kw>
+<kw name="Call Method" library="BuiltIn">
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<arguments>
+<arg>${chrome_options}</arg>
+<arg>add_argument</arg>
+<arg>--disable-popup-blocking</arg>
+</arguments>
+<status status="PASS" starttime="20200222 23:09:49.041" endtime="20200222 23:09:49.041"></status>
+</kw>
+<kw name="Create Webdriver" library="SeleniumLibrary">
+<doc>Creates an instance of Selenium WebDriver.</doc>
+<arguments>
+<arg>Chrome</arg>
+<arg>chrome_options=${chrome_options}</arg>
+</arguments>
+<msg timestamp="20200222 23:09:49.041" level="INFO">Creating an instance of the Chrome WebDriver.</msg>
+<status status="PASS" starttime="20200222 23:09:49.041" endtime="20200222 23:09:54.139"></status>
+</kw>
+<status status="PASS" starttime="20200222 23:09:49.039" endtime="20200222 23:09:54.140"></status>
+</kw>
+<test id="s1-t1" name="AIS-CRM Website">
+<kw name="Launch Web System" library="misc_resources">
+<doc>Url of the web application</doc>
+<arguments>
+<arg>${URL}</arg>
+</arguments>
+<kw name="Go To" library="SeleniumLibrary">
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<arguments>
+<arg>${link}</arg>
+</arguments>
+<msg timestamp="20200222 23:09:54.141" level="INFO">Opening url 'http://192.168.0.24/aistcrm_uat/index.php?action=Login&amp;module=Users'</msg>
+<status status="PASS" starttime="20200222 23:09:54.140" endtime="20200222 23:10:06.316"></status>
+</kw>
+<kw name="Verify Title Page" library="misc_resources">
+<doc>Verify the title of the page after the login with username successfully entered.</doc>
+<kw name="Get Title" library="SeleniumLibrary">
+<doc>Returns the title of the current page.</doc>
+<status status="PASS" starttime="20200222 23:10:06.316" endtime="20200222 23:10:06.323"></status>
+</kw>
+<kw name="Title Should Be" library="SeleniumLibrary">
+<doc>Verifies that the current page title equals ``title``.</doc>
+<arguments>
+<arg>MOAI-CRM - The Premium CRM Solution</arg>
+</arguments>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<msg timestamp="20200222 23:10:06.807" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-3.png"&gt;&lt;img src="selenium-screenshot-3.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20200222 23:10:06.331" endtime="20200222 23:10:06.807"></status>
+</kw>
+<msg timestamp="20200222 23:10:06.809" level="FAIL">Title should have been 'MOAI-CRM - The Premium CRM Solution' but was '192.168.0.24'.</msg>
+<status status="FAIL" starttime="20200222 23:10:06.323" endtime="20200222 23:10:06.809"></status>
+</kw>
+<status status="FAIL" starttime="20200222 23:10:06.316" endtime="20200222 23:10:06.809"></status>
+</kw>
+<status status="FAIL" starttime="20200222 23:09:54.140" endtime="20200222 23:10:06.809"></status>
+</kw>
+<tags>
+<tag>AIS-CRM SITE</tag>
+</tags>
+<status status="FAIL" starttime="20200222 23:09:54.140" endtime="20200222 23:10:06.809" critical="yes">Title should have been 'MOAI-CRM - The Premium CRM Solution' but was '192.168.0.24'.</status>
+</test>
+<test id="s1-t2" name="Log-In User with Valid Username And Password">
+<kw name="Input Username" library="misc_resources">
+<doc>This is the email username input text function.</doc>
+<arguments>
+<arg>${USER}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${USERNAME_LOCATOR}</arg>
+</arguments>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<msg timestamp="20200222 23:10:12.315" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-4.png"&gt;&lt;img src="selenium-screenshot-4.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20200222 23:10:11.927" endtime="20200222 23:10:12.315"></status>
+</kw>
+<msg timestamp="20200222 23:10:12.338" level="FAIL">Element 'name:user_name' not visible after 5 seconds.</msg>
+<status status="FAIL" starttime="20200222 23:10:06.810" endtime="20200222 23:10:12.338"></status>
+</kw>
+<status status="FAIL" starttime="20200222 23:10:06.810" endtime="20200222 23:10:12.338"></status>
+</kw>
+<tags>
+<tag>User credentials</tag>
+</tags>
+<status status="FAIL" starttime="20200222 23:10:06.809" endtime="20200222 23:10:12.339" critical="yes">Element 'name:user_name' not visible after 5 seconds.</status>
+</test>
+<test id="s1-t3" name="Sales Visit">
+<kw name="Select Menu" library="misc_resources">
+<doc>Select Menu Header like Sales, Customer Service, Inventory</doc>
+<arguments>
+<arg>${HEADER_MENU_STRING}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>//td[@class="tabUnSelected"]/a[contains(text(), '${menu}')]</arg>
+</arguments>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<msg timestamp="20200222 23:10:41.919" level="FAIL">WebDriverException: Message: chrome not reachable
+  (Session info: chrome=80.0.3987.116)
+</msg>
+<status status="FAIL" starttime="20200222 23:10:27.863" endtime="20200222 23:10:41.920"></status>
+</kw>
+<msg timestamp="20200222 23:10:41.920" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: WebDriverException: Message: chrome not reachable
+  (Session info: chrome=80.0.3987.116)
+</msg>
+<msg timestamp="20200222 23:10:41.932" level="FAIL">WebDriverException: Message: chrome not reachable
+  (Session info: chrome=80.0.3987.116)
+</msg>
+<status status="FAIL" starttime="20200222 23:10:12.340" endtime="20200222 23:10:41.932"></status>
+</kw>
+<status status="FAIL" starttime="20200222 23:10:12.339" endtime="20200222 23:10:41.933"></status>
+</kw>
+<status status="FAIL" starttime="20200222 23:10:12.339" endtime="20200222 23:10:41.933" critical="yes">WebDriverException: Message: chrome not reachable
+  (Session info: chrome=80.0.3987.116)
+</status>
+</test>
+<test id="s1-t4" name="All Informations">
+<kw name="Perform Create Sales Visit All Informations" library="create_sales_visit_resource">
+<doc>This function is to call the csv file and distribute the contents.</doc>
+<arguments>
+<arg>ALL</arg>
+<arg>D:\\my_files\\Robot_Framework\\robotScripts\\AISCRM\\create_sales_visit${/}../resources/sales_visit2.csv</arg>
+</arguments>
+<kw name="Get File" library="OperatingSystem">
+<doc>Returns the contents of a specified file.</doc>
+<arguments>
+<arg>${csv}</arg>
+</arguments>
+<assign>
+<var>${contents}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.942" level="INFO" html="yes">Getting file '&lt;a href="file://D:\my_files\Robot_Framework\robotScripts\AISCRM\resources\sales_visit2.csv"&gt;D:\my_files\Robot_Framework\robotScripts\AISCRM\resources\sales_visit2.csv&lt;/a&gt;'.</msg>
+<msg timestamp="20200222 23:10:41.943" level="INFO">${contents} = ﻿Schedule|Objective|Date |Status|Account|Contact|Project|start_time|end_time|plan|email|mobile|phone|department|position|comment|report|remaining|competitors|remark|lead_no|lead_name|image
+Year|Propos...</msg>
+<status status="PASS" starttime="20200222 23:10:41.941" endtime="20200222 23:10:41.943"></status>
+</kw>
+<kw name="Create List" library="BuiltIn">
+<doc>Returns a list containing given items.</doc>
+<arguments>
+<arg>${contents}</arg>
+</arguments>
+<assign>
+<var>@{read}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.943" level="INFO">@{read} = [ ﻿Schedule|Objective|Date |Status|Account|Contact|Project|start_time|end_time|plan|email|mobile|phone|department|position|comment|report|remaining|competitors|remark|lead_no|lead_name|image
+Year|Prop...</msg>
+<status status="PASS" starttime="20200222 23:10:41.943" endtime="20200222 23:10:41.943"></status>
+</kw>
+<kw name="Split To Lines" library="String">
+<doc>Splits the given string to lines.</doc>
+<arguments>
+<arg>@{read}</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>@{lines}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.944" level="INFO">45 lines returned</msg>
+<msg timestamp="20200222 23:10:41.944" level="INFO">@{lines} = [ Year|Propose|24/05/2020|Plan|A I SYSTEM CO.|คุณเบียร์ -|Saint Test|||A I SYSTEM CO.|ruel@aisyst.com|(0) 2637-1142 -(3)|(0) 2637-1142 -(3)|A I SYSTEM CO.|A I SYSTEM CO.|A I SYSTEM CO.|A I SYSTEM CO.|...</msg>
+<status status="PASS" starttime="20200222 23:10:41.943" endtime="20200222 23:10:41.944"></status>
+</kw>
+<kw name="${line} IN [ @{lines} ]" type="for">
+<kw name="${line} = Year|Propose|24/05/2020|Plan|A I SYSTEM CO.|คุณเบียร์ -|Saint Test|||A I SYSTEM CO.|ruel@aisyst.com|(0) 2637-1142 -(3)|(0) 2637-1142 -(3)|A I SYSTEM CO.|A I SYSTEM CO.|A I SYSTEM CO.|A I SYSTEM CO.|A ..." type="foritem">
+<kw name="Get Current Date" library="DateTime">
+<doc>Returns current local or UTC time with an optional increment.</doc>
+<arguments>
+<arg>result_format=%H:%M:%S</arg>
+</arguments>
+<assign>
+<var>${current_date}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.944" level="INFO">${current_date} = 23:10:41</msg>
+<status status="PASS" starttime="20200222 23:10:41.944" endtime="20200222 23:10:41.944"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${current_date}</arg>
+</arguments>
+<assign>
+<var>${end_variable}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.945" level="INFO">${end_variable} = 23:10:41</msg>
+<status status="PASS" starttime="20200222 23:10:41.945" endtime="20200222 23:10:41.945"></status>
+</kw>
+<kw name="Add Time To Time" library="DateTime">
+<doc>Adds time to another time and returns the resulting time.</doc>
+<arguments>
+<arg>${end_variable}</arg>
+<arg>1 hour</arg>
+</arguments>
+<assign>
+<var>${adjust}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.946" level="INFO">${adjust} = 87041.0</msg>
+<status status="PASS" starttime="20200222 23:10:41.945" endtime="20200222 23:10:41.946"></status>
+</kw>
+<kw name="Convert Time" library="DateTime">
+<doc>Converts between supported `time formats`.</doc>
+<arguments>
+<arg>${adjust}</arg>
+<arg>Timer</arg>
+</arguments>
+<assign>
+<var>${add_convert}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.946" level="INFO">${add_convert} = 24:10:41.000</msg>
+<status status="PASS" starttime="20200222 23:10:41.946" endtime="20200222 23:10:41.946"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${add_convert}</arg>
+</arguments>
+<assign>
+<var>${add_set}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.947" level="INFO">${add_set} = 24:10:41.000</msg>
+<status status="PASS" starttime="20200222 23:10:41.946" endtime="20200222 23:10:41.947"></status>
+</kw>
+<kw name="Split String From Right" library="String">
+<doc>Splits the ``string`` using ``separator`` starting from right.</doc>
+<arguments>
+<arg>${add_set}</arg>
+<arg>:</arg>
+<arg>max_split=1</arg>
+</arguments>
+<assign>
+<var>${add_split}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.947" level="INFO">${add_split} = ['24:10', '41.000']</msg>
+<status status="PASS" starttime="20200222 23:10:41.947" endtime="20200222 23:10:41.947"></status>
+</kw>
+<kw name="Get From List" library="Collections">
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<arguments>
+<arg>${add_split}</arg>
+<arg>0</arg>
+</arguments>
+<assign>
+<var>${add_get}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.947" level="INFO">${add_get} = 24:10</msg>
+<status status="PASS" starttime="20200222 23:10:41.947" endtime="20200222 23:10:41.947"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>Adding Time ${add_get} without seconds</arg>
+</arguments>
+<msg timestamp="20200222 23:10:41.948" level="INFO">Adding Time 24:10 without seconds</msg>
+<status status="PASS" starttime="20200222 23:10:41.947" endtime="20200222 23:10:41.948"></status>
+</kw>
+<kw name="Subtract Time From Time" library="DateTime">
+<doc>Subtracts time from another time and returns the resulting time.</doc>
+<arguments>
+<arg>${adjust}</arg>
+<arg>1 hour</arg>
+</arguments>
+<assign>
+<var>${adj_subtract}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.948" level="INFO">${adj_subtract} = 83441.0</msg>
+<status status="PASS" starttime="20200222 23:10:41.948" endtime="20200222 23:10:41.948"></status>
+</kw>
+<kw name="Convert Time" library="DateTime">
+<doc>Converts between supported `time formats`.</doc>
+<arguments>
+<arg>${adj_subtract}</arg>
+<arg>Timer</arg>
+</arguments>
+<assign>
+<var>${sub_convert}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.948" level="INFO">${sub_convert} = 23:10:41.000</msg>
+<status status="PASS" starttime="20200222 23:10:41.948" endtime="20200222 23:10:41.948"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${sub_convert}</arg>
+</arguments>
+<assign>
+<var>${sub_set}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.949" level="INFO">${sub_set} = 23:10:41.000</msg>
+<status status="PASS" starttime="20200222 23:10:41.948" endtime="20200222 23:10:41.949"></status>
+</kw>
+<kw name="Split String From Right" library="String">
+<doc>Splits the ``string`` using ``separator`` starting from right.</doc>
+<arguments>
+<arg>${sub_set}</arg>
+<arg>:</arg>
+<arg>max_split=1</arg>
+</arguments>
+<assign>
+<var>${sub_split}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.949" level="INFO">${sub_split} = ['23:10', '41.000']</msg>
+<status status="PASS" starttime="20200222 23:10:41.949" endtime="20200222 23:10:41.949"></status>
+</kw>
+<kw name="Get From List" library="Collections">
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<arguments>
+<arg>${sub_split}</arg>
+<arg>0</arg>
+</arguments>
+<assign>
+<var>${sub_get}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.950" level="INFO">${sub_get} = 23:10</msg>
+<status status="PASS" starttime="20200222 23:10:41.949" endtime="20200222 23:10:41.950"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>Subracting Time ${sub_get} without seconds</arg>
+</arguments>
+<msg timestamp="20200222 23:10:41.950" level="INFO">Subracting Time 23:10 without seconds</msg>
+<status status="PASS" starttime="20200222 23:10:41.950" endtime="20200222 23:10:41.950"></status>
+</kw>
+<kw name="Split String" library="String">
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<arguments>
+<arg>${line}</arg>
+<arg>|</arg>
+</arguments>
+<assign>
+<var>@{bm}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.950" level="INFO">@{bm} = [ Year | Propose | 24/05/2020 | Plan | A I SYSTEM CO. | คุณเบียร์ - | Saint Test |  |  | A I SYSTEM CO. | ruel@aisyst.com | (0) 2637-1142 -(3) | (0) 2637-1142 -(3) | A I SYSTEM CO. | A I SYSTEM CO. | ...</msg>
+<status status="PASS" starttime="20200222 23:10:41.950" endtime="20200222 23:10:41.950"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[0]</arg>
+</arguments>
+<assign>
+<var>${schedule}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.951" level="INFO">${schedule} = Year</msg>
+<status status="PASS" starttime="20200222 23:10:41.950" endtime="20200222 23:10:41.951"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[1]</arg>
+</arguments>
+<assign>
+<var>${objective}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.951" level="INFO">${objective} = Propose</msg>
+<status status="PASS" starttime="20200222 23:10:41.951" endtime="20200222 23:10:41.951"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[2]</arg>
+</arguments>
+<assign>
+<var>${start_date}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.951" level="INFO">${start_date} = 24/05/2020</msg>
+<status status="PASS" starttime="20200222 23:10:41.951" endtime="20200222 23:10:41.951"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[3]</arg>
+</arguments>
+<assign>
+<var>${status}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.952" level="INFO">${status} = Plan</msg>
+<status status="PASS" starttime="20200222 23:10:41.952" endtime="20200222 23:10:41.952"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[4]</arg>
+</arguments>
+<assign>
+<var>${account}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.952" level="INFO">${account} = A I SYSTEM CO.</msg>
+<status status="PASS" starttime="20200222 23:10:41.952" endtime="20200222 23:10:41.952"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[5]</arg>
+</arguments>
+<assign>
+<var>${contact_name}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.952" level="INFO">${contact_name} = คุณเบียร์ -</msg>
+<status status="PASS" starttime="20200222 23:10:41.952" endtime="20200222 23:10:41.952"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[6]</arg>
+</arguments>
+<assign>
+<var>${project_name}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.953" level="INFO">${project_name} = Saint Test</msg>
+<status status="PASS" starttime="20200222 23:10:41.953" endtime="20200222 23:10:41.953"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${sub_get}</arg>
+</arguments>
+<assign>
+<var>${subtract}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.953" level="INFO">${subtract} = 23:10</msg>
+<status status="PASS" starttime="20200222 23:10:41.953" endtime="20200222 23:10:41.953"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${add_get}</arg>
+</arguments>
+<assign>
+<var>${add}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.954" level="INFO">${add} = 24:10</msg>
+<status status="PASS" starttime="20200222 23:10:41.953" endtime="20200222 23:10:41.954"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[9]</arg>
+</arguments>
+<assign>
+<var>${plan}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.954" level="INFO">${plan} = A I SYSTEM CO.</msg>
+<status status="PASS" starttime="20200222 23:10:41.954" endtime="20200222 23:10:41.954"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[10]</arg>
+</arguments>
+<assign>
+<var>${email}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.955" level="INFO">${email} = ruel@aisyst.com</msg>
+<status status="PASS" starttime="20200222 23:10:41.954" endtime="20200222 23:10:41.955"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[11]</arg>
+</arguments>
+<assign>
+<var>${mobile}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.955" level="INFO">${mobile} = (0) 2637-1142 -(3)</msg>
+<status status="PASS" starttime="20200222 23:10:41.955" endtime="20200222 23:10:41.955"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[12]</arg>
+</arguments>
+<assign>
+<var>${phone}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.955" level="INFO">${phone} = (0) 2637-1142 -(3)</msg>
+<status status="PASS" starttime="20200222 23:10:41.955" endtime="20200222 23:10:41.955"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[13]</arg>
+</arguments>
+<assign>
+<var>${department}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.956" level="INFO">${department} = A I SYSTEM CO.</msg>
+<status status="PASS" starttime="20200222 23:10:41.955" endtime="20200222 23:10:41.956"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[14]</arg>
+</arguments>
+<assign>
+<var>${position}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.956" level="INFO">${position} = A I SYSTEM CO.</msg>
+<status status="PASS" starttime="20200222 23:10:41.956" endtime="20200222 23:10:41.956"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[15]</arg>
+</arguments>
+<assign>
+<var>${comment}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.956" level="INFO">${comment} = A I SYSTEM CO.</msg>
+<status status="PASS" starttime="20200222 23:10:41.956" endtime="20200222 23:10:41.956"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[16]</arg>
+</arguments>
+<assign>
+<var>${report}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.957" level="INFO">${report} = A I SYSTEM CO.</msg>
+<status status="PASS" starttime="20200222 23:10:41.957" endtime="20200222 23:10:41.957"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[17]</arg>
+</arguments>
+<assign>
+<var>${remaining}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.957" level="INFO">${remaining} = A I SYSTEM CO.</msg>
+<status status="PASS" starttime="20200222 23:10:41.957" endtime="20200222 23:10:41.957"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[18]</arg>
+</arguments>
+<assign>
+<var>${competitor}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.957" level="INFO">${competitor} = A I SYSTEM CO.</msg>
+<status status="PASS" starttime="20200222 23:10:41.957" endtime="20200222 23:10:41.957"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[19]</arg>
+</arguments>
+<assign>
+<var>${remark}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.958" level="INFO">${remark} = A I SYSTEM CO.</msg>
+<status status="PASS" starttime="20200222 23:10:41.958" endtime="20200222 23:10:41.958"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[20]</arg>
+</arguments>
+<assign>
+<var>${lead_no}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.958" level="INFO">${lead_no} = LEA62-0004</msg>
+<status status="PASS" starttime="20200222 23:10:41.958" endtime="20200222 23:10:41.958"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[21]</arg>
+</arguments>
+<assign>
+<var>${lead_name}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.958" level="INFO">${lead_name} = Jisoo Kim</msg>
+<status status="PASS" starttime="20200222 23:10:41.958" endtime="20200222 23:10:41.958"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[22]</arg>
+</arguments>
+<assign>
+<var>${image}</var>
+</assign>
+<msg timestamp="20200222 23:10:41.959" level="INFO">${image} = JPEG.jpg</msg>
+<status status="PASS" starttime="20200222 23:10:41.959" endtime="20200222 23:10:41.959"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${data}'=='ALL'</arg>
+<arg>Navigate Creating Sales Visit All</arg>
+<arg>${schedule}</arg>
+<arg>${objective}</arg>
+<arg>${start_date}</arg>
+<arg>${status}</arg>
+<arg>${account}</arg>
+<arg>${contact_name}</arg>
+<arg>${project_name}</arg>
+<arg>${add}</arg>
+<arg>${subtract}</arg>
+<arg>${department}</arg>
+<arg>${position}</arg>
+<arg>${email}</arg>
+<arg>${plan}</arg>
+<arg>${comment}</arg>
+<arg>${report}</arg>
+<arg>${remaining}</arg>
+<arg>${remark}</arg>
+<arg>${competitor}</arg>
+<arg>${lead_no}</arg>
+<arg>${lead_name}</arg>
+<arg>${mobile}</arg>
+<arg>${phone}</arg>
+<arg>${image}</arg>
+</arguments>
+<kw name="Navigate Creating Sales Visit All" library="create_sales_visit_resource">
+<doc>All functions</doc>
+<arguments>
+<arg>${schedule}</arg>
+<arg>${objective}</arg>
+<arg>${start_date}</arg>
+<arg>${status}</arg>
+<arg>${account}</arg>
+<arg>${contact_name}</arg>
+<arg>${project_name}</arg>
+<arg>${add}</arg>
+<arg>${subtract}</arg>
+<arg>${department}</arg>
+<arg>${position}</arg>
+<arg>${email}</arg>
+<arg>${plan}</arg>
+<arg>${comment}</arg>
+<arg>${report}</arg>
+<arg>${remaining}</arg>
+<arg>${remark}</arg>
+<arg>${competitor}</arg>
+<arg>${lead_no}</arg>
+<arg>${lead_name}</arg>
+<arg>${mobile}</arg>
+<arg>${phone}</arg>
+<arg>${image}</arg>
+</arguments>
+<kw name="Select Dropdown Option From Menu" library="misc_resources">
+<doc>Select Dropdown options from menu like sales visit, account,contacts, case.etc</doc>
+<arguments>
+<arg>${SALES_VISIT_STRING}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>//a[contains(text(), '${select}')]</arg>
+</arguments>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<msg timestamp="20200222 23:11:09.995" level="FAIL">WebDriverException: Message: chrome not reachable
+  (Session info: chrome=80.0.3987.116)
+</msg>
+<status status="FAIL" starttime="20200222 23:10:55.978" endtime="20200222 23:11:09.995"></status>
+</kw>
+<msg timestamp="20200222 23:11:09.995" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: WebDriverException: Message: chrome not reachable
+  (Session info: chrome=80.0.3987.116)
+</msg>
+<msg timestamp="20200222 23:11:09.996" level="FAIL">WebDriverException: Message: chrome not reachable
+  (Session info: chrome=80.0.3987.116)
+</msg>
+<status status="FAIL" starttime="20200222 23:10:41.961" endtime="20200222 23:11:09.996"></status>
+</kw>
+<status status="FAIL" starttime="20200222 23:10:41.960" endtime="20200222 23:11:09.996"></status>
+</kw>
+<status status="FAIL" starttime="20200222 23:10:41.959" endtime="20200222 23:11:09.996"></status>
+</kw>
+<status status="FAIL" starttime="20200222 23:10:41.959" endtime="20200222 23:11:09.996"></status>
+</kw>
+<status status="FAIL" starttime="20200222 23:10:41.944" endtime="20200222 23:11:09.996"></status>
+</kw>
+<status status="FAIL" starttime="20200222 23:10:41.944" endtime="20200222 23:11:09.996"></status>
+</kw>
+<status status="FAIL" starttime="20200222 23:10:41.934" endtime="20200222 23:11:09.996"></status>
+</kw>
+<status status="FAIL" starttime="20200222 23:10:41.933" endtime="20200222 23:11:09.996" critical="yes">WebDriverException: Message: chrome not reachable
+  (Session info: chrome=80.0.3987.116)
+</status>
+</test>
+<kw name="Close Browser" library="SeleniumLibrary" type="teardown">
+<doc>Closes the current browser.</doc>
+<status status="PASS" starttime="20200222 23:11:09.997" endtime="20200222 23:11:12.023"></status>
+</kw>
+<doc>This is the script for Create Sales Visit All Informations
+Prerequisites : Follow the steps below
+1. Open user_login_resource
+2. Input Username at variable ruel.arb
+3. Input password at variable moaicrm
+4. Input User's Full Name at variable Ruel Arbon</doc>
+<status status="FAIL" starttime="20200222 23:09:48.745" endtime="20200222 23:11:12.023"></status>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="4">Critical Tests</stat>
+<stat pass="0" fail="4">All Tests</stat>
+</total>
+<tag>
+<stat pass="0" fail="1">AIS-CRM SITE</stat>
+<stat pass="0" fail="1">User credentials</stat>
+</tag>
+<suite>
+<stat pass="0" fail="4" id="s1" name="Create Sales Visit All">Create Sales Visit All</stat>
+</suite>
+</statistics>
+<errors>
+<msg timestamp="20200222 23:10:41.920" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: WebDriverException: Message: chrome not reachable
+  (Session info: chrome=80.0.3987.116)
+</msg>
+<msg timestamp="20200222 23:11:09.995" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: WebDriverException: Message: chrome not reachable
+  (Session info: chrome=80.0.3987.116)
+</msg>
+</errors>
+</robot>
