@@ -405,7 +405,7 @@ Start And End Date Informations
 Status Information
     [Documentation]     Plan, Cancel, Completed
     [Arguments]     ${status}
-    Select From Option Search Field    ${status}
+    Select Option From Dropdown List    eventstatus  ${status}
 
 
 Adding Account Information
@@ -717,7 +717,7 @@ Verify Username Result
     [Documentation]  Verify the username registerd
     ${get_user}=    Get Text    //select[@name="assigned_user_id"]
     ${convert_user}=    Convert To String   ${get_user}
-    Wait Until Element Contains     //select[@name="assigned_user_id"]      ${USER}
+    Wait Until Element Contains     //select[@name="assigned_user_id"]      ${USER_FULL_NAME}
     Log     ${convert_user}
 
 Verify //a Attribute Check Result
@@ -759,7 +759,7 @@ Verify Account Name Result
 Verify E-mail Result
     [Arguments]     ${email}
     ${email_verify}=    Get Text    //span[@id="dtlview_E-mail"][contains(text(), '${email}')]
-    Should Be Equal     ${email_verify}     ${email}
+    Should Be Equal As Strings     ${email_verify}     ${email}
     Log     ${email_verify}
 
 Verify Phone Result

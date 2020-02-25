@@ -1,43 +1,43 @@
 ﻿Case Name|Priority|Person|Case Type|Status |Project|Case Open Date|Case Close Date|Plan Due Date|Waiting For|Partner Account|Partner Contact|Closed Reason|Description|Solution|Prevention|Contact name|Contact Mobile|Contact E-mail|Account Name|Serial Name|Product name|Product Brand|Product Model|Delivery Date|Warranty|Warranty Active Date|Check Product Date|Warranty Expired Date|Sent Product Date
---None--|Urgent|Kanchawat Chan-ngom|แจ้งปัญหา|เปิดงาน|Saint Test||||||||||||||||||||||||
---None--|--None--|Account Manager and PM|ร้องเรียน|ส่งต่อ|||||||||||||||||||||||||
-Low|Low|Business Development and PM|แจ้งซ่อม|รับงาน|||||||||||||||||||||||||
-Medium|Medium|Business Development Team|ร้องขอสนับสนุน|เช็คอิน|||||||||||||||||||||||||
-High|High|Email To Group|แจ้งเคลม|อยู่ระหว่างดำเนินการ|||||||||||||||||||||||||
-Urgent|Urgent|Sales Team|อื่นๆ          |ปิดงาน|||||||||||||||||||||||||
---None--|--None--|ADMIN ADMIN|แจ้งปัญหา|เปิดงาน|||||||||||||||||||||||||
-Low|Low|FF WP|ร้องเรียน|ส่งต่อ|||||||||||||||||||||||||
-Medium|Medium|FF2 WP2|แจ้งซ่อม|รับงาน|||||||||||||||||||||||||
-High|High|Jureeporn Katakhob|ร้องขอสนับสนุน|เช็คอิน|||||||||||||||||||||||||
-Urgent|Urgent|Kanchawat Chan-ngom|แจ้งเคลม|อยู่ระหว่างดำเนินการ|||||||||||||||||||||||||
---None--|--None--|Kanlaya Srinakorn|อื่นๆ          |ปิดงาน|||||||||||||||||||||||||
-Low|Low|Kitsalak Admin|แจ้งปัญหา|เปิดงาน|||||||||||||||||||||||||
-Medium|Medium|Kitsalak Sales|ร้องเรียน|ส่งต่อ|||||||||||||||||||||||||
-High|High|Kitsalak services|แจ้งซ่อม|รับงาน|||||||||||||||||||||||||
-Urgent|Urgent|Kitsalak Wanghan|ร้องขอสนับสนุน|เช็คอิน|||||||||||||||||||||||||
---None--|--None--|Kriengkrai Suthinarathorn|แจ้งเคลม|อยู่ระหว่างดำเนินการ|||||||||||||||||||||||||
-Low|Low|Maneerat Leewasirinan|อื่นๆ          |ปิดงาน|||||||||||||||||||||||||
-Medium|Medium|Nichapat Charatarcha|แจ้งปัญหา|เปิดงาน|||||||||||||||||||||||||
-High|High|Noppawat Vichayapornjarat|ร้องเรียน|ส่งต่อ|||||||||||||||||||||||||
-Urgent|Urgent|Nutthawat Taruensorn|แจ้งซ่อม|รับงาน|||||||||||||||||||||||||
---None--|--None--|nutthawat taruensorn|ร้องขอสนับสนุน|เช็คอิน|||||||||||||||||||||||||
-Low|Low|nutthawat taruensorn|แจ้งเคลม|อยู่ระหว่างดำเนินการ|||||||||||||||||||||||||
-Medium|Medium|nutthawat taruensorn|อื่นๆ          |ปิดงาน|||||||||||||||||||||||||
-High|High|Phumsiri Sirimuratha|แจ้งปัญหา|เปิดงาน|||||||||||||||||||||||||
-Urgent|Urgent|Ruel Arbon|ร้องเรียน|ส่งต่อ|||||||||||||||||||||||||
---None--|--None--|Sateanpong Jariyawuttipong|แจ้งซ่อม|รับงาน|||||||||||||||||||||||||
-Low|Low|Supphanan Homhual|ร้องขอสนับสนุน|เช็คอิน|||||||||||||||||||||||||
-Medium|Medium|Supphanan2 Homhual2|แจ้งเคลม|อยู่ระหว่างดำเนินการ|||||||||||||||||||||||||
-High|High|Supphanan2 Homhual2|อื่นๆ          |ปิดงาน|||||||||||||||||||||||||
-Urgent|Urgent|Thammarong Ngamchitsitthichai|แจ้งปัญหา|เปิดงาน|||||||||||||||||||||||||
---None--|--None--|wannapa Sale1|ร้องเรียน|ส่งต่อ|||||||||||||||||||||||||
-Low|Low|Warakrit Teerarungsikul|แจ้งซ่อม|รับงาน|||||||||||||||||||||||||
-Medium|Medium|Worawut pukkom|ร้องขอสนับสนุน|เช็คอิน|||||||||||||||||||||||||
-High|High|Wuttipong Mejumras|แจ้งเคลม|อยู่ระหว่างดำเนินการ|||||||||||||||||||||||||
-Urgent|Urgent|Wuttipong Mejumras|อื่นๆ          |ปิดงาน|||||||||||||||||||||||||
---None--|--None--|Nichapata T|แจ้งปัญหา|เปิดงาน|||||||||||||||||||||||||
-||                                             ||ส่งต่อ|||||||||||||||||||||||||
-||||รับงาน|||||||||||||||||||||||||
-||||เช็คอิน|||||||||||||||||||||||||
-||||อยู่ระหว่างดำเนินการ|||||||||||||||||||||||||
-||||ปิดงาน|||||||||||||||||||||||||
+Kanchawat Chan-ngom|Urgent|Kanchawat Chan-ngom|แจ้งปัญหา|เปิดงาน|Saint Test|28/02/2020|03/05/2020|01/03/2020||Advanced Communication Services Co., Ltd.|Robot Framework||This Is the Description of the Case|This is the Solution of the Case|This is my prevention|คุณเบียร์|(0) 2637-1142 -(3)||||||||||||
+Account Manager and PM|--None--|Account Manager and PM|ร้องเรียน|ส่งต่อ||||||Advanced Communication Services Co., Ltd.|||||||||||||||||||
+Business Development and PM|Low|Business Development and PM|แจ้งซ่อม|รับงาน||||||VST ECS (Thailand) Co., Ltd.|||||||||||||||||||
+Business Development Team|Medium|Business Development Team|ร้องขอสนับสนุน|เช็คอิน||||||M Technologies (Thailand) Co,. Ltd.|||||||||||||||||||
+Email To Group|High|Email To Group|แจ้งเคลม|อยู่ระหว่างดำเนินการ||||||PACIFIC TECH (THAILAND) COMPANY LIMITED|||||||||||||||||||
+Sales Team|Urgent|Sales Team|อื่นๆ          |ปิดงาน||||||Poise Technology Co., Ltd.|||||||||||||||||||
+ADMIN ADMIN|--None--|ADMIN ADMIN|แจ้งปัญหา|เปิดงาน||||||Tech Titan Distribution Company Limited|||||||||||||||||||
+FF WP|Low|FF WP|ร้องเรียน|ส่งต่อ||||||Insync technology Co.,Ltd.|||||||||||||||||||
+FF2 WP2|Medium|FF2 WP2|แจ้งซ่อม|รับงาน||||||Creator Design System Co.,Ltd.|||||||||||||||||||
+Jureeporn Katakhob|High|Jureeporn Katakhob|ร้องขอสนับสนุน|เช็คอิน||||||Optimus (Thailand) Co., Ltd.|||||||||||||||||||
+Kanchawat Chan-ngom|Urgent|Kanchawat Chan-ngom|แจ้งเคลม|อยู่ระหว่างดำเนินการ||||||Get on technology co.,ltd|||||||||||||||||||
+Kanlaya Srinakorn|--None--|Kanlaya Srinakorn|อื่นๆ          |ปิดงาน||||||Netka System Co.,Ltd|||||||||||||||||||
+Kitsalak Admin|Low|Kitsalak Admin|แจ้งปัญหา|เปิดงาน||||||IT Green Public Company (Limited)|||||||||||||||||||
+Kitsalak Sales|Medium|Kitsalak Sales|ร้องเรียน|ส่งต่อ||||||Synnex(Thailand) Public Company Limited|||||||||||||||||||
+Kitsalak services|High|Kitsalak services|แจ้งซ่อม|รับงาน||||||--None--|||||||||||||||||||
+Kitsalak Wanghan|Urgent|Kitsalak Wanghan|ร้องขอสนับสนุน|เช็คอิน||||||Advanced Communication Services Co., Ltd.|||||||||||||||||||
+Kriengkrai Suthinarathorn|--None--|Kriengkrai Suthinarathorn|แจ้งเคลม|อยู่ระหว่างดำเนินการ||||||VST ECS (Thailand) Co., Ltd.|||||||||||||||||||
+Maneerat Leewasirinan|Low|Maneerat Leewasirinan|อื่นๆ          |ปิดงาน||||||M Technologies (Thailand) Co,. Ltd.|||||||||||||||||||
+Nichapat Charatarcha|Medium|Nichapat Charatarcha|แจ้งปัญหา|เปิดงาน||||||PACIFIC TECH (THAILAND) COMPANY LIMITED|||||||||||||||||||
+Noppawat Vichayapornjarat|High|Noppawat Vichayapornjarat|ร้องเรียน|ส่งต่อ||||||Poise Technology Co., Ltd.|||||||||||||||||||
+Nutthawat Taruensorn|Urgent|Nutthawat Taruensorn|แจ้งซ่อม|รับงาน||||||Tech Titan Distribution Company Limited|||||||||||||||||||
+nutthawat taruensorn|--None--|nutthawat taruensorn|ร้องขอสนับสนุน|เช็คอิน||||||Insync technology Co.,Ltd.|||||||||||||||||||
+nutthawat taruensorn|Low|nutthawat taruensorn|แจ้งเคลม|อยู่ระหว่างดำเนินการ||||||Creator Design System Co.,Ltd.|||||||||||||||||||
+nutthawat taruensorn|Medium|nutthawat taruensorn|อื่นๆ          |ปิดงาน||||||Optimus (Thailand) Co., Ltd.|||||||||||||||||||
+Phumsiri Sirimuratha|High|Phumsiri Sirimuratha|แจ้งปัญหา|เปิดงาน||||||Get on technology co.,ltd|||||||||||||||||||
+Ruel Arbon|Urgent|Ruel Arbon|ร้องเรียน|ส่งต่อ||||||Netka System Co.,Ltd|||||||||||||||||||
+Sateanpong Jariyawuttipong|--None--|Sateanpong Jariyawuttipong|แจ้งซ่อม|รับงาน||||||IT Green Public Company (Limited)|||||||||||||||||||
+Supphanan Homhual|Low|Supphanan Homhual|ร้องขอสนับสนุน|เช็คอิน||||||Synnex(Thailand) Public Company Limited|||||||||||||||||||
+Supphanan2 Homhual2|Medium|Supphanan2 Homhual2|แจ้งเคลม|อยู่ระหว่างดำเนินการ||||||--None--|||||||||||||||||||
+Supphanan2 Homhual2|High|Supphanan2 Homhual2|อื่นๆ          |ปิดงาน||||||Advanced Communication Services Co., Ltd.|||||||||||||||||||
+Thammarong Ngamchitsitthichai|Urgent|Thammarong Ngamchitsitthichai|แจ้งปัญหา|เปิดงาน||||||VST ECS (Thailand) Co., Ltd.|||||||||||||||||||
+wannapa Sale1|--None--|wannapa Sale1|ร้องเรียน|ส่งต่อ||||||M Technologies (Thailand) Co,. Ltd.|||||||||||||||||||
+Warakrit Teerarungsikul|Low|Warakrit Teerarungsikul|แจ้งซ่อม|รับงาน||||||PACIFIC TECH (THAILAND) COMPANY LIMITED|||||||||||||||||||
+Worawut pukkom|Medium|Worawut pukkom|ร้องขอสนับสนุน|เช็คอิน||||||Poise Technology Co., Ltd.|||||||||||||||||||
+Wuttipong Mejumras|High|Wuttipong Mejumras|แจ้งเคลม|อยู่ระหว่างดำเนินการ||||||Tech Titan Distribution Company Limited|||||||||||||||||||
+Wuttipong Mejumras|Urgent|Wuttipong Mejumras|อื่นๆ          |ปิดงาน||||||Insync technology Co.,Ltd.|||||||||||||||||||
+Nichapata T|--None--|Nichapata T|แจ้งปัญหา|เปิดงาน||||||Creator Design System Co.,Ltd.|||||||||||||||||||
+||                                             ||ส่งต่อ||||||Optimus (Thailand) Co., Ltd.|||||||||||||||||||
+||||รับงาน||||||Get on technology co.,ltd|||||||||||||||||||
+||||เช็คอิน||||||Netka System Co.,Ltd|||||||||||||||||||
+||||อยู่ระหว่างดำเนินการ||||||IT Green Public Company (Limited)|||||||||||||||||||
+||||ปิดงาน||||||Synnex(Thailand) Public Company Limited|||||||||||||||||||

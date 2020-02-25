@@ -25,11 +25,9 @@ Select Dropdown Option From Menu
 
 Select Data On Basic Search Mode
     [Documentation]  This Function is to Add some data. It has a plus button and erase Button
-    [Arguments]     ${plus_button_locator}      ${option}   ${string_reference}
-    Scroll Down Page From The Browser
-    Click Element              ${plus_button_locator}
+    [Arguments]           ${selector}     ${option}   ${string_reference}
     Switch Window   NEW
-    Select From Option Search Field   ${option}
+    Select Option From Dropdown List   ${selector}   ${option}     # OTHER KEYWORD UNDER misc.resources
     Input Text To Search        ${string_reference}
     Click Search Button
     Select The List Found       ${string_reference}
@@ -84,10 +82,10 @@ Click Button
     [Arguments]         ${image}
     Click Element   //input[@value="${image}"]
 
-Select From Option Search Field
-    [Documentation]   Can be used for Dropdown selection
-    [Arguments]     ${option}
-    Click Element   ${SEARCH_FIELD}/option[@value="${option}"]
+Select Option From Dropdown List
+    [Documentation]   Example in Status from Sales Visit : Plan, Complete, Cancel
+    [Arguments]     ${selector}     ${option}
+    Click Element   //select[@name="${selector}"]/option[@value="${option}"]
 
 Alert Message Should Be Found
     [Documentation]     This is for Alert Message
@@ -126,13 +124,16 @@ Click Erase Button
     Click Element   ${account_delete}
     Set Selenium Timeout    5 seconds
 
+Click Plus Button
+    [Documentation]  This function is to click the "+" button
+    [Arguments]     ${plus_button}
+    Click Element       ${plus_button}
 Verify Added Information
     [Documentation]     This function is to check the added account name, contact name, project name.
     [Arguments]     ${expected}     ${variable}
     ${actual}=     Get Value       //input[@name="${variable}"]
 #    Should Be Equal As Strings     ${actual}      ${expected}
     Log     Contains text ${actual}
-
 Subtract Time Without Seconds
     [Documentation]     Subract Time From Time And Remove Seconds
     ${currrent_date}=   Get Current Date    result_format=%H:%M:%S
@@ -165,13 +166,14 @@ Verify Deleted Information
     Log     ${actual}
     Should Be Empty     ${actual}
 
-Input Date Calendar Text
-    [Documentation]    This function is used to input the specific type of text of Date Calendar Text
+Enter Date Calendar Text
+    [Documentation]    Calendar Text for optional informations like Case module:("Case Open Date").
     [Arguments]     ${locator}  ${calendar_text}
-    Click Element   name:${locator}
-    Press Keys      name:${locator}      CTRL+a+DELETE
+    Click Element   ${locator}
+#    Press Keys      ${locator}      CTRL+a+DELETE
+    Input Text      ${locator}      ${calendar_text}    clear=True
     ${replace}=     Replace String       ${calendar_text}   /    -
-    Input Text      name:${locator}      ${replace}
+    Input Text      ${locator}      ${replace}
 
 
 
