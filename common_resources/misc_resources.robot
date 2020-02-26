@@ -23,18 +23,21 @@ Select Dropdown Option From Menu
     Wait Until Element Is Visible   //a[contains(text(), '${select}')]
     Click Link      //a[contains(text(), '${select}')]
 
+Focus New Browser Window
+    [Documentation]   To focus and execute new pop-up browser window
+    Switch Window   NEW
+
+Exit New Window And Focus Main Browser
+    [Documentation]  To Exit pop-up browser window and go back to the main browser
+    Switch Window
+
 Select Data On Basic Search Mode
     [Documentation]  This Function is to Add some data. It has a plus button and erase Button
     [Arguments]        ${selector}     ${option}   ${string_reference}
-    Switch Window   NEW
-    ${not_empty}=   Get Element Count   id:all_contacts
-    Run Keyword And Return If     ${not_empty}      Click Element       id:all_contacts
-    Sleep   2
     Select Option From Dropdown List   ${selector}   ${option}     # OTHER KEYWORD UNDER misc.resources
     Input Text To Search        ${string_reference}
     Click Search Button
     Select The List Found       ${string_reference}
-    Switch Window
 
 Click Button To Create Page
     [Documentation]   This is specific button for creating Case, Jobs, Contacts, Leads, Documents, Projects.

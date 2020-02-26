@@ -50,10 +50,10 @@ ${SERIAL_NAME_DEL_BTN}      //td[@class='showPanelBg']//td[2]//table[1]//tbody[1
 ${SERIAL_NAME_LABEL}        serial_name
 ${SERIAL_NO_SEARCH}         serial_no
 ${PROD_NAME_ADD_BTN}        //tr[21]//td[4]//table[1]//tbody[1]//tr[1]//td[2]//img[1]
-${PROD_NAME_LABEL}          name:product_name
+${PROD_NAME_LABEL}          product_name
 ${PROD_NAME_DEL_BTN}        //tr[21]//td[4]//table[1]//tbody[1]//tr[1]//td[3]//input[1]
 ${PROD_NAME_SEARCH}         product_no
-${PROD_BRAND_LOC}           name:case_prd_brand
+${PROD_BRAND_LOC}           id:case_prd_brand
 ${PROD_MODEL_LOC}           name:case_prd_model
 ${DELIVERY_DATE_LOC}        name:case_waranty
 ${WARRANTY_DATE_LOC}        name:case_start_date
@@ -62,7 +62,7 @@ ${WARRANTY_EXPIRED_LOC}     name:case_end_date
 ${SENT_PRODUCT_LOC}         name:case_datesent
 *** Test Cases ***
 AIS-CRM Website
-    Launch Web System   ${URL}
+    Launch Web System   ${URL_2}
 
 # Log-In User with Valid Username And Password
     [Tags]  User credentials
@@ -147,35 +147,35 @@ Case Data Informations
     \   ${warranty_expired_date}=   Set Variable    @{bm}[28]
     # Sent Product Date
     \   ${sent_product_date}=       Set Variable    @{bm}[29]
-#    \   Case Name                       ${remove_case}
-#    \   Priority Case                   ${priority}
-#    \   Responsible Person              ${responsible}
-#    \   Case Type                       ${case_type}
-#    \   Status                          ${status}
-#    \   Project Name                    ${project}
-#    \   Case Open Date                  ${case_open_date}
-#    \   Case Close Date                 ${case_close_date}
-#    \   Plan Due Date                   ${plan_due_date}
-#    \   Waiting For                     ${waiting}
-#    \   Partner Account                 ${partner_account}
-#    \   Partner Contact                 ${partner_contact}
-#    \   Description                     ${description}
-#    \   Solution                        ${solution}
-#    \   Prevention                      ${prevention}
-#    \   Contact Name                    ${contact_name}
-#    \   Contact Mobile                  ${contact_mobile}
-#    \   Contact E-mail                  ${contact_email}
-#    \   Account Name                    ${account_name}
+    \   Case Name                       ${remove_case}
+    \   Priority Case                   ${priority}
+    \   Responsible Person              ${responsible}
+    \   Case Type                       ${case_type}
+    \   Status                          ${status}
+    \   Project Name                    ${project}
+    \   Case Open Date                  ${case_open_date}
+    \   Case Close Date                 ${case_close_date}
+    \   Plan Due Date                   ${plan_due_date}
+    \   Waiting For                     ${waiting}
+    \   Partner Account                 ${partner_account}
+    \   Partner Contact                 ${partner_contact}
+    \   Description                     ${description}
+    \   Solution                        ${solution}
+    \   Prevention                      ${prevention}
+    \   Contact Name                    ${contact_name}
+    \   Contact Mobile                  ${contact_mobile}
+    \   Contact E-mail                  ${contact_email}
+    \   Account Name                    ${account_name}
     \   Serial Name                     ${serial_name}
 #    \   Product Name                    ${product_name}
-#    \   Product Brand                   ${product_brand}
-#    \   Product Model                   ${product_model}
-#    \   Delivery Date                   ${delivery_date}
-#    \   Warranty                        ${warranty}
-#    \   Warranty Active Date            ${warranty_active_date}
-#    \   Check Product Date              ${check_product_date}
-#    \   Warranty Expired Date           ${warranty_expired_date}
-#    \   Sent Product Date               ${sent_product_date}
+    \   Product Brand                   ${product_brand}
+    \   Product Model                   ${product_model}
+    \   Delivery Date                   ${delivery_date}
+    \   Warranty                        ${warranty}
+    \   Warranty Active Date            ${warranty_active_date}
+    \   Check Product Date              ${check_product_date}
+    \   Warranty Expired Date           ${warranty_expired_date}
+    \   Sent Product Date               ${sent_product_date}
 #    \   Enter Case Information          ${remove_case}  ${priority}    ${responsible}    ${case_type}
 #    ...     ${status}   ${project}  ${case_open_date}   ${case_close_date}
 #    ...     ${plan_due_date}    ${waiting}  ${partner_account}  ${partner_contact}
@@ -241,23 +241,34 @@ Project Name
     [Arguments]     ${project}
     Scroll Down Page From The Browser
     Click Plus Button       ${PROJECT_ADD_BTN}
+    Focus New Browser Window
     Select Data On Basic Search Mode          ${DROPDOWN_SEARCH_LOC}   ${NAME_SEARCH_FIELD}    ${project}   #from misc_resource.robot
+    Exit New Window And Focus Main Browser
     Verify Added Information    ${project}      ${PROJECT_LOC}
     Click Erase Button      ${PROJECT_DEL_BTN}
     Verify Deleted Information      ${PROJECT_LOC}
     Click Plus Button       ${PROJECT_ADD_BTN}
+    Focus New Browser Window
+
     Select Data On Basic Search Mode          ${DROPDOWN_SEARCH_LOC}   ${NAME_SEARCH_FIELD}    ${project}   #from misc_resource.robot
+    Exit New Window And Focus Main Browser
+
     Verify Added Information    ${project}  ${PROJECT_LOC}
-    Switch Window
 Account Name
     [Arguments]  ${account_name}=${EMPTY}
     Run Keyword If  "${account_name}"!="${EMPTY}"   Run Keywords    Click Plus Button       ${ACCOUNT_NAME_ADD_BTN}
+    ...     AND     Focus New Browser Window
     ...     AND     Select Data On Basic Search Mode    ${DROPDOWN_SEARCH_LOC}      ${account_name}     #from misc_resources.robot
+    ...     AND     Exit New Window And Focus Main Browser
+
     ...     AND     Verify Added Information    ${project}  ${ACCOUNT_NAME_SEARCH}
     ...     AND     Click Erase Button      ${ACCOUNT_NAME_DEL_BTN}
     ...     AND     Verify Deleted Information  ${ACCOUNT_NAME_SEARCH}
     ...     AND     Click Plus Button   ${ACCOUNT_NAME_ADD_BTN}
+    ...     AND     Focus New Browser Window
     ...     AND     Select Data On Basic Search Mode    ${DROPDOWN_SEARCH_LOC}  ${account_name}
+    ...     AND     Exit New Window And Focus Main Browser
+
     ...     AND     Verify Added Information    ${project}  ${ACCOUNT_NAME_ADD_BTN}
 
 
@@ -305,12 +316,16 @@ Contact Name
     [Arguments]     ${contact_name}=${EMPTY}
     Scroll Down Page From The Browser
     Run Keyword If  "${contact_name}"!="${EMPTY}"   Run Keywords    Click Plus Button       ${CONTACT_ADDNAME_BTN}       #${plus_button_locator}
+    ...     AND     Focus New Browser Window
     ...     AND     Select Data On Basic Search Mode      ${DROPDOWN_SEARCH_LOC}  ${CONTACT_NAME_SEARCH}  ${contact_name}
+    ...     AND     Exit New Window And Focus Main Browser
     ...     AND     Verify Added Information              ${contact_name}      ${CONTACT_NAME_LABEL}
     ...     AND     Click Erase Button                    ${CONTACTNAME_DEL_BTN}
     ...     AND     Verify Deleted Information            ${CONTACT_NAME_LABEL}
     ...     AND     Click Plus Button                     ${CONTACT_ADDNAME_BTN}
+    ...     AND     Focus New Browser Window
     ...     AND     Select Data On Basic Search Mode      ${DROPDOWN_SEARCH_LOC}   ${CONTACT_NAME_SEARCH}    ${contact_name}   #from misc_resource.robot
+    ...     AND     Exit New Window And Focus Main Browser
     ...     AND     Verify Added Information              ${contact_name}      ${CONTACT_NAME_LABEL}
 Contact Mobile
     [Arguments]     ${contact_mobile}=${EMPTY}
@@ -324,31 +339,44 @@ Serial Name
     [Arguments]  ${serial_name}=${EMPTY}
     Scroll Down Page From The Browser
     ${element}=     Get Element Count   //tr[2]/td[2]
+    ${not_empty}=   Get Element Count   id:all_contacts
     Run Keyword If  "${serial_name}"!="${EMPTY}"     Run Keywords    Click Plus Button   ${SERIAL_NAME_ADD_BTN}   # plus button locator
+    ...     AND     Focus New Browser Window
+    ...     AND     Run Keyword If     "${not_empty}"!="${EMPTY}"      Click Element       id:all_contacts
     ...     AND     Select Data On Basic Search Mode    ${DROPDOWN_SEARCH_LOC}  ${SERIAL_NO_SEARCH}     ${serial_name}
+    ...     AND     Exit New Window And Focus Main Browser
     ...     AND     Verify Added Information      ${element}     ${SERIAL_NAME_LABEL}
     ...     AND     Click Erase Button      ${SERIAL_NAME_DEL_BTN}
     ...     AND     Verify Deleted Information      ${SERIAL_NAME_LABEL}
     ...     AND     Click Plus Button               ${SERIAL_NAME_ADD_BTN}
+    ...     AND     Focus New Browser Window
+    ...     AND     Run Keyword If     "${not_empty}"!="${EMPTY}"      Click Element       id:all_contacts
     ...     AND     Select Data On Basic Search Mode    ${DROPDOWN_SEARCH_LOC}  ${SERIAL_NO_SEARCH}     ${serial_name}
+    ...     AND     Exit New Window And Focus Main Browser
     ...     AND     Verify Added Information            ${element}     ${SERIAL_NAME_LABEL}
 Product Name
     [Arguments]   ${product_name}=${EMPTY}
     Scroll Down Page From The Browser
     Run Keyword If  "${product_name}"!="${EMPTY}"   Run Keywords    Click Plus Button   ${PROD_NAME_ADD_BTN}
+    ...     AND     Focus New Browser Window
     ...     AND     Select Data On Basic Search Mode    ${DROPDOWN_SEARCH_LOC}  ${PROD_NAME_SEARCH}     ${product_name}
+    ...     AND     Exit New Window And Focus Main Browser
     ...     AND     Verify Added Information              ${product_name}     ${PROD_NAME_LABEL}
-    ...     AND     Click Erase Button                  ${PROJECT_DEL_BTN}
+    ...     AND     Click Erase Button                  ${PROD_NAME_DEL_BTN}
     ...     AND     Verify Deleted Information          ${PROD_NAME_LABEL}
     ...     AND     Click Plus Button                   ${PROD_NAME_ADD_BTN}
+    ...     AND     Focus New Browser Window
     ...     AND     Select Data On Basic Search Mode    ${DROPDOWN_SEARCH_LOC}  ${PROD_NAME_SEARCH}     ${product_name}
+    ...     AND     Exit New Window And Focus Main Browser
     ...     AND     Verify Added Information            ${product_name}     ${PROD_NAME_LABEL}
-    ...     AND     Switch Window
+
 
 
 Product Brand
-    [Arguments]     ${product_brand}=${EMPTY}
-    Run Keyword If  "${product_name}"!="${EMPTY}"   Input Text      ${PROD_BRAND_LOC}       ${product_brand}
+    [Arguments]   ${product_brand}=${EMPTY}
+    Run Keyword If      "${product_brand}"!="${EMPTY}"  Run Keywords
+    ...     Wait Until Element Is Visible   ${PROD_BRAND_LOC}
+    ...     AND     Input Text      ${PROD_BRAND_LOC}       ${product_brand}
 
 Product Model
     [Arguments]     ${product_model}=${EMPTY}
@@ -356,7 +384,7 @@ Product Model
 
 Delivery Date
     [Arguments]     ${delivery_date}=${EMPTY}
-    Run Keyword If  "${delivery_date}"!="${EMPTY}"  Input Text            ${DELIVERY_DATE_LOC}      ${delivery_date}
+    Run Keyword If  "${delivery_date}"!="${EMPTY}"      Input Text            ${DELIVERY_DATE_LOC}      ${delivery_date}
 
 Warranty
     [Arguments]    ${warranty}=${EMPTY}
