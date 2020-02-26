@@ -25,8 +25,11 @@ Select Dropdown Option From Menu
 
 Select Data On Basic Search Mode
     [Documentation]  This Function is to Add some data. It has a plus button and erase Button
-    [Arguments]           ${selector}     ${option}   ${string_reference}
+    [Arguments]        ${selector}     ${option}   ${string_reference}
     Switch Window   NEW
+    ${not_empty}=   Get Element Count   id:all_contacts
+    Run Keyword And Return If     ${not_empty}      Click Element       id:all_contacts
+    Sleep   2
     Select Option From Dropdown List   ${selector}   ${option}     # OTHER KEYWORD UNDER misc.resources
     Input Text To Search        ${string_reference}
     Click Search Button

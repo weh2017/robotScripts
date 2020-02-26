@@ -1,7 +1,7 @@
 *** Settings ***
 Library     Selenium2Library
 Library     OperatingSystem
-Library     String
+Library     String   
 Library     DateTime
 Library     Collections
 Library     Dialogs
@@ -14,37 +14,57 @@ Suite Setup     Open Chrome Browser
 #Suite Teardown  Close Browser
 
 *** Variables ***
-${CUSTOMER_SERVICE}     Customer Service
-${CASE_STRING}          Case
-${CASE_TXTBOX}          name:ticket_title
-${PRIORITY_LOC}         ticket_important
-${CASE_TYPE_LOC}        ticket_type
-${STATUS_LOC}           ticketstatus
-${PROJECT_LOC}          project_no
-${PROJECT_ADD_BTN}      //td[4]//table[1]//tbody[1]//tr[1]//td[3]//img[1]
-${PROJECT_DEL_BTN}      //td[4]//table[1]//tbody[1]//tr[1]//td[4]//input[1]
-${NAME_SEARCH_FIELD}    project_name
-${CASE_OPEN_LOC}        name:case_open_date
-${CASE_CLOSE_LOC}       name:cf_4616
-${CASE_PLAN_LOC}        name:case_date
-${WAITING_FOR_LOC}      cf_4583
-${PART_ACCOUNT_LOC}     ticket_del_name
-${PARTNER_CONTACT_LOC}   id:cf_4614
-${CLOSED_REASON_LOC}    cf_4681
-${DESCRIPTION_LOC}      name:case_cause
-${SOLUTION_LOC}         name:case_perfomance
-${PREVENTION_LOC}       name:case_protection
-${CONTACT_ADDNAME_BTN}  //td[@class='showPanelBg']//td[2]//table[1]//tbody[1]//tr[1]//td[2]//img[1]
-${CONTACTNAME_DEL_BTN}  //td[@class='showPanelBg']//td[2]//table[1]//tbody[1]//tr[1]//td[3]//input[1]
-${DROPDOWN_SEARCH_LOC}  search_field
-${CONTACT_NAME_SEARCH}  firstname
-${CONTACT_NAME_LABEL}   contact_name
+${CUSTOMER_SERVICE}         Customer Service
+${CASE_STRING}              Case
+${CASE_TXTBOX}              name:ticket_title
+${PRIORITY_LOC}             ticket_important
+${CASE_TYPE_LOC}            ticket_type
+${STATUS_LOC}               ticketstatus
+${PROJECT_LOC}              project_no
+${PROJECT_ADD_BTN}          //td[4]//table[1]//tbody[1]//tr[1]//td[3]//img[1]
+${PROJECT_DEL_BTN}          //td[4]//table[1]//tbody[1]//tr[1]//td[4]//input[1]
+${NAME_SEARCH_FIELD}        project_name
+${CASE_OPEN_LOC}            name:case_open_date
+${CASE_CLOSE_LOC}           name:cf_4616
+${CASE_PLAN_LOC}            name:case_date
+${WAITING_FOR_LOC}          cf_4583
+${PART_ACCOUNT_LOC}         ticket_del_name
+${PARTNER_CONTACT_LOC}      id:cf_4614
+${CLOSED_REASON_LOC}        cf_4681
+${DESCRIPTION_LOC}          name:case_cause
+${SOLUTION_LOC}             name:case_perfomance
+${PREVENTION_LOC}           name:case_protection
+${CONTACT_ADDNAME_BTN}      //td[@class='showPanelBg']//td[2]//table[1]//tbody[1]//tr[1]//td[2]//img[1]
+${CONTACTNAME_DEL_BTN}      //td[@class='showPanelBg']//td[2]//table[1]//tbody[1]//tr[1]//td[3]//input[1]
+${DROPDOWN_SEARCH_LOC}      search_field
+${CONTACT_NAME_SEARCH}      firstname
+${CONTACT_NAME_LABEL}       contact_name
+${CONTACT_EMAIL_LOC}        name:email
+${CONTACT_MOBILE_LOC}       name:phone
+${ACCOUNT_NAME_ADD_BTN}     //tr[17]//td[4]//table[1]//tbody[1]//tr[1]//td[2]//img[1]
+${ACCOUNT_NAME_DEL_BTN}     //tr[17]//td[4]//table[1]//tbody[1]//tr[1]//td[3]//input[1]
+${ACCOUNT_NAME_LABEL}       account_name
+${ACCOUNT_NAME_SEARCH}      accountname
+${SERIAL_NAME_ADD_BTN}      //td[@class='showPanelBg']//td[2]//table[1]//tbody[1]//tr[1]//td[3]//img[1]
+${SERIAL_NAME_DEL_BTN}      //td[@class='showPanelBg']//td[2]//table[1]//tbody[1]//tr[1]//td[4]//input[1]
+${SERIAL_NAME_LABEL}        serial_name
+${SERIAL_NO_SEARCH}         serial_no
+${PROD_NAME_ADD_BTN}        //tr[21]//td[4]//table[1]//tbody[1]//tr[1]//td[2]//img[1]
+${PROD_NAME_LABEL}          name:product_name
+${PROD_NAME_DEL_BTN}        //tr[21]//td[4]//table[1]//tbody[1]//tr[1]//td[3]//input[1]
+${PROD_NAME_SEARCH}         product_no
+${PROD_BRAND_LOC}           name:case_prd_brand
+${PROD_MODEL_LOC}           name:case_prd_model
+${DELIVERY_DATE_LOC}        name:case_waranty
+${WARRANTY_DATE_LOC}        name:case_start_date
+${CHECK_PRODUCT_LOC}        name:case_daterecieve
+${WARRANTY_EXPIRED_LOC}     name:case_end_date
+${SENT_PRODUCT_LOC}         name:case_datesent
 *** Test Cases ***
 AIS-CRM Website
-    [Tags]      AIS-CRM SITE
     Launch Web System   ${URL}
 
-Log-In User with Valid Username And Password
+# Log-In User with Valid Username And Password
     [Tags]  User credentials
     Input Username             ${USER}
     Input User's Password      ${PASS}
@@ -58,8 +78,6 @@ Select Customer Service
 Create Case Data Informations
     Case Data Informations      ${CURDIR}${/}create_case_module.csv
 
-
-
 *** Keywords ***
 Case Data Informations
     [Arguments]         ${csv}
@@ -72,56 +90,92 @@ Case Data Informations
     \   ${case_name}=   Set Variable    @{bm}[0]
     \   ${remove_case}=  Remove String   ${case_name}    ['
     # Priority
-    \   ${priority}=    Set Variable    @{bm}[1]
+    \   ${priority}=                Set Variable    @{bm}[1]
     # Responsble Person
-    \   ${responsible}=  Set Variable    @{bm}[2]
+    \   ${responsible}=             Set Variable    @{bm}[2]
     # Case Type
-    \   ${case_type}=   Set Variable    @{bm}[3]
+    \   ${case_type}=               Set Variable    @{bm}[3]
     # Status
-    \   ${status}=      Set Variable    @{bm}[4]
+    \   ${status}=                  Set Variable    @{bm}[4]
     # Project Name
-    \   ${project}=     Set Variable    @{bm}[5]
+    \   ${project}=                 Set Variable    @{bm}[5]
     # Case Open Date
-    \   ${case_open_date}=  Set Variable    @{bm}[6]
+    \   ${case_open_date}=          Set Variable    @{bm}[6]
     # Case Close Date
-    \   ${case_close_date}=  Set Variable   @{bm}[7]
+    \   ${case_close_date}=         Set Variable   @{bm}[7]
     # Plan Due Date
-    \   ${plan_due_date}=    Set Variable   @{bm}[8]
+    \   ${plan_due_date}=           Set Variable   @{bm}[8]
     # Waiting For
-    \   ${waiting}=     Set Variable        @{bm}[9]
+    \   ${waiting}=                 Set Variable   @{bm}[9]
     # Partner Account
-    \   ${partner_account}=     Set Variable    @{bm}[10]
+    \   ${partner_account}=         Set Variable    @{bm}[10]
     # Partner Contact
-    \   ${partner_contact}=     Set Variable    @{bm}[11]
+    \   ${partner_contact}=         Set Variable    @{bm}[11]
     # Closed Reason
-    \   ${closed_reason}=       Set Variable    @{bm}[12]
+    \   ${closed_reason}=           Set Variable    @{bm}[12]
     # Description
-    \   ${description}=         Set Variable    @{bm}[13]
+    \   ${description}=             Set Variable    @{bm}[13]
     # Solution
-    \   ${solution}=            Set Variable    @{bm}[14]
+    \   ${solution}=                Set Variable    @{bm}[14]
     # Prevention
-    \   ${prevention}=          Set Variable    @{bm}[15]
+    \   ${prevention}=              Set Variable    @{bm}[15]
     # Contact Name
-    \   ${contact_name}=        Set Variable    @{bm}[16]
+    \   ${contact_name}=            Set Variable    @{bm}[16]
     # Contact Mobile
-    \   ${contact_mobile}=      Set Variable    @{bm}[17]
-
-    \   Case Name                       ${remove_case}
-    \   Priority Case                   ${priority}
-    \   Responsible Person              ${responsible}
-    \   Case Type                       ${case_type}
-    \   Status                          ${status}
-    \   Project Name                    ${project}
-    \   Case Open Date                  ${case_open_date}
-    \   Case Close Date                 ${case_close_date}
-    \   Plan Due Date                   ${plan_due_date}
-    \   Waiting For                     ${waiting}
-    \   Partner Account                 ${partner_account}
-    \   Partner Contact                 ${partner_contact}
-    \   Description                     ${description}
-    \   Solution                        ${solution}
-    \   Prevention                      ${prevention}
-    \   Contact Name                    ${contact_name}
+    \   ${contact_mobile}=          Set Variable    @{bm}[17]
+    # Contact E-mail
+    \   ${contact_email}=           Set Variable    @{bm}[18]
+    # Account Name
+    \   ${account_name}=            Set Variable    @{bm}[19]
+    # Serial Name
+    \   ${serial_name}=             Set Variable    @{bm}[20]
+    # Product Name
+    \   ${product_name}=            Set Variable    @{bm}[21]
+    # Product Brand
+    \   ${product_brand}=           Set Variable    @{bm}[22]
+    # Product Model
+    \   ${product_model}=           Set Variable    @{bm}[23]
+    # Delivery Date
+    \   ${delivery_date}=           Set Variable    @{bm}[24]
+    # Warranty
+    \   ${warranty}=                Set Variable    @{bm}[25]
+    # Warranty Active Date
+    \   ${warranty_active_date}=    Set Variable    @{bm}[26]
+    # Check Product Date
+    \   ${check_product_date}=      Set Variable    @{bm}[27]
+    # Warranty Expired Date
+    \   ${warranty_expired_date}=   Set Variable    @{bm}[28]
+    # Sent Product Date
+    \   ${sent_product_date}=       Set Variable    @{bm}[29]
+#    \   Case Name                       ${remove_case}
+#    \   Priority Case                   ${priority}
+#    \   Responsible Person              ${responsible}
+#    \   Case Type                       ${case_type}
+#    \   Status                          ${status}
+#    \   Project Name                    ${project}
+#    \   Case Open Date                  ${case_open_date}
+#    \   Case Close Date                 ${case_close_date}
+#    \   Plan Due Date                   ${plan_due_date}
+#    \   Waiting For                     ${waiting}
+#    \   Partner Account                 ${partner_account}
+#    \   Partner Contact                 ${partner_contact}
+#    \   Description                     ${description}
+#    \   Solution                        ${solution}
+#    \   Prevention                      ${prevention}
+#    \   Contact Name                    ${contact_name}
+#    \   Contact Mobile                  ${contact_mobile}
+#    \   Contact E-mail                  ${contact_email}
+#    \   Account Name                    ${account_name}
+    \   Serial Name                     ${serial_name}
+#    \   Product Name                    ${product_name}
+#    \   Product Brand                   ${product_brand}
+#    \   Product Model                   ${product_model}
+#    \   Delivery Date                   ${delivery_date}
+#    \   Warranty                        ${warranty}
+#    \   Warranty Active Date            ${warranty_active_date}
+#    \   Check Product Date              ${check_product_date}
+#    \   Warranty Expired Date           ${warranty_expired_date}
+#    \   Sent Product Date               ${sent_product_date}
 #    \   Enter Case Information          ${remove_case}  ${priority}    ${responsible}    ${case_type}
 #    ...     ${status}   ${project}  ${case_open_date}   ${case_close_date}
 #    ...     ${plan_due_date}    ${waiting}  ${partner_account}  ${partner_contact}
@@ -194,6 +248,18 @@ Project Name
     Click Plus Button       ${PROJECT_ADD_BTN}
     Select Data On Basic Search Mode          ${DROPDOWN_SEARCH_LOC}   ${NAME_SEARCH_FIELD}    ${project}   #from misc_resource.robot
     Verify Added Information    ${project}  ${PROJECT_LOC}
+    Switch Window
+Account Name
+    [Arguments]  ${account_name}=${EMPTY}
+    Run Keyword If  "${account_name}"!="${EMPTY}"   Run Keywords    Click Plus Button       ${ACCOUNT_NAME_ADD_BTN}
+    ...     AND     Select Data On Basic Search Mode    ${DROPDOWN_SEARCH_LOC}      ${account_name}     #from misc_resources.robot
+    ...     AND     Verify Added Information    ${project}  ${ACCOUNT_NAME_SEARCH}
+    ...     AND     Click Erase Button      ${ACCOUNT_NAME_DEL_BTN}
+    ...     AND     Verify Deleted Information  ${ACCOUNT_NAME_SEARCH}
+    ...     AND     Click Plus Button   ${ACCOUNT_NAME_ADD_BTN}
+    ...     AND     Select Data On Basic Search Mode    ${DROPDOWN_SEARCH_LOC}  ${account_name}
+    ...     AND     Verify Added Information    ${project}  ${ACCOUNT_NAME_ADD_BTN}
+
 
 Case Open Date
     [Arguments]     ${case_open_date}
@@ -206,10 +272,10 @@ Plan Due Date
     Enter Date Calendar Text        ${CASE_PLAN_LOC}    ${plan_due_date}
 Waiting For
     [Arguments]     ${waiting}
-    ${wait_for}=    Get Web Elements    //select[@name="${WAITING_FOR_LOC}"]
+    ${wait_for}=    Get Web Elements    //select[@name="${WAITING_FOR_LOC}"]      #Get Web Elements is extract text or strings
     :FOR   ${item}  IN    @{wait_for}
     \   Log  ${item.text}
-#    Click Element   //select[@name="${WAITING_FOR_LOC}"]/option[@value=contains(text(), "${waiting}")]
+    Click Element   //select[@name="${WAITING_FOR_LOC}"]/option[@value=contains(text(), "${waiting}")]
 Partner Account
     [Arguments]     ${partner_account}
     ${case_part_acc}=   Get Web Elements  //select[@name="${PART_ACCOUNT_LOC}"]
@@ -226,27 +292,91 @@ Closed Reason
     \   Log     ${item.text}
 
 Description
-    [Arguments]  ${description}
-    Input Text      ${DESCRIPTION_LOC}      ${description}
+    [Arguments]  ${description}=${EMPTY}
+    Run Keyword If  "${description}"!="${EMPTY}"    Input Text      ${DESCRIPTION_LOC}      ${description}
 Solution
-    [Arguments]  ${solution}
-    Input Text      ${SOLUTION_LOC}         ${solution}
+    [Arguments]  ${solution}=${EMPTY}
+    Run Keyword If  "${solution}"!="${EMPTY}"   Input Text      ${SOLUTION_LOC}         ${solution}
 Prevention
-    [Arguments]  ${prevention}
-    Input Text      ${PREVENTION_LOC}       ${prevention}
+    [Arguments]  ${prevention}=${EMPTY}
+    Run Keyword If  "${prevention}"!="${EMPTY}"     Input Text      ${PREVENTION_LOC}       ${prevention}
 
 Contact Name
-    [Arguments]     ${contact_name}
+    [Arguments]     ${contact_name}=${EMPTY}
     Scroll Down Page From The Browser
-    Click Plus Button                     ${CONTACT_ADDNAME_BTN}       #${plus_button_locator}
-    Select Data On Basic Search Mode      ${DROPDOWN_SEARCH_LOC}  ${CONTACT_NAME_SEARCH}  ${contact_name}
-    Verify Added Information              ${contact_name}      ${CONTACT_NAME_LABEL}
-    Click Erase Button                    ${CONTACTNAME_DEL_BTN}
-    Verify Deleted Information            ${CONTACT_NAME_LABEL}
-    Click Plus Button                     ${CONTACT_ADDNAME_BTN}
-    Select Data On Basic Search Mode      ${DROPDOWN_SEARCH_LOC}   ${CONTACT_NAME_SEARCH}    ${contact_name}   #from misc_resource.robot
-    Verify Added Information              ${contact_name}      ${CONTACT_NAME_LABEL}
-
+    Run Keyword If  "${contact_name}"!="${EMPTY}"   Run Keywords    Click Plus Button       ${CONTACT_ADDNAME_BTN}       #${plus_button_locator}
+    ...     AND     Select Data On Basic Search Mode      ${DROPDOWN_SEARCH_LOC}  ${CONTACT_NAME_SEARCH}  ${contact_name}
+    ...     AND     Verify Added Information              ${contact_name}      ${CONTACT_NAME_LABEL}
+    ...     AND     Click Erase Button                    ${CONTACTNAME_DEL_BTN}
+    ...     AND     Verify Deleted Information            ${CONTACT_NAME_LABEL}
+    ...     AND     Click Plus Button                     ${CONTACT_ADDNAME_BTN}
+    ...     AND     Select Data On Basic Search Mode      ${DROPDOWN_SEARCH_LOC}   ${CONTACT_NAME_SEARCH}    ${contact_name}   #from misc_resource.robot
+    ...     AND     Verify Added Information              ${contact_name}      ${CONTACT_NAME_LABEL}
 Contact Mobile
-    [Arguments]     ${contact_mobile}
-    
+    [Arguments]     ${contact_mobile}=${EMPTY}
+    Run Keyword If   "${contact_mobile}"!="${EMPTY}"     Input Text      ${CONTACT_MOBILE_LOC}        ${contact_mobile}
+
+Contact E-mail
+    [Arguments]     ${contact_email}=${EMPTY}
+    Run Keyword If  "${contact_email}"!="${EMPTY}"      Input Text  ${CONTACT_EMAIL_LOC}    ${contact_email}
+
+Serial Name
+    [Arguments]  ${serial_name}=${EMPTY}
+    Scroll Down Page From The Browser
+    ${element}=     Get Element Count   //tr[2]/td[2]
+    Run Keyword If  "${serial_name}"!="${EMPTY}"     Run Keywords    Click Plus Button   ${SERIAL_NAME_ADD_BTN}   # plus button locator
+    ...     AND     Select Data On Basic Search Mode    ${DROPDOWN_SEARCH_LOC}  ${SERIAL_NO_SEARCH}     ${serial_name}
+    ...     AND     Verify Added Information      ${element}     ${SERIAL_NAME_LABEL}
+    ...     AND     Click Erase Button      ${SERIAL_NAME_DEL_BTN}
+    ...     AND     Verify Deleted Information      ${SERIAL_NAME_LABEL}
+    ...     AND     Click Plus Button               ${SERIAL_NAME_ADD_BTN}
+    ...     AND     Select Data On Basic Search Mode    ${DROPDOWN_SEARCH_LOC}  ${SERIAL_NO_SEARCH}     ${serial_name}
+    ...     AND     Verify Added Information            ${element}     ${SERIAL_NAME_LABEL}
+Product Name
+    [Arguments]   ${product_name}=${EMPTY}
+    Scroll Down Page From The Browser
+    Run Keyword If  "${product_name}"!="${EMPTY}"   Run Keywords    Click Plus Button   ${PROD_NAME_ADD_BTN}
+    ...     AND     Select Data On Basic Search Mode    ${DROPDOWN_SEARCH_LOC}  ${PROD_NAME_SEARCH}     ${product_name}
+    ...     AND     Verify Added Information              ${product_name}     ${PROD_NAME_LABEL}
+    ...     AND     Click Erase Button                  ${PROJECT_DEL_BTN}
+    ...     AND     Verify Deleted Information          ${PROD_NAME_LABEL}
+    ...     AND     Click Plus Button                   ${PROD_NAME_ADD_BTN}
+    ...     AND     Select Data On Basic Search Mode    ${DROPDOWN_SEARCH_LOC}  ${PROD_NAME_SEARCH}     ${product_name}
+    ...     AND     Verify Added Information            ${product_name}     ${PROD_NAME_LABEL}
+    ...     AND     Switch Window
+
+
+Product Brand
+    [Arguments]     ${product_brand}=${EMPTY}
+    Run Keyword If  "${product_name}"!="${EMPTY}"   Input Text      ${PROD_BRAND_LOC}       ${product_brand}
+
+Product Model
+    [Arguments]     ${product_model}=${EMPTY}
+    Run Keyword If  "${product_model}"!="${EMPTY}"  Input Text      ${PROD_MODEL_LOC}   ${product_model}
+
+Delivery Date
+    [Arguments]     ${delivery_date}=${EMPTY}
+    Run Keyword If  "${delivery_date}"!="${EMPTY}"  Input Text            ${DELIVERY_DATE_LOC}      ${delivery_date}
+
+Warranty
+    [Arguments]    ${warranty}=${EMPTY}
+    ${get_warranty}=    Get Web Elements    //select[@name="case_waranty"]
+    :FOR    ${item}     IN      @{get_warranty}
+    \   Log     ${item.text}
+    Select Option From Dropdown List    //select[@name="case_waranty"]        ${warranty}
+
+Warranty Active Date
+    [Arguments]     ${warranty_active_date}=${EMPTY}
+    Run Keyword If      "${warranty_active_date}"!="${EMPTY}"   Input Text  ${WARRANTY_DATE_LOC}    ${warranty_active_date}
+
+Check Product Date
+    [Arguments]     ${check_product_date}=${EMPTY}
+    Run Keyword If      "${check_product_date}"!="${EMPTY}"     Input Text  ${CHECK_PRODUCT_LOC}    ${check_product_date}
+
+Warranty Expired Date
+    [Arguments]     ${warranty_expired_date}=${EMPTY}
+    Run Keyword If  "${warranty_expired_date}"!="${EMPTY}"   Input Text  ${WARRANTY_EXPIRED_LOC}     ${warranty_expired_date}
+
+Sent Product Date
+    [Arguments]     ${sent_product_date}=${EMPTY}
+    Run Keyword If  "${sent_product_date}"!="${EMPTY}"      Inpu Text   ${SENT_PRODUCT_LOC}     ${sent_product_date}
