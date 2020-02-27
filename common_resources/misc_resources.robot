@@ -174,12 +174,12 @@ Verify Deleted Information
 
 Enter Date Calendar Text
     [Documentation]    Calendar Text for optional informations like Case module:("Case Open Date").
-    [Arguments]     ${locator}  ${calendar_text}
+    [Arguments]     ${locator}  ${calendar_text}    ${clear}
     Click Element   ${locator}
 #    Press Keys      ${locator}      CTRL+a+DELETE
-    Input Text      ${locator}      ${calendar_text}    clear=True
+    Input Text      ${locator}      ${calendar_text}    ${clear}
     ${replace}=     Replace String       ${calendar_text}   /    -
-    Input Text      ${locator}      ${replace}
+    Input Text      ${locator}      ${replace}      ${clear}
 
 
 

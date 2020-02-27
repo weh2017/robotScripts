@@ -1,10 +1,11 @@
 *** Settings ***
-Library     Selenium2Library
+Library     SeleniumLibrary
 Library     OperatingSystem
 Library     String   
 Library     DateTime
 Library     Collections
 Library     Dialogs
+Library     ImapLibrary
 Resource        ../../common_resources/web_common.robot
 Resource        ../../common_resources/misc_resources.robot
 Resource        ../resources/user_login_resources/user_login_resource.robot
@@ -61,6 +62,7 @@ ${WARRANTY_DATE_LOC}        name:case_start_date
 ${CHECK_PRODUCT_LOC}        name:case_daterecieve
 ${WARRANTY_EXPIRED_LOC}     name:case_end_date
 ${SENT_PRODUCT_LOC}         name:case_datesent
+${ALL_CONTACTS_BTN}         id:all_contacts
 *** Test Cases ***
 AIS-CRM Website
     Launch Web System   ${URL_2}
@@ -78,81 +80,111 @@ Select Customer Service
 
 Create Case Data Informations
     Case Data Informations      ${CURDIR}${/}create_case_module.csv
-
 *** Keywords ***
 Case Data Informations
     [Arguments]         ${csv}
     ${contents}=    Get File    ${csv}
     @{read}=    Create List     ${contents}
     @{lines}=   Split To Lines      @{read}     1
-    :FOR    ${line}    IN          @{lines} + 1
+    :FOR    ${line}    IN          @{lines}
     \   @{bm}=      Split String    ${line}     |
     # Case Name
     \   ${case_name}=   Set Variable    @{bm}[0]
-    \   ${remove_case}=  Remove String   ${case_name}    ['
+    \   ${remove_space}=    Strip String   ${case_name}${SPACE}
+    \   ${remove_case}=  Remove String   ${remove_space}    ['
     # Priority
-    \   ${priority}=                Set Variable    @{bm}[1]
+    \   ${remove}=                  Set Variable    @{bm}[1]
+    \   ${priority}=                Strip String   ${remove}${SPACE}
     # Responsble Person
-    \   ${responsible}=             Set Variable    @{bm}[2]
+    \   ${space_res}=               Set Variable    @{bm}[2]
+    \   ${responsible}=             Strip String   ${space_res}${SPACE}
     # Case Type
-    \   ${case_type}=               Set Variable    @{bm}[3]
+    \   ${rem_case}=                Set Variable    @{bm}[3]
+    \   ${case_type}=               Strip String   ${rem_case}${SPACE}
     # Status
-    \   ${status}=                  Set Variable    @{bm}[4]
-    # Project Name
-    \   ${project}=                 Set Variable    @{bm}[5]
-    # Case Open Date
-    \   ${case_open_date}=          Set Variable    @{bm}[6]
-    # Case Close Date
-    \   ${case_close_date}=         Set Variable   @{bm}[7]
-    # Plan Due Date
-    \   ${plan_due_date}=           Set Variable   @{bm}[8]
-    # Waiting For
-    \   ${waiting}=                 Set Variable   @{bm}[9]
-    # Partner Account
-    \   ${partner_account}=         Set Variable    @{bm}[10]
-    # Partner Contact
-    \   ${partner_contact}=         Set Variable    @{bm}[11]
-    # Closed Reason
-    \   ${closed_reason}=           Set Variable    @{bm}[12]
-    # Description
-    \   ${description}=             Set Variable    @{bm}[13]
-    # Solution
-    \   ${solution}=                Set Variable    @{bm}[14]
-    # Prevention
-    \   ${prevention}=              Set Variable    @{bm}[15]
-    # Contact Name
-    \   ${contact_name}=            Set Variable    @{bm}[16]
-    # Contact Mobile
-    \   ${contact_mobile}=          Set Variable    @{bm}[17]
-    # Contact E-mail
-    \   ${contact_email}=           Set Variable    @{bm}[18]
+    \   ${strip_status}=            Set Variable    @{bm}[4]
+    \   ${status}=                  Strip String    ${strip_status}${SPACE}
     # Account Name
-    \   ${account_name}=            Set Variable    @{bm}[19]
+    \   ${strip_account}=            Set Variable    @{bm}[5]
+    \   ${account_name}=            Strip String     ${strip_account}${SPACE}
+    # Project Name
+    \   ${strip_project}=           Set Variable    @{bm}[6]
+    \   ${project}=                 Strip String    ${strip_project}${SPACE}
+    # Case Open Date
+    \   ${strip_case_open}=          Set Variable    @{bm}[7]
+    \   ${case_open_date}=          Strip String    ${strip_case_open}${SPACE}
+    # Case Close Date
+    \   ${strip_case_close}=         Set Variable   @{bm}[8]
+    \   ${case_close_date}=          Strip String   ${strip_case_close}${SPACE}
+    # Plan Due Date
+    \   ${strip_plan_due}=          Set Variable   @{bm}[9]
+    \   ${plan_due_date}=           Strip String    ${strip_plan_due}${SPACE}
+    # Waiting For
+    \   ${strip_waiting}=           Set Variable   @{bm}[10]
+    \   ${waiting}=                 Strip String   ${strip_waiting}${SPACE}
+    # Partner Account
+    \   ${strip_part_acc}=         Set Variable    @{bm}[11]
+    \   ${partner_account}=         Strip String   ${strip_part_acc}${SPACE}
+    # Partner Contact
+    \   ${strip_part_cont}=         Set Variable    @{bm}[12]
+    \   ${partner_contact}=         Strip String    ${strip_part_cont}${SPACE}
+    # Closed Reason
+    \   ${strip_closed}=            Set Variable    @{bm}[13]
+    \   ${closed_reason}=           Strip String    ${strip_closed}${SPACE}
+    # Description
+    \   ${strip_description}=       Set Variable    @{bm}[14]
+    \   ${description}=             Strip String    ${strip_description}${SPACE}
+    # Solution
+    \   ${strip_solution}=          Set Variable    @{bm}[15]
+    \   ${solution}=                Strip String    ${strip_solution}${SPACE}
+    # Prevention
+    \   ${strip_prevent}=           Set Variable    @{bm}[16]
+    \   ${prevention}=              Strip String    ${strip_prevent}${SPACE}
+    # Contact Name
+    \   ${strip_contact_name}=      Set Variable    @{bm}[17]
+    \   ${contact_name}=            Strip String    ${strip_contact_name}${SPACE}
+    # Contact Mobile
+    \   ${strip_contact_mobile}=    Set Variable    @{bm}[18]
+    \   ${contact_mobile}=          Strip String    ${strip_contact_mobile}${SPACE}
+    # Contact E-mail
+    \   ${strip_contact_email}=     Set Variable    @{bm}[19]
+    \   ${contact_email}=           Strip String    ${strip_contact_email}${SPACE}
     # Serial Name
-    \   ${serial_name}=             Set Variable    @{bm}[20]
+    \   ${strip_serial_name}=       Set Variable    @{bm}[20]
+    \   ${serial_name}=             Strip String    ${strip_serial_name}${SPACE}
     # Product Name
-    \   ${product_name}=            Set Variable    @{bm}[21]
+    \   ${strip_product_name}=      Set Variable    @{bm}[21]
+    \   ${product_name}=            Strip String    ${strip_product_name}${SPACE}
     # Product Brand
-    \   ${product_brand}=           Set Variable    @{bm}[22]
+    \   ${strip_product_brand}=     Set Variable    @{bm}[22]
+    \   ${product_brand}=           Strip String    ${strip_product_brand}${SPACE}
     # Product Model
-    \   ${product_model}=           Set Variable    @{bm}[23]
+    \   ${strip_product_model}=     Set Variable    @{bm}[23]
+    \   ${product_model}=           Strip String    ${strip_product_model}${SPACE}
     # Delivery Date
-    \   ${delivery_date}=           Set Variable    @{bm}[24]
+    \   ${strip_delivery_date}=     Set Variable    @{bm}[24]
+    \   ${delivery_date}=           Strip String   ${strip_delivery_date}${SPACE}
     # Warranty
-    \   ${warranty}=                Set Variable    @{bm}[25]
+    \   ${strip_warranty}=           Set Variable    @{bm}[25]
+    \   ${warranty}=                 Strip String    ${strip_warranty}${SPACE}
     # Warranty Active Date
-    \   ${warranty_active_date}=    Set Variable    @{bm}[26]
+    \   ${strip_warranty_active}=    Set Variable    @{bm}[26]
+    \   ${warranty_active_date}=     Strip String    ${strip_warranty_active}${SPACE}
     # Check Product Date
-    \   ${check_product_date}=      Set Variable    @{bm}[27]
+    \   ${strip_check_prod}=         Set Variable    @{bm}[27]
+    \   ${check_product_date}=       Strip String    ${strip_check_prod}${SPACE}
     # Warranty Expired Date
-    \   ${warranty_expired_date}=   Set Variable    @{bm}[28]
+    \   ${strip_warranty_expired}=   Set Variable    @{bm}[28]
+    \   ${warranty_expired_date}=    Strip String    ${strip_warranty_expired}${SPACE}
     # Sent Product Date
-    \   ${sent_product_date}=       Set Variable    @{bm}[29]
+    \   ${strip_sent_prod_date}=     Set Variable    @{bm}[29]
+    \   ${sent_product_date}=        Strip String    ${strip_sent_prod_date}${SPACE}
     \   Case Name                       ${remove_case}
     \   Priority Case                   ${priority}
     \   Responsible Person              ${responsible}
     \   Case Type                       ${case_type}
     \   Status                          ${status}
+    \   Account Name                    ${account_name}
     \   Project Name                    ${project}
     \   Case Open Date                  ${case_open_date}
     \   Case Close Date                 ${case_close_date}
@@ -166,9 +198,8 @@ Case Data Informations
     \   Contact Name                    ${contact_name}
     \   Contact Mobile                  ${contact_mobile}
     \   Contact E-mail                  ${contact_email}
-    \   Account Name                    ${account_name}
     \   Serial Name                     ${serial_name}
-#    \   Product Name                    ${product_name}
+    \   Product Name                    ${product_name}
     \   Product Brand                   ${product_brand}
     \   Product Model                   ${product_model}
     \   Delivery Date                   ${delivery_date}
@@ -182,7 +213,8 @@ Case Data Informations
 #    ...     ${plan_due_date}    ${waiting}  ${partner_account}  ${partner_contact}
 #    ...     ${description}  ${solution}     ${prevention}
 
-
+Email Verification
+    Open Mailbox    mail.aisyst.com     user
 Enter Case Information
     [Arguments]     ${remove_case}  ${priority}    ${responsible}    ${case_type}
     ...     ${status}   ${project}  ${case_open_date}   ${case_close_date}
@@ -212,18 +244,24 @@ Priority Case
     ${prior}=   Get Web Elements    //select[@name="ticket_important"]
     :FOR  ${item}   IN  @{prior}
     \   Log     ${item.text}
-#    Click Element   //select[@name="ticket_important"]/option[@value="${priority}"]
-    Select Option From Dropdown List    ${PRIORITY_LOC}     ${priority}
+    Run Keyword If  "${priority}"=="None"   Click Element   //select[@name="ticket_important"]/option[@value="--${priority}--"]
+    ...     ELSE    Select Option From Dropdown List    ${PRIORITY_LOC}     ${priority}
 Responsible Person
     [Documentation]  This is to set the person to assign Case
     [Arguments]     ${responsible}
+#    Set Selenium Speed   0.5
     ${xpath_user}=   Get Element Count    //select[@name="assigned_user_id"]/option[contains(text(), "${responsible}")]
     ${xpath_group}=     Get Element Count     //select[@name="assigned_group_id"]/option[contains(text(), "${responsible}")]
 
-    Run Keyword And Return If  ${xpath_user}   Click Element      //select[@name="assigned_user_id"]/option[contains(text(), "${responsible}")]
+    Run Keyword And Return If  ${xpath_user}    Run Keywords     Select Radio Button   assigntype    U
+    ...   AND     Click Element      //select[@name="assigned_user_id"]/option[contains(text(), "${responsible}")]
+    ...   AND     Element Text Should Be     //select[@name="assigned_user_id"]/option[contains(text(), "${responsible}")]
+    ...     ${responsible}
     Run Keyword And Return If  ${xpath_group}   Run Keywords     Select Radio Button   assigntype    T
     ...   AND     Wait Until Element Is Visible   //select[@name="assigned_group_id"]/option[contains(text(), "${responsible}")]
     ...   AND     Click Element       //select[@name="assigned_group_id"]/option[contains(text(), "${responsible}")]
+    ...   AND     Element Text Should Be     //select[@name="assigned_group_id"]/option[contains(text(), "${responsible}")]
+    ...     ${responsible}
 Case Type
     [Arguments]     ${case_type}
     ${ticket}=      Get Web Elements        //select[@name="ticket_type"]
@@ -231,6 +269,7 @@ Case Type
     \   Log     ${item.text}
 #    Click Element   //select[@name="ticket_type"]/option[@value="${case_type}"]
     Select Option From Dropdown List    ${CASE_TYPE_LOC}        ${case_type}
+    Wait Until Page Contains Element       //select[@name="${CASE_TYPE_LOC}"]/option[@value="${case_type}"]
 Status
     [Arguments]   ${status}
     ${status_case}=     Get Web Elements    //select[@name="ticketstatus"]
@@ -238,50 +277,60 @@ Status
     \   Log    ${item.text}
 #    Click Element   //select[@name="ticketstatus"]/option[@value="${status}"]
     Select Option From Dropdown List     ${STATUS_LOC}      ${status}
+    Wait Until Page Contains Element      //select[@name="${STATUS_LOC}"]/option[@value="${status}"]
+
+
 Project Name
-    [Arguments]     ${project}
-    Scroll Down Page From The Browser
-    Click Plus Button       ${PROJECT_ADD_BTN}
-    Focus New Browser Window
-    Select Data On Basic Search Mode          ${DROPDOWN_SEARCH_LOC}   ${NAME_SEARCH_FIELD}    ${project}   #from misc_resource.robot
-    Exit New Window And Focus Main Browser
-    Verify Added Information    ${project}      ${PROJECT_LOC}
-    Click Erase Button      ${PROJECT_DEL_BTN}
-    Verify Deleted Information      ${PROJECT_LOC}
-    Click Plus Button       ${PROJECT_ADD_BTN}
-    Focus New Browser Window
+    [Arguments]     ${project}=${EMPTY}
+    ${get}=     Get WebElements     //a[@href="javascript:window.close();"]
+    :FOR    ${item}     IN    @{get}
+    \   Log   ${item.text}
+    Run Keyword If  "${project}"!="${EMPTY}"    Run Keywords    Scroll Down Page From The Browser
+    ...     AND     Click Plus Button       ${PROJECT_ADD_BTN}
+    ...     AND     Focus New Browser Window
+    ...     AND    Select Data On Basic Search Mode          ${DROPDOWN_SEARCH_LOC}   ${NAME_SEARCH_FIELD}    ${project}   #from misc_resource.robot
+    ...     AND    Exit New Window And Focus Main Browser
+    ...     AND    Verify Added Information    ${project}      ${PROJECT_LOC}
+    ...     AND    Click Erase Button      ${PROJECT_DEL_BTN}
+    ...     AND    Verify Deleted Information      ${PROJECT_LOC}
+    ...     AND    Click Plus Button       ${PROJECT_ADD_BTN}
+    ...     AND    Focus New Browser Window
+    ...     AND    Select Data On Basic Search Mode          ${DROPDOWN_SEARCH_LOC}   ${NAME_SEARCH_FIELD}    ${project}   #from misc_resource.robot
+    ...     AND    Exit New Window And Focus Main Browser
+    ...     AND    Verify Added Information    ${project}  ${PROJECT_LOC}
+    Run Keyword If  "${project}"=="${EMPTY}"    Run Keywords    Click Erase Button  ${PROJECT_DEL_BTN}
+    ...     AND     Verify Deleted Information   ${PROJECT_LOC}
 
-    Select Data On Basic Search Mode          ${DROPDOWN_SEARCH_LOC}   ${NAME_SEARCH_FIELD}    ${project}   #from misc_resource.robot
-    Exit New Window And Focus Main Browser
-
-    Verify Added Information    ${project}  ${PROJECT_LOC}
 Account Name
     [Arguments]  ${account_name}=${EMPTY}
-    Run Keyword If  "${account_name}"!="${EMPTY}"   Run Keywords    Click Plus Button       ${ACCOUNT_NAME_ADD_BTN}
+    Run Keyword If  "${account_name}"!="${EMPTY}"   Run Keywords    Scroll Down Page From The Browser
+    ...     AND     Click Plus Button       ${ACCOUNT_NAME_ADD_BTN}
     ...     AND     Focus New Browser Window
-    ...     AND     Select Data On Basic Search Mode    ${DROPDOWN_SEARCH_LOC}      ${account_name}     #from misc_resources.robot
+    ...     AND     Select Data On Basic Search Mode    ${DROPDOWN_SEARCH_LOC}  ${ACCOUNT_NAME_SEARCH}      ${account_name}     #from misc_resources.robot
     ...     AND     Exit New Window And Focus Main Browser
-
-    ...     AND     Verify Added Information    ${project}  ${ACCOUNT_NAME_SEARCH}
+    ...     AND     Verify Added Information    ${account_name}  ${ACCOUNT_NAME_LABEL}
     ...     AND     Click Erase Button      ${ACCOUNT_NAME_DEL_BTN}
-    ...     AND     Verify Deleted Information  ${ACCOUNT_NAME_SEARCH}
+    ...     AND     Verify Deleted Information  ${ACCOUNT_NAME_LABEL}
     ...     AND     Click Plus Button   ${ACCOUNT_NAME_ADD_BTN}
     ...     AND     Focus New Browser Window
-    ...     AND     Select Data On Basic Search Mode    ${DROPDOWN_SEARCH_LOC}  ${account_name}
+    ...     AND     Select Data On Basic Search Mode    ${DROPDOWN_SEARCH_LOC}  ${ACCOUNT_NAME_SEARCH}  ${account_name}
     ...     AND     Exit New Window And Focus Main Browser
-
-    ...     AND     Verify Added Information    ${project}  ${ACCOUNT_NAME_ADD_BTN}
-
+    ...     AND     Verify Added Information    ${account_name}  ${ACCOUNT_NAME_LABEL}
+    Run Keyword If  "${account_name}"=="${EMPTY}"   Run Keywords    Click Erase Button   ${ACCOUNT_NAME_DEL_BTN}
+    ...     AND     Verify Deleted Information      ${ACCOUNT_NAME_LABEL}
 
 Case Open Date
     [Arguments]     ${case_open_date}=${EMPTY}
-    Run Keyword If  "${case_open_date}"!="${EMPTY}"   Enter Date Calendar Text    ${CASE_OPEN_LOC}    ${case_open_date}
+    Run Keyword If  "${case_open_date}"!="${EMPTY}"
+    ...     Enter Date Calendar Text    ${CASE_OPEN_LOC}    ${case_open_date}   clear=True
 Case Close Date
     [Arguments]     ${case_close_date}=${EMPTY}
-    Run Keyword If  "${case_close_date}"!="${EMPTY}"    Enter Date Calendar Text    ${CASE_CLOSE_LOC}   ${case_close_date}
+    Run Keyword If  "${case_close_date}"!="${EMPTY}"
+    ...     Enter Date Calendar Text    ${CASE_CLOSE_LOC}   ${case_close_date}  clear=True
 Plan Due Date
     [Arguments]     ${plan_due_date}=${EMPTY}
-    Run Keyword If  "${plan_due_date}"!="${EMPTY}"      Enter Date Calendar Text        ${CASE_PLAN_LOC}    ${plan_due_date}
+    Run Keyword If  "${plan_due_date}"!="${EMPTY}"
+    ...     Enter Date Calendar Text        ${CASE_PLAN_LOC}    ${plan_due_date}    clear=True
 Waiting For
     [Arguments]     ${waiting}
     ${wait_for}=    Get Web Elements    //select[@name="${WAITING_FOR_LOC}"]      #Get Web Elements is extract text or strings
@@ -336,14 +385,17 @@ Contact E-mail
     [Arguments]     ${contact_email}=${EMPTY}
     Run Keyword If  "${contact_email}"!="${EMPTY}"      Input Text  ${CONTACT_EMAIL_LOC}    ${contact_email}
 
+Click All Contacts Button
+     ${not_empty}=   Get Element Count   id:all_contacts
+     Run Keyword If     "${not_empty}"!="${EMPTY}"      Click Element       id:all_contacts
 Serial Name
     [Arguments]  ${serial_name}=${EMPTY}
     Scroll Down Page From The Browser
     ${element}=     Get Element Count   //tr[2]/td[2]
-    ${not_empty}=   Get Element Count   id:all_contacts
+    ${not_empty}=   Get Element Count   ${ALL_CONTACTS_BTN}
     Run Keyword If  "${serial_name}"!="${EMPTY}"     Run Keywords    Click Plus Button   ${SERIAL_NAME_ADD_BTN}   # plus button locator
     ...     AND     Focus New Browser Window
-    ...     AND     Run Keyword If     "${not_empty}"!="${EMPTY}"      Click Element       id:all_contacts
+    ...     AND     Run Keyword If     "${not_empty}"!="${EMPTY}"      Click Element       ${ALL_CONTACTS_BTN}
     ...     AND     Select Data On Basic Search Mode    ${DROPDOWN_SEARCH_LOC}  ${SERIAL_NO_SEARCH}     ${serial_name}
     ...     AND     Exit New Window And Focus Main Browser
     ...     AND     Verify Added Information      ${element}     ${SERIAL_NAME_LABEL}
@@ -351,7 +403,7 @@ Serial Name
     ...     AND     Verify Deleted Information      ${SERIAL_NAME_LABEL}
     ...     AND     Click Plus Button               ${SERIAL_NAME_ADD_BTN}
     ...     AND     Focus New Browser Window
-    ...     AND     Run Keyword If     "${not_empty}"!="${EMPTY}"      Click Element       id:all_contacts
+    ...     AND     Run Keyword If     "${not_empty}"!="${EMPTY}"      Click Element       ${ALL_CONTACTS_BTN}
     ...     AND     Select Data On Basic Search Mode    ${DROPDOWN_SEARCH_LOC}  ${SERIAL_NO_SEARCH}     ${serial_name}
     ...     AND     Exit New Window And Focus Main Browser
     ...     AND     Verify Added Information            ${element}     ${SERIAL_NAME_LABEL}
@@ -385,7 +437,8 @@ Product Model
 
 Delivery Date
     [Arguments]     ${delivery_date}=${EMPTY}
-    Run Keyword If  "${delivery_date}"!="${EMPTY}"      Input Text            ${DELIVERY_DATE_LOC}      ${delivery_date}
+    Run Keyword If  "${delivery_date}"!="${EMPTY}"
+    ...     Enter Date Calendar Text            ${DELIVERY_DATE_LOC}      ${delivery_date}      clear=True
 
 Warranty
     [Arguments]    ${warranty}=${EMPTY}
@@ -393,24 +446,25 @@ Warranty
     :FOR    ${item}     IN      @{get_warranty}
     \   Log     ${item.text}
     Run Keyword If      "${warranty}"=="None"     Click Element     //select[@name="case_waranty"]/option[@value="--${warranty}--"]
-    Select Option From Dropdown List    ${WARRANTY_DROPDOWN_LOC}        ${warranty}
+    ...     ELSE    Select Option From Dropdown List    ${WARRANTY_DROPDOWN_LOC}        ${warranty}
 
 Warranty Active Date
     [Arguments]     ${warranty_active_date}=${EMPTY}
-    Run Keyword If      "${warranty_active_date}"!="${EMPTY}"   Input Text  ${WARRANTY_DATE_LOC}    ${warranty_active_date}
+    Run Keyword If      "${warranty_active_date}"!="${EMPTY}"
+    ...     Enter Date Calendar Text  ${WARRANTY_DATE_LOC}    ${warranty_active_date}      clear=True
 
 Check Product Date
     [Arguments]     ${check_product_date}=${EMPTY}
-    Run Keyword If      "${check_product_date}"!="${EMPTY}"     Input Text  ${CHECK_PRODUCT_LOC}    ${check_product_date}
+    Run Keyword If      "${check_product_date}"!="${EMPTY}"
+    ...     Enter Date Calendar Text  ${CHECK_PRODUCT_LOC}    ${check_product_date}
 
 Warranty Expired Date
     [Arguments]     ${warranty_expired_date}=${EMPTY}
-    Run Keyword If  "${warranty_expired_date}"!="${EMPTY}"   Input Text  ${WARRANTY_EXPIRED_LOC}     ${warranty_expired_date}
+    Run Keyword If  "${warranty_expired_date}"!="${EMPTY}"
+    ...     Enter Date Calendar Text  ${WARRANTY_EXPIRED_LOC}     ${warranty_expired_date}      clear=True
 
 Sent Product Date
     [Arguments]     ${sent_product_date}=${EMPTY}
-    Run Keyword If  "${sent_product_date}"!="${EMPTY}"      Inpu Text   ${SENT_PRODUCT_LOC}     ${sent_product_date}
+    Run Keyword If  "${sent_product_date}"!="${EMPTY}"
+    ...     Enter Date Calendar Text   ${SENT_PRODUCT_LOC}     ${sent_product_date}     clear=True
 
-Dash Symbol
-    [Arguments]     ${string}=None
-    Run Keyword If      "${string}"=="None"     Input Text
