@@ -55,7 +55,8 @@ ${PROD_NAME_DEL_BTN}        //tr[21]//td[4]//table[1]//tbody[1]//tr[1]//td[3]//i
 ${PROD_NAME_SEARCH}         product_no
 ${PROD_BRAND_LOC}           id:case_prd_brand
 ${PROD_MODEL_LOC}           name:case_prd_model
-${DELIVERY_DATE_LOC}        name:case_waranty
+${DELIVERY_DATE_LOC}        name:case_datebuy
+${WARRANTY_DROPDOWN_LOC}    case_waranty
 ${WARRANTY_DATE_LOC}        name:case_start_date
 ${CHECK_PRODUCT_LOC}        name:case_daterecieve
 ${WARRANTY_EXPIRED_LOC}     name:case_end_date
@@ -273,14 +274,14 @@ Account Name
 
 
 Case Open Date
-    [Arguments]     ${case_open_date}
-    Enter Date Calendar Text    ${CASE_OPEN_LOC}    ${case_open_date}
+    [Arguments]     ${case_open_date}=${EMPTY}
+    Run Keyword If  "${case_open_date}"!="${EMPTY}"   Enter Date Calendar Text    ${CASE_OPEN_LOC}    ${case_open_date}
 Case Close Date
-    [Arguments]     ${case_close_date}
-    Enter Date Calendar Text    ${CASE_CLOSE_LOC}   ${case_close_date}
+    [Arguments]     ${case_close_date}=${EMPTY}
+    Run Keyword If  "${case_close_date}"!="${EMPTY}"    Enter Date Calendar Text    ${CASE_CLOSE_LOC}   ${case_close_date}
 Plan Due Date
-    [Arguments]     ${plan_due_date}
-    Enter Date Calendar Text        ${CASE_PLAN_LOC}    ${plan_due_date}
+    [Arguments]     ${plan_due_date}=${EMPTY}
+    Run Keyword If  "${plan_due_date}"!="${EMPTY}"      Enter Date Calendar Text        ${CASE_PLAN_LOC}    ${plan_due_date}
 Waiting For
     [Arguments]     ${waiting}
     ${wait_for}=    Get Web Elements    //select[@name="${WAITING_FOR_LOC}"]      #Get Web Elements is extract text or strings
@@ -388,10 +389,11 @@ Delivery Date
 
 Warranty
     [Arguments]    ${warranty}=${EMPTY}
-    ${get_warranty}=    Get Web Elements    //select[@name="case_waranty"]
+    ${get_warranty}=    Get Web Elements    ${WARRANTY_DROPDOWN_LOC}
     :FOR    ${item}     IN      @{get_warranty}
     \   Log     ${item.text}
-    Select Option From Dropdown List    //select[@name="case_waranty"]        ${warranty}
+    Run Keyword If      "${warranty}"=="None"     Click Element     //select[@name="case_waranty"]/option[@value="--${warranty}--"]
+    Select Option From Dropdown List    ${WARRANTY_DROPDOWN_LOC}        ${warranty}
 
 Warranty Active Date
     [Arguments]     ${warranty_active_date}=${EMPTY}
@@ -408,3 +410,7 @@ Warranty Expired Date
 Sent Product Date
     [Arguments]     ${sent_product_date}=${EMPTY}
     Run Keyword If  "${sent_product_date}"!="${EMPTY}"      Inpu Text   ${SENT_PRODUCT_LOC}     ${sent_product_date}
+
+Dash Symbol
+    [Arguments]     ${string}=None
+    Run Keyword If      "${string}"=="None"     Input Text
