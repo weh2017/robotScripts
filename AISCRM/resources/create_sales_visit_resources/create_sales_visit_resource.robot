@@ -102,7 +102,7 @@ Perform Create Sales Visit All Informations
     ${contents}=    Get File        ${csv}
     @{read}=    Create List     ${contents}
     @{lines}=   Split To Lines      @{read}     1
-    :FOR    ${line}     IN      @{lines}
+    :FOR    ${line}     IN      @{lines} + 1
     \   ${current_date}=   Get Current Date    result_format=%H:%M:%S
     \   ${end_variable}=   Set Variable    ${current_date}
     \   ${adjust}=      Add Time To Time    ${end_variable}     1 hour
@@ -120,53 +120,76 @@ Perform Create Sales Visit All Informations
     ##########################################################################
     \   @{bm}=  Split String    ${line}     |
     # schedule
-    \   ${schedule}=    Set Variable    @{bm}[0]
+    \   ${strip_sched}=     Set Variable    @{bm}[0]
+    \   ${schedule}=        Strip String    ${SPACE}${strip_sched}${SPACE}
     # presentation
-    \   ${objective}=    Set Variable    @{bm}[1]
+    \   ${strip_obj}=       Set Variable    @{bm}[1]
+    \   ${objective}=       Strip String   ${SPACE}${strip_obj}${SPACE}
     # start date
-    \   ${start_date}=  Set Variable    @{bm}[2]
+    \   ${strip_date}=      Set Variable    @{bm}[2]
+    \   ${start_date}=     Strip String    ${SPACE}${strip_date}${SPACE}
     # status
-    \   ${status}=  Set Variable    @{bm}[3]
+    \   ${strip_status}=  Set Variable    @{bm}[3]
+    \   ${status}=   Strip String   ${SPACE}${strip_status}${SPACE}
     #   Account name
-    \   ${account}=   Set Variable    @{bm}[4]
+    \   ${strip_account}=   Set Variable    @{bm}[4]
+    \   ${account}=         Strip String        ${SPACE}${strip_account}${SPACE}
     #   First Contact name
-    \   ${contact_name}=    Set Variable    @{bm}[5]
+    \   ${strip_contact}=    Set Variable    @{bm}[5]
+    \   ${contact_name}=    Strip String    ${SPACE}${strip_contact}${SPACE}
     #   Project name
-    \   ${project_name}=    Set Variable    @{bm}[6]
+    \   ${strip_project}=    Set Variable    @{bm}[6]
+    \   ${project_name}=     Strip String   ${SPACE}${strip_project}${SPACE}
     #   Time Start
-    \   ${subtract}=        Set Variable    ${sub_get}
+    \   ${strip_subtract}=        Set Variable    ${sub_get}
+    \   ${subtract}=              Strip String    ${SPACE}${strip_subtract}${SPACE}
 #       End Time
-    \   ${add}=             Set Variable       ${add_get}
+    \   ${strip_add}=             Set Variable       ${add_get}
+    \   ${add}=                   Strip String        ${SPACE}${strip_add}${SPACE}
     #   Plan Detail
-    \   ${plan}=            Set Variable    @{bm}[9]
+    \   ${strip_plan}=            Set Variable    @{bm}[9]
+    \   ${plan}=                  Strip String      ${SPACE}${strip_plan}${SPACE}
 #    #   Contact Other Name
 #    \   ${contact_other}=   Set Variable    @{bm}[10]
     #   Email
-    \   ${email}=           Set Variable    @{bm}[10]
+    \   ${strip_email}=     Set Variable    @{bm}[10]
+    \   ${email}=           Strip String    ${SPACE}${strip_email}${SPACE}
     #   Mobile
-    \   ${mobile}=          Set Variable    @{bm}[11]
+    \   ${strip_mobile}=    Set Variable    @{bm}[11]
+    \   ${mobile}=          Strip String    ${SPACE}${strip_mobile}${SPACE}
     #   Phone
-    \   ${phone}=           Set Variable    @{bm}[12]
+    \   ${strip_phone}=     Set Variable    @{bm}[12]
+    \   ${phone}=           Strip String   ${SPACE}${strip_phone}${SPACE}
     #   Department
-    \   ${department}=      Set Variable    @{bm}[13]
+    \   ${strip_depart}=    Set Variable    @{bm}[13]
+    \   ${department}=       Strip String    ${SPACE}${strip_depart}${SPACE}
     #   Position
-    \   ${position}=        Set Variable    @{bm}[14]
+    \   ${strip_pos}=       Set Variable    @{bm}[14]
+    \   ${position}=        Strip String    ${SPACE}${strip_pos}${SPACE}
     #   Comment
-    \   ${comment}=         Set Variable    @{bm}[15]
+    \   ${strip_comment}=   Set Variable    @{bm}[15]
+    \   ${comment}=         Strip String   ${SPACE}${strip_comment}${SPACE}
     #   Report
-    \   ${report}=          Set Variable    @{bm}[16]
+    \   ${strip_report}=          Set Variable    @{bm}[16]
+    \   ${report}=          Strip String    ${SPACE}${strip_report}${SPACE}
     #   Remaining
-    \   ${remaining}=       Set Variable    @{bm}[17]
+    \   ${strip_remain}=       Set Variable    @{bm}[17]
+    \   ${remaining}=       Strip String    ${SPACE}${strip_remain}${SPACE}
     #   Competitor
-    \   ${competitor}=      Set Variable    @{bm}[18]
+    \   ${strip_string}=      Set Variable    @{bm}[18]
+    \   ${competitor}=      Strip String    ${SPACE}${strip_string}${SPACE}
     #   Remark
-    \   ${remark}=          Set Variable    @{bm}[19]
+    \   ${strip_remark}=          Set Variable    @{bm}[19]
+    \   ${remark}=          Strip String    ${SPACE}${strip_remark}${SPACE}
     #   Lead No
-    \   ${lead_no}=         Set Variable    @{bm}[20]
+    \   ${strip_lead}=         Set Variable    @{bm}[20]
+    \   ${lead_no}=         Strip String    ${SPACE}${strip_lead}${SPACE}
     #   Lead name
-    \   ${lead_name}=       Set Variable    @{bm}[21]
+    \   ${strip_lead_name}=       Set Variable    @{bm}[21]
+    \   ${lead_name}=       Strip String    ${SPACE}${strip_lead_name}${SPACE}
     #   Image file
-    \   ${image}=           Set Variable    @{bm}[22]
+    \   ${strip_image}=           Set Variable    @{bm}[22]
+    \   ${image}=           Strip String    ${SPACE}${strip_image}${SPACE}
     \   Run Keyword If  '${data}'=='ALL'    Navigate Creating Sales Visit All        ${schedule}  ${objective}
     ...             ${start_date}      ${status}   ${account}  ${contact_name}
     ...             ${project_name}    ${add}  ${subtract}    ${department}   ${position}     ${email}    ${plan}

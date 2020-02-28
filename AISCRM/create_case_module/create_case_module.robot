@@ -456,7 +456,7 @@ Warranty Active Date
 Check Product Date
     [Arguments]     ${check_product_date}=${EMPTY}
     Run Keyword If      "${check_product_date}"!="${EMPTY}"
-    ...     Enter Date Calendar Text  ${CHECK_PRODUCT_LOC}    ${check_product_date}
+    ...     Enter Date Calendar Text  ${CHECK_PRODUCT_LOC}    ${check_product_date}     clear=True
 
 Warranty Expired Date
     [Arguments]     ${warranty_expired_date}=${EMPTY}
