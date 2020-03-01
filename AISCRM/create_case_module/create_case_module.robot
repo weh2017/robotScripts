@@ -72,6 +72,7 @@ AIS-CRM Website
     Input Username             ${USER}
     Input User's Password      ${PASS}
     Click Login button
+    
 
 Select Customer Service
     Select Menu                             ${CUSTOMER_SERVICE}
@@ -79,14 +80,14 @@ Select Customer Service
     Click Button To Create Page             ${CASE_STRING}
 
 Create Case Data Informations
-    Case Data Informations      ${CURDIR}${/}create_case_module.csv
+    Case Data Informations      ALL     ${CURDIR}${/}create_case_module.csv
 *** Keywords ***
 Case Data Informations
-    [Arguments]         ${csv}
+    [Arguments]   ${data}      ${csv}
     ${contents}=    Get File    ${csv}
     @{read}=    Create List     ${contents}
     @{lines}=   Split To Lines      @{read}     1
-    :FOR    ${line}    IN          @{lines}
+    :FOR    ${line}    IN          @{lines} + 1
     \   @{bm}=      Split String    ${line}     |
     # Case Name
     \   ${case_name}=   Set Variable    @{bm}[0]
@@ -179,63 +180,53 @@ Case Data Informations
     # Sent Product Date
     \   ${strip_sent_prod_date}=     Set Variable    @{bm}[29]
     \   ${sent_product_date}=        Strip String    ${strip_sent_prod_date}${SPACE}
-    \   Case Name                       ${remove_case}
-    \   Priority Case                   ${priority}
-    \   Responsible Person              ${responsible}
-    \   Case Type                       ${case_type}
-    \   Status                          ${status}
-    \   Account Name                    ${account_name}
-    \   Project Name                    ${project}
-    \   Case Open Date                  ${case_open_date}
-    \   Case Close Date                 ${case_close_date}
-    \   Plan Due Date                   ${plan_due_date}
-    \   Waiting For                     ${waiting}
-    \   Partner Account                 ${partner_account}
-    \   Partner Contact                 ${partner_contact}
-    \   Description                     ${description}
-    \   Solution                        ${solution}
-    \   Prevention                      ${prevention}
-    \   Contact Name                    ${contact_name}
-    \   Contact Mobile                  ${contact_mobile}
-    \   Contact E-mail                  ${contact_email}
-    \   Serial Name                     ${serial_name}
-    \   Product Name                    ${product_name}
-    \   Product Brand                   ${product_brand}
-    \   Product Model                   ${product_model}
-    \   Delivery Date                   ${delivery_date}
-    \   Warranty                        ${warranty}
-    \   Warranty Active Date            ${warranty_active_date}
-    \   Check Product Date              ${check_product_date}
-    \   Warranty Expired Date           ${warranty_expired_date}
-    \   Sent Product Date               ${sent_product_date}
-#    \   Enter Case Information          ${remove_case}  ${priority}    ${responsible}    ${case_type}
-#    ...     ${status}   ${project}  ${case_open_date}   ${case_close_date}
-#    ...     ${plan_due_date}    ${waiting}  ${partner_account}  ${partner_contact}
-#    ...     ${description}  ${solution}     ${prevention}
+    \   Run Keyword If   '${data}'=='ALL'    Enter Case Information
+    ...         ${remove_case}  ${priority}  ${responsible}  ${case_type}  ${status}
+    ...         ${account_name}  ${project}  ${case_open_date}  ${case_close_date}  ${plan_due_date}
+    ...         ${waiting}  ${partner_account}  ${partner_contact}  ${description}  ${solution}
+    ...         ${prevention}  ${contact_name}  ${contact_mobile}  ${contact_email}  ${serial_name}
+    ...         ${product_name}  ${product_brand}  ${product_model}  ${delivery_date}  ${warranty}
+    ...         ${warranty_active_date}  ${check_product_date}  ${warranty_expired_date}  ${sent_product_date}
 
-Email Verification
-    Open Mailbox    mail.aisyst.com     user
 Enter Case Information
-    [Arguments]     ${remove_case}  ${priority}    ${responsible}    ${case_type}
-    ...     ${status}   ${project}  ${case_open_date}   ${case_close_date}
-    ...     ${plan_due_date}    ${waiting}  ${partner_account}  ${partner_contact}  #${closed_reason}
-    ...     ${description}      ${solution}     ${prevention}   ${contact_name}
-    Case Name           ${remove_case}
-    Priority Case       ${priority}
-    Responsible Person  ${responsible}
-    Case Type           ${case_type}
-    Status              ${status}
-    Case Open Date      ${case_open_date}
-    Case Close Date     ${case_close_date}
-    Plan Due Date       ${plan_due_date}
-    Waiting For         ${waiting}
-    Partner Account     ${partner_account}
-    Partner Contact     ${partner_contact}
-    Description         ${description}
-    Solution            ${solution}
-    Prevention          ${prevention}
-    Project Name        ${project}
-    Contact Name        ${contact_name}
+    [Arguments]  ${remove_case}  ${priority}  ${responsible}  ${case_type}  ${status}
+    ...         ${account_name}  ${project}  ${case_open_date}  ${case_close_date}  ${plan_due_date}
+    ...         ${waiting}  ${partner_account}  ${partner_contact}  ${description}  ${solution}
+    ...         ${prevention}  ${contact_name}  ${contact_mobile}  ${contact_email}  ${serial_name}
+    ...         ${product_name}  ${product_brand}  ${product_model}  ${delivery_date}  ${warranty}
+    ...         ${warranty_active_date}  ${check_product_date}  ${warranty_expired_date}  ${sent_product_date}
+    Case Name                       ${remove_case}
+    Priority Case                   ${priority}
+    Responsible Person              ${responsible}
+    Case Type                       ${case_type}
+    Status                          ${status}
+    Account Name                    ${account_name}
+    Project Name                    ${project}
+    Case Open Date                  ${case_open_date}
+    Case Close Date                 ${case_close_date}
+    Plan Due Date                   ${plan_due_date}
+    Waiting For                     ${waiting}
+    Partner Account                 ${partner_account}
+    Partner Contact                 ${partner_contact}
+    Description                     ${description}
+    Solution                        ${solution}
+    Prevention                      ${prevention}
+    Contact Name                    ${contact_name}
+    Contact Mobile                  ${contact_mobile}
+    Contact E-mail                  ${contact_email}
+    Serial Name                     ${serial_name}
+    Product Name                    ${product_name}
+    Product Brand                   ${product_brand}
+    Product Model                   ${product_model}
+    Delivery Date                   ${delivery_date}
+    Warranty                        ${warranty}
+    Warranty Active Date            ${warranty_active_date}
+    Check Product Date              ${check_product_date}
+    Warranty Expired Date           ${warranty_expired_date}
+    Sent Product Date               ${sent_product_date}
+    Click Save Footer Button
+    Verify Results After Create
+    
 Case Name
     [Arguments]     ${remove_case}
     Input Data To TextBox   ${CASE_TXTBOX}      ${remove_case}
@@ -467,4 +458,12 @@ Sent Product Date
     [Arguments]     ${sent_product_date}=${EMPTY}
     Run Keyword If  "${sent_product_date}"!="${EMPTY}"
     ...     Enter Date Calendar Text   ${SENT_PRODUCT_LOC}     ${sent_product_date}     clear=True
+
+Verify Results After Create
+    [Arguments]
+    ${web}=     Get WebElements    //tr/td[2][@class="dvtCellInfo"]
+    Log     ${web}
+    ${get_id}=  Get Text  //tr/td[2][@class="dvtCellInfo"]
+    ${convert}=     Convert To String   ${get_id}
+    Log  ${convert}
 

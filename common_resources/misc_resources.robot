@@ -37,6 +37,7 @@ Select Data On Basic Search Mode
     Select Option From Dropdown List   ${selector}   ${option}     # OTHER KEYWORD UNDER misc.resources
     Input Text To Search        ${string_reference}
     Click Search Button
+    Wait Until Page Contains   ${string_reference}
     Select The List Found       ${string_reference}
 
 Click Button To Create Page
@@ -181,7 +182,9 @@ Enter Date Calendar Text
     ${replace}=     Replace String       ${calendar_text}   /    -
     Input Text      ${locator}      ${replace}      ${clear}
 
-
+Click Save Footer Button
+    [Documentation]     This function is the save button located at the footer area
+    Click Element    ${SAVE_FOOTER_BTN}
 
 *** Variables ***
 
@@ -194,4 +197,5 @@ ${MODIFIED_TIME_LOCATOR}    //td[@class="dvtCellInfo"][contains(text(), "21-01-2
 ${LOGIN_ERROR_MSG}          //*[@id="form"]/div[5]/font
 ${ERROR_LOGIN_MSG}          //font[contains(text(),'i')
 ${SEARCH_FIELD}             //select[@name="search_field"]
+${SAVE_FOOTER_BTN}          //tr[27]/td/div/input[@title="Save [Alt+S]"]
 

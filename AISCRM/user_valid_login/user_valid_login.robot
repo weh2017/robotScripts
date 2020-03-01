@@ -11,7 +11,7 @@ Suite Teardown  Close Browser
 *** Test Cases ***
 
 Launch AIS-CRM site
-    Launch Web System   ${URL}
+    Launch Web System   ${URL_2}
 
 Login Valid AIS-CRM Credentials
     Input Username       ${USER}
