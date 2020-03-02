@@ -1,11 +1,10 @@
 *** Settings ***
-Library     SeleniumLibrary
+Library     Selenium2Library
 Library     OperatingSystem
 Library     String   
 Library     DateTime
 Library     Collections
 Library     Dialogs
-Library     ImapLibrary
 Resource        ../../common_resources/web_common.robot
 Resource        ../../common_resources/misc_resources.robot
 Resource        ../resources/user_login_resources/user_login_resource.robot
@@ -84,6 +83,7 @@ Create Case Data Informations
 *** Keywords ***
 Case Data Informations
     [Arguments]   ${data}      ${csv}
+#    Set Selenium Speed  0.5
     ${contents}=    Get File    ${csv}
     @{read}=    Create List     ${contents}
     @{lines}=   Split To Lines      @{read}     1
@@ -200,13 +200,13 @@ Enter Case Information
     Responsible Person              ${responsible}
     Case Type                       ${case_type}
     Status                          ${status}
+    Partner Account                 ${partner_account}
     Account Name                    ${account_name}
     Project Name                    ${project}
     Case Open Date                  ${case_open_date}
     Case Close Date                 ${case_close_date}
     Plan Due Date                   ${plan_due_date}
     Waiting For                     ${waiting}
-    Partner Account                 ${partner_account}
     Partner Contact                 ${partner_contact}
     Description                     ${description}
     Solution                        ${solution}
@@ -224,8 +224,10 @@ Enter Case Information
     Check Product Date              ${check_product_date}
     Warranty Expired Date           ${warranty_expired_date}
     Sent Product Date               ${sent_product_date}
-    Click Save Footer Button
-    Verify Results After Create
+#    Pause Execution
+    Click Save Header Button
+#    Verify Results After Create     ${case_type}   ${remove_case}     ${status}   ${priority}     ${waiting}
+#    ...                             ${responsible}    ${partner_account}  ${case_open_date}
     
 Case Name
     [Arguments]     ${remove_case}
@@ -460,10 +462,46 @@ Sent Product Date
     ...     Enter Date Calendar Text   ${SENT_PRODUCT_LOC}     ${sent_product_date}     clear=True
 
 Verify Results After Create
-    [Arguments]
+    [Arguments]       ${case_type}   ${remove_case}     ${status}   ${priority}     ${waiting}
+    ...               ${responsible}    ${partner_account}  ${case_open_date}
+    Sleep  1
+    ${current_date}=    Get Current Date    result_format=%d-%m-%Y %H:%M
+    Log     ${current_date}
     ${web}=     Get WebElements    //tr/td[2][@class="dvtCellInfo"]
     Log     ${web}
     ${get_id}=  Get Text  //tr/td[2][@class="dvtCellInfo"]
     ${convert}=     Convert To String   ${get_id}
     Log  ${convert}
+    #Case No
+    Table Row Should Contain    //tr/td[2]      1   ${convert}
+    #Case Type
+    Table Row Should Contain    //tr/td[4]      1   ${case_type}
+    # Modified Time
+    Table Row Should Contain    //tr[2]/td[2]   2   ${current_date}
+    #Created Time
+    Table Row Should Contain    //tr[2]/td[4]   2   ${current_date}
+    #Created By
+    Table Row Should Contain    //tr[3]/td[4]   3   ${USER_FULL_NAME}
+    #Case Name
+    Table Row Should Contain    //tr[4]/td[2]   4   ${remove_case}
+    #Status
+    Table Row Should Contain    //tr[4]/td[4]   4   ${status}
+    #Priority
+    Table Row Should Contain    //tr[5]/td[2]   5   ${priority}
+    #Waiting For
+    Table Row Should Contain    //tr[5]/td[4]   5   ${waiting}
+    #Responsible Person
+    Table Row Should Contain    //tr[6]/td[2]   6   ${responsible}
+    #Partner Account
+    Table Row Should Contain    //tr[6]/td[4]   6   ${partner_account}
+    #Case Open Date
+    Table Row Should Contain    //tr[7]/td[2]   7   ${case_open_date}
+    #Partner Contact
+    Table Row Should Contain    //tr[7]/td[4]   7   ${partner_contact}
+    #Case Close Date
+    Table Row Should Contain    //tr[8]/td[2]   8   ${case_close_date}
+    #Closed Reason
+    Table Row Should Contain    //tr[8]/td[4]   8   ${closed_reason}
+    #Plan Due Date
+    Table Row Should Contain    //tr[9]/td[2]   9   ${plan_due_date}
 

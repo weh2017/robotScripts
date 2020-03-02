@@ -64,6 +64,10 @@ Scroll Down Page From The Browser
     #Execute Javascript      window.scrollTo(0, 1500)       # Can also use this to scroll down page
     Execute Javascript      window.scrollTo(0,document.body.scrollHeight)
 
+Scroll Up Page From The Browser
+    [Documentation]     This function will perform to scroll up from bottom.
+    Execute Javascript      2849        0
+
 Verify Error Message
     [Documentation]  This is to test the error message if prompted or not.
     [Arguments]     ${error_message}
@@ -186,6 +190,11 @@ Click Save Footer Button
     [Documentation]     This function is the save button located at the footer area
     Click Element    ${SAVE_FOOTER_BTN}
 
+Click Save Header Button
+    [Documentation]     This function is the save button located at the header area
+    Mouse Up            ${SAVE_HEADER_BTN}
+#    Click Element       ${SAVE_FOOTER_BTN}
+
 *** Variables ***
 
 ${USERNAME_LOCATOR}         name:user_name
@@ -198,4 +207,5 @@ ${LOGIN_ERROR_MSG}          //*[@id="form"]/div[5]/font
 ${ERROR_LOGIN_MSG}          //font[contains(text(),'i')
 ${SEARCH_FIELD}             //select[@name="search_field"]
 ${SAVE_FOOTER_BTN}          //tr[27]/td/div/input[@title="Save [Alt+S]"]
+${SAVE_HEADER_BTN}          //tr/td/div/input[@title="Save [Alt+S]"]
 
