@@ -66,7 +66,7 @@ Scroll Down Page From The Browser
 
 Scroll Up Page From The Browser
     [Documentation]     This function will perform to scroll up from bottom.
-    Execute Javascript      2849        0
+    Execute Javascript      window.scrollTo(0,-document.body.scrollHeight)
 
 Verify Error Message
     [Documentation]  This is to test the error message if prompted or not.
@@ -86,7 +86,9 @@ Select The List Found
     [Documentation]  This function is to click the link element
     [Arguments]     ${found_list}
 #    Click Link      //a[contains(text(), '${found_list}')]
-    Click Link   //a[@href="javascript:window.close();"][contains(text(), '${found_list}')]
+    Wait Until Element Is Visible   //a[@href="javascript:window.close();"][contains(text(), '${found_list}')]
+    Sleep  3
+    Click Element   //a[@href="javascript:window.close();"][contains(text(), '${found_list}')]
 
 Click Button
     [Documentation]     Add Image Button
@@ -177,6 +179,12 @@ Verify Deleted Information
     Log     ${actual}
     Should Be Empty     ${actual}
 
+Verify Result Date Calendar
+    [Documentation]   Verify the result of Calendar information.Should Be in a Calendar format(ex. 28-02-2020)
+    [Arguments]     ${locator}   ${row_number}   ${string_to_be_verified}
+    ${string_verified}=   Replace String      ${string_to_be_verified}  /   -
+    Table Row Should Contain    ${locator}   ${row_number}   ${string_verified}
+
 Enter Date Calendar Text
     [Documentation]    Calendar Text for optional informations like Case module:("Case Open Date").
     [Arguments]     ${locator}  ${calendar_text}    ${clear}
@@ -192,8 +200,7 @@ Click Save Footer Button
 
 Click Save Header Button
     [Documentation]     This function is the save button located at the header area
-    Mouse Up            ${SAVE_HEADER_BTN}
-#    Click Element       ${SAVE_FOOTER_BTN}
+    Click Element            ${SAVE_HEADER_BTN}
 
 *** Variables ***
 

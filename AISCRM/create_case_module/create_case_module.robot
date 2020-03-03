@@ -64,7 +64,7 @@ ${SENT_PRODUCT_LOC}         name:case_datesent
 ${ALL_CONTACTS_BTN}         id:all_contacts
 *** Test Cases ***
 AIS-CRM Website
-    Launch Web System   ${URL_2}
+    Launch Web System   ${URL}
 
 # Log-In User with Valid Username And Password
     [Tags]  User credentials
@@ -87,7 +87,7 @@ Case Data Informations
     ${contents}=    Get File    ${csv}
     @{read}=    Create List     ${contents}
     @{lines}=   Split To Lines      @{read}     1
-    :FOR    ${line}    IN          @{lines} + 1
+    :FOR    ${line}    IN          @{lines}
     \   @{bm}=      Split String    ${line}     |
     # Case Name
     \   ${case_name}=   Set Variable    @{bm}[0]
@@ -181,7 +181,7 @@ Case Data Informations
     \   ${strip_sent_prod_date}=     Set Variable    @{bm}[29]
     \   ${sent_product_date}=        Strip String    ${strip_sent_prod_date}${SPACE}
     \   Run Keyword If   '${data}'=='ALL'    Enter Case Information
-    ...         ${remove_case}  ${priority}  ${responsible}  ${case_type}  ${status}
+    ...         ${remove_case}  ${priority}  ${responsible}  ${case_type}  ${status}  ${closed_reason}
     ...         ${account_name}  ${project}  ${case_open_date}  ${case_close_date}  ${plan_due_date}
     ...         ${waiting}  ${partner_account}  ${partner_contact}  ${description}  ${solution}
     ...         ${prevention}  ${contact_name}  ${contact_mobile}  ${contact_email}  ${serial_name}
@@ -189,7 +189,7 @@ Case Data Informations
     ...         ${warranty_active_date}  ${check_product_date}  ${warranty_expired_date}  ${sent_product_date}
 
 Enter Case Information
-    [Arguments]  ${remove_case}  ${priority}  ${responsible}  ${case_type}  ${status}
+    [Arguments]  ${remove_case}  ${priority}  ${responsible}  ${case_type}  ${status}   ${closed_reason}
     ...         ${account_name}  ${project}  ${case_open_date}  ${case_close_date}  ${plan_due_date}
     ...         ${waiting}  ${partner_account}  ${partner_contact}  ${description}  ${solution}
     ...         ${prevention}  ${contact_name}  ${contact_mobile}  ${contact_email}  ${serial_name}
@@ -200,7 +200,6 @@ Enter Case Information
     Responsible Person              ${responsible}
     Case Type                       ${case_type}
     Status                          ${status}
-    Partner Account                 ${partner_account}
     Account Name                    ${account_name}
     Project Name                    ${project}
     Case Open Date                  ${case_open_date}
@@ -224,10 +223,13 @@ Enter Case Information
     Check Product Date              ${check_product_date}
     Warranty Expired Date           ${warranty_expired_date}
     Sent Product Date               ${sent_product_date}
+    Partner Account                 ${partner_account}
 #    Pause Execution
-    Click Save Header Button
+    Scroll Up Page From The Browser
+#    Click Save Header Button
 #    Verify Results After Create     ${case_type}   ${remove_case}     ${status}   ${priority}     ${waiting}
-#    ...                             ${responsible}    ${partner_account}  ${case_open_date}
+#    ...               ${responsible}    ${partner_account}  ${case_open_date}   ${partner_contact}
+#    ...               ${case_close_date}   ${closed_reason}   ${plan_due_date}
     
 Case Name
     [Arguments]     ${remove_case}
@@ -348,6 +350,7 @@ Closed Reason
 Description
     [Arguments]  ${description}=${EMPTY}
     Run Keyword If  "${description}"!="${EMPTY}"    Input Text      ${DESCRIPTION_LOC}      ${description}
+    
 Solution
     [Arguments]  ${solution}=${EMPTY}
     Run Keyword If  "${solution}"!="${EMPTY}"   Input Text      ${SOLUTION_LOC}         ${solution}
@@ -463,7 +466,8 @@ Sent Product Date
 
 Verify Results After Create
     [Arguments]       ${case_type}   ${remove_case}     ${status}   ${priority}     ${waiting}
-    ...               ${responsible}    ${partner_account}  ${case_open_date}
+    ...               ${responsible}    ${partner_account}  ${case_open_date}   ${partner_contact}
+    ...               ${case_close_date}   ${closed_reason}   ${plan_due_date}
     Sleep  1
     ${current_date}=    Get Current Date    result_format=%d-%m-%Y %H:%M
     Log     ${current_date}
@@ -473,35 +477,36 @@ Verify Results After Create
     ${convert}=     Convert To String   ${get_id}
     Log  ${convert}
     #Case No
-    Table Row Should Contain    //tr/td[2]      1   ${convert}
+    Table Row Should Contain    //tr/td[2]      1       ${convert}
     #Case Type
-    Table Row Should Contain    //tr/td[4]      1   ${case_type}
+    Table Row Should Contain    //tr/td[4]      1       ${case_type}
     # Modified Time
-    Table Row Should Contain    //tr[2]/td[2]   2   ${current_date}
+    Table Row Should Contain    //tr[2]/td[2]   2       ${current_date}
     #Created Time
-    Table Row Should Contain    //tr[2]/td[4]   2   ${current_date}
+    Table Row Should Contain    //tr[2]/td[4]   2       ${current_date}
     #Created By
-    Table Row Should Contain    //tr[3]/td[4]   3   ${USER_FULL_NAME}
+    Table Row Should Contain    //tr[3]/td[4]   3       ${USER_FULL_NAME}
     #Case Name
-    Table Row Should Contain    //tr[4]/td[2]   4   ${remove_case}
+    Table Row Should Contain    //tr[4]/td[2]   4       ${remove_case}
     #Status
-    Table Row Should Contain    //tr[4]/td[4]   4   ${status}
+    Table Row Should Contain    //tr[4]/td[4]   4       ${status}
     #Priority
-    Table Row Should Contain    //tr[5]/td[2]   5   ${priority}
+    Table Row Should Contain    //tr[5]/td[2]   5       ${priority}
     #Waiting For
-    Table Row Should Contain    //tr[5]/td[4]   5   ${waiting}
+    Table Row Should Contain    //tr[5]/td[4]   5       ${waiting}
     #Responsible Person
-    Table Row Should Contain    //tr[6]/td[2]   6   ${responsible}
+    Table Row Should Contain    //tr[6]/td[2]   6       ${responsible}
     #Partner Account
-    Table Row Should Contain    //tr[6]/td[4]   6   ${partner_account}
+    Table Row Should Contain    //tr[6]/td[4]   6       ${partner_account}
     #Case Open Date
-    Table Row Should Contain    //tr[7]/td[2]   7   ${case_open_date}
+    Verify Result Date Calendar   //tr[7]/td[2]   7     ${case_open_date}
     #Partner Contact
-    Table Row Should Contain    //tr[7]/td[4]   7   ${partner_contact}
+    Table Row Should Contain    //tr[7]/td[4]   7       ${partner_contact}
     #Case Close Date
-    Table Row Should Contain    //tr[8]/td[2]   8   ${case_close_date}
+    Verify Result Date Calendar    //tr[8]/td[2]   8    ${case_close_date}
     #Closed Reason
-    Table Row Should Contain    //tr[8]/td[4]   8   ${closed_reason}
+    Run Keyword If   "${closed_reason}"!="${None}"
+    ...     Table Row Should Contain    //tr[8]/td[4]   8       ${closed_reason}
     #Plan Due Date
-    Table Row Should Contain    //tr[9]/td[2]   9   ${plan_due_date}
+    Verify Result Date Calendar    //tr[9]/td[2]   9    ${plan_due_date}
 
