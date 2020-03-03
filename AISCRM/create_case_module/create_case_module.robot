@@ -64,7 +64,7 @@ ${SENT_PRODUCT_LOC}         name:case_datesent
 ${ALL_CONTACTS_BTN}         id:all_contacts
 *** Test Cases ***
 AIS-CRM Website
-    Launch Web System   ${URL}
+    Launch Web System   ${URL_2}
 
 # Log-In User with Valid Username And Password
     [Tags]  User credentials
@@ -87,7 +87,7 @@ Case Data Informations
     ${contents}=    Get File    ${csv}
     @{read}=    Create List     ${contents}
     @{lines}=   Split To Lines      @{read}     1
-    :FOR    ${line}    IN          @{lines}
+    :FOR    ${line}    IN          @{lines} + 1
     \   @{bm}=      Split String    ${line}     |
     # Case Name
     \   ${case_name}=   Set Variable    @{bm}[0]
@@ -187,6 +187,7 @@ Case Data Informations
     ...         ${prevention}  ${contact_name}  ${contact_mobile}  ${contact_email}  ${serial_name}
     ...         ${product_name}  ${product_brand}  ${product_model}  ${delivery_date}  ${warranty}
     ...         ${warranty_active_date}  ${check_product_date}  ${warranty_expired_date}  ${sent_product_date}
+    ...         ${solution}
 
 Enter Case Information
     [Arguments]  ${remove_case}  ${priority}  ${responsible}  ${case_type}  ${status}   ${closed_reason}
@@ -195,6 +196,7 @@ Enter Case Information
     ...         ${prevention}  ${contact_name}  ${contact_mobile}  ${contact_email}  ${serial_name}
     ...         ${product_name}  ${product_brand}  ${product_model}  ${delivery_date}  ${warranty}
     ...         ${warranty_active_date}  ${check_product_date}  ${warranty_expired_date}  ${sent_product_date}
+    ...         ${solution}
     Case Name                       ${remove_case}
     Priority Case                   ${priority}
     Responsible Person              ${responsible}
@@ -224,12 +226,12 @@ Enter Case Information
     Warranty Expired Date           ${warranty_expired_date}
     Sent Product Date               ${sent_product_date}
     Partner Account                 ${partner_account}
-#    Pause Execution
+    Pause Execution
     Scroll Up Page From The Browser
 #    Click Save Header Button
 #    Verify Results After Create     ${case_type}   ${remove_case}     ${status}   ${priority}     ${waiting}
 #    ...               ${responsible}    ${partner_account}  ${case_open_date}   ${partner_contact}
-#    ...               ${case_close_date}   ${closed_reason}   ${plan_due_date}
+#    ...               ${case_close_date}   ${closed_reason}   ${plan_due_date}     ${solution}
     
 Case Name
     [Arguments]     ${remove_case}
@@ -350,7 +352,7 @@ Closed Reason
 Description
     [Arguments]  ${description}=${EMPTY}
     Run Keyword If  "${description}"!="${EMPTY}"    Input Text      ${DESCRIPTION_LOC}      ${description}
-    
+
 Solution
     [Arguments]  ${solution}=${EMPTY}
     Run Keyword If  "${solution}"!="${EMPTY}"   Input Text      ${SOLUTION_LOC}         ${solution}
@@ -467,7 +469,7 @@ Sent Product Date
 Verify Results After Create
     [Arguments]       ${case_type}   ${remove_case}     ${status}   ${priority}     ${waiting}
     ...               ${responsible}    ${partner_account}  ${case_open_date}   ${partner_contact}
-    ...               ${case_close_date}   ${closed_reason}   ${plan_due_date}
+    ...               ${case_close_date}   ${closed_reason}   ${plan_due_date}  ${solution}
     Sleep  1
     ${current_date}=    Get Current Date    result_format=%d-%m-%Y %H:%M
     Log     ${current_date}
@@ -509,4 +511,6 @@ Verify Results After Create
     ...     Table Row Should Contain    //tr[8]/td[4]   8       ${closed_reason}
     #Plan Due Date
     Verify Result Date Calendar    //tr[9]/td[2]   9    ${plan_due_date}
+    #Solution and Answer
+    Table Row Should Contain    //tr[3]/td/div[@id="comments_div"]   3      ${solution}
 
