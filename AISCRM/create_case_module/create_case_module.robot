@@ -150,12 +150,12 @@ Case Data Informations
     # Contact E-mail
     \   ${strip_contact_email}=     Set Variable    @{bm}[19]
     \   ${contact_email}=           Strip String    ${strip_contact_email}${SPACE}
-    # Serial Name
-    \   ${strip_serial_name}=       Set Variable    @{bm}[20]
-    \   ${serial_name}=             Strip String    ${strip_serial_name}${SPACE}
     # Product Name
-    \   ${strip_product_name}=      Set Variable    @{bm}[21]
+    \   ${strip_product_name}=      Set Variable    @{bm}[20]
     \   ${product_name}=            Strip String    ${strip_product_name}${SPACE}
+    # Serial Name
+    \   ${strip_serial_name}=       Set Variable    @{bm}[21]
+    \   ${serial_name}=             Strip String    ${strip_serial_name}${SPACE}
     # Product Brand
     \   ${strip_product_brand}=     Set Variable    @{bm}[22]
     \   ${product_brand}=           Strip String    ${strip_product_brand}${SPACE}
@@ -187,7 +187,6 @@ Case Data Informations
     ...         ${prevention}  ${contact_name}  ${contact_mobile}  ${contact_email}  ${serial_name}
     ...         ${product_name}  ${product_brand}  ${product_model}  ${delivery_date}  ${warranty}
     ...         ${warranty_active_date}  ${check_product_date}  ${warranty_expired_date}  ${sent_product_date}
-    ...         ${solution}
 
 Enter Case Information
     [Arguments]  ${remove_case}  ${priority}  ${responsible}  ${case_type}  ${status}   ${closed_reason}
@@ -196,7 +195,6 @@ Enter Case Information
     ...         ${prevention}  ${contact_name}  ${contact_mobile}  ${contact_email}  ${serial_name}
     ...         ${product_name}  ${product_brand}  ${product_model}  ${delivery_date}  ${warranty}
     ...         ${warranty_active_date}  ${check_product_date}  ${warranty_expired_date}  ${sent_product_date}
-    ...         ${solution}
     Case Name                       ${remove_case}
     Priority Case                   ${priority}
     Responsible Person              ${responsible}
@@ -215,8 +213,8 @@ Enter Case Information
     Contact Name                    ${contact_name}
     Contact Mobile                  ${contact_mobile}
     Contact E-mail                  ${contact_email}
-    Serial Name                     ${serial_name}
     Product Name                    ${product_name}
+    Serial Name                     ${serial_name}
     Product Brand                   ${product_brand}
     Product Model                   ${product_model}
     Delivery Date                   ${delivery_date}
@@ -226,13 +224,15 @@ Enter Case Information
     Warranty Expired Date           ${warranty_expired_date}
     Sent Product Date               ${sent_product_date}
     Partner Account                 ${partner_account}
-    Pause Execution
     Scroll Up Page From The Browser
-#    Click Save Header Button
-#    Verify Results After Create     ${case_type}   ${remove_case}     ${status}   ${priority}     ${waiting}
-#    ...               ${responsible}    ${partner_account}  ${case_open_date}   ${partner_contact}
-#    ...               ${case_close_date}   ${closed_reason}   ${plan_due_date}     ${solution}
-    
+    Pause Execution
+    Click Save Header Button
+    Verify Results After Create      ${case_type}   ${remove_case}     ${status}   ${priority}     ${waiting}
+    ...               ${responsible}    ${partner_account}  ${case_open_date}   ${partner_contact}
+    ...               ${case_close_date}   ${closed_reason}   ${plan_due_date}  ${solution}     ${prevention}
+    ...               ${description}  ${contact_name}  ${contact_mobile}  ${contact_email}  ${project}
+    ...               ${account_name}  ${delivery_date}  ${warranty}  ${warranty_active_date}  ${check_product_date}
+    ...               ${warranty_expired_date}  ${check_product_date}   ${product_name}
 Case Name
     [Arguments]     ${remove_case}
     Input Data To TextBox   ${CASE_TXTBOX}      ${remove_case}
@@ -405,6 +405,9 @@ Serial Name
     ...     AND     Select Data On Basic Search Mode    ${DROPDOWN_SEARCH_LOC}  ${SERIAL_NO_SEARCH}     ${serial_name}
     ...     AND     Exit New Window And Focus Main Browser
     ...     AND     Verify Added Information            ${element}     ${SERIAL_NAME_LABEL}
+    ${suite}=       Get Value   //input[@name="${SERIAL_NAME_LABEL}"]
+    Set Task Variable     ${suite}
+
 Product Name
     [Arguments]   ${product_name}=${EMPTY}
     Scroll Down Page From The Browser
@@ -420,6 +423,8 @@ Product Name
     ...     AND     Select Data On Basic Search Mode    ${DROPDOWN_SEARCH_LOC}  ${PROD_NAME_SEARCH}     ${product_name}
     ...     AND     Exit New Window And Focus Main Browser
     ...     AND     Verify Added Information            ${product_name}     ${PROD_NAME_LABEL}
+    ${product_suite}=       Get Value   //input[@name="${PROD_NAME_LABEL}"]
+    Set Task Variable     ${product_suite}
 
 
 
@@ -428,10 +433,15 @@ Product Brand
     Run Keyword If      "${product_brand}"!="${EMPTY}"  Run Keywords
     ...     Wait Until Element Is Visible   ${PROD_BRAND_LOC}
     ...     AND     Input Text      ${PROD_BRAND_LOC}       ${product_brand}
+    ${brand_suite}=     Get Value   id:case_prd_brand
+    Set Global Variable     ${brand_suite}
+
 
 Product Model
     [Arguments]     ${product_model}=${EMPTY}
     Run Keyword If  "${product_model}"!="${EMPTY}"  Input Text      ${PROD_MODEL_LOC}   ${product_model}
+    ${model_suite}=     Get Value   id:case_prd_model
+    Set Task Variable     ${model_suite}
 
 Delivery Date
     [Arguments]     ${delivery_date}=${EMPTY}
@@ -469,15 +479,21 @@ Sent Product Date
 Verify Results After Create
     [Arguments]       ${case_type}   ${remove_case}     ${status}   ${priority}     ${waiting}
     ...               ${responsible}    ${partner_account}  ${case_open_date}   ${partner_contact}
-    ...               ${case_close_date}   ${closed_reason}   ${plan_due_date}  ${solution}
+    ...               ${case_close_date}   ${closed_reason}   ${plan_due_date}  ${solution}     ${prevention}
+    ...               ${description}  ${contact_name}  ${contact_mobile}  ${contact_email}  ${project}
+    ...               ${account_name}  ${delivery_date}  ${warranty}  ${warranty_active_date}  ${check_product_date}
+    ...               ${warranty_expired_date}  ${check_product_date}   ${product_name}
     Sleep  1
-    ${current_date}=    Get Current Date    result_format=%d-%m-%Y %H:%M
+    ${current_date}=    Get Current Date    result_format=%d-%m-%Y
     Log     ${current_date}
     ${web}=     Get WebElements    //tr/td[2][@class="dvtCellInfo"]
     Log     ${web}
     ${get_id}=  Get Text  //tr/td[2][@class="dvtCellInfo"]
     ${convert}=     Convert To String   ${get_id}
     Log  ${convert}
+    ##########################################################################################
+    #Case Information
+    ##########################################################################################
     #Case No
     Table Row Should Contain    //tr/td[2]      1       ${convert}
     #Case Type
@@ -511,6 +527,89 @@ Verify Results After Create
     ...     Table Row Should Contain    //tr[8]/td[4]   8       ${closed_reason}
     #Plan Due Date
     Verify Result Date Calendar    //tr[9]/td[2]   9    ${plan_due_date}
-    #Solution and Answer
-    Table Row Should Contain    //tr[3]/td/div[@id="comments_div"]   3      ${solution}
-
+    #####################################################################################################
+    #Decription Information
+    #####################################################################################################
+#    #Solution and Answer
+#    Scroll Element Into View    //tr[3]/td/div[@id="comments_div"]
+#    Table Row Should Contain    //tr[3]/td/div[@id="comments_div"]   3      ${solution}
+#    #Description
+#    Scroll Element Into View    //td[2]/span[@id="dtlview_Description"]
+#    Table Row Should Contain    //td[2]/span[@id="dtlview_Description"]     2   ${description}
+#    #Prevention
+#    Scroll Element Into View    //td[2]/span[@id="dtlview_Prevention (วิธีการป้องกัน)"]
+#    Table Row Should Contain    //td[2]/span[@id="dtlview_Prevention (วิธีการป้องกัน)"]     2    ${prevention}
+    #####################################################################################################
+    #Customer Information
+    #####################################################################################################
+    #Contact Name
+    Scroll Down Page From The Browser
+    Table Should Contain    //div[@id="tblCustomerInformation"]/table/tbody/tr/td[2]    ${contact_name}
+    ${get_text}=    Get Text    //div[@id="tblCustomerInformation"]/table/tbody/tr/td[2]
+    ${remove}=  Remove String    ${get_text}    -
+    ${strip}=   Strip String    ${remove}${SPACE}
+    Should Be Equal       ${strip}  ${contact_name}
+    #Contact Mobile
+    Wait Until Element Is Visible     //span[@id="dtlview_Contact Mobile"][contains(text(), "${contact_mobile}")]
+    ${mobile_text}=     Get Text    //span[@id="dtlview_Contact Mobile"]
+    Should Be Equal    ${mobile_text}    ${contact_mobile}
+    #Contact E-mail
+    Table Should Contain     //div[@id="tblCustomerInformation"]/table/tbody/tr[3]/td[2]    ${contact_email}
+    ${get_email}=   Get Text    //div[@id="tblCustomerInformation"]/table/tbody/tr[3]/td[2]
+    Should Be Equal    ${get_email}   ${contact_email}
+    #Project Name
+    Table Should Contain     //td[@id="mouseArea_Project Name"]      ${project}
+    ${text_project}=     Get Text    //td[@id="mouseArea_Project Name"]
+    Should Be Equal    ${text_project}    ${project}
+    #Account Name
+    Wait Until Element Is Visible    //div[@id="tblCustomerInformation"]/table/tbody/tr[2]/td[4][contains(text(), "${account_name}")]
+    ${get_account}=     Get Text    //div[@id="tblCustomerInformation"]/table/tbody/tr[2]/td[4]
+    Should Be Equal   ${get_account}   ${account_name}
+    #####################################################################################################
+    #Production Informatin
+    #####################################################################################################
+    #Serial Name
+    Element Should Contain     //div[@id="tblProductInformation"]/table/tbody/tr[1]/td[2]         ${suite}
+    ${get_serial}=      Get Text    //div[@id="tblProductInformation"]/table/tbody/tr[1]/td[2]
+    Should Be Equal      ${get_serial}  ${suite}
+    #Product Name
+    Element Should Contain    //div[@id="tblProductInformation"]/table/tbody/tr[1]/td[4]/a      ${product_suite}
+    ${get_product_name}=    Get Text    //div[@id="tblProductInformation"]/table/tbody/tr[1]/td[4]/a
+    Should Be Equal     ${get_product_name}     ${product_suite}
+    #Product Brand
+    Element Should Contain   //div[@id="tblProductInformation"]/table/tbody/tr[2]/td[2]   ${brand_suite}
+    ${get_brand}=   Get Text    //div[@id="tblProductInformation"]/table/tbody/tr[2]/td[2]
+    Should Be Equal      ${get_brand}   ${brand_suite}
+    #Product Model
+    Element Should Contain        //div[@id="tblProductInformation"]/table/tbody/tr[2]/td[4]      ${model_suite}
+    ${get_model}=   Get Text    //div[@id="tblProductInformation"]/table/tbody/tr[2]/td[4]
+    Should Be Equal    ${get_model}     ${model_suite}
+    #Delivery Date
+    ${replace}=     Replace String   ${delivery_date}   /   -
+    Element Should Contain        //div[@id="tblProductInformation"]/table/tbody/tr[3]/td[2]  ${replace}
+    ${get_delivery_date}=       Get Text    //div[@id="tblProductInformation"]/table/tbody/tr[3]/td[2]
+    Should Be Equal     ${get_delivery_date}    ${replace}
+    #Warranty
+    Run Keyword If  Element Should Contain    //div[@id="tblProductInformation"]/table/tbody/tr[3]/td[4]    --${warranty}--
+    ${get_warranty}=    Get Text  //div[@id="tblProductInformation"]/table/tbody/tr[3]/td[4]
+    Should Be Equal  ${get_warranty}  --${warranty}--
+    #Warranty Active Date
+    ${replace}=     Replace String   ${warranty_active_date}   /   -
+    Element Should Contain    //div[@id="tblProductInformation"]/table/tbody/tr[4]/td[2]  ${replace}
+    ${get_warranty_active}=     Get Text    //div[@id="tblProductInformation"]/table/tbody/tr[4]/td[2]
+    Should Be Equal     ${get_warranty_active}   ${replace}
+    #Check Product Date
+    ${replace}=     Replace String   ${check_product_date}   /   -
+    Element Should Contain    //div[@id="tblProductInformation"]/table/tbody/tr[4]/td[4]  ${replace}
+    ${get_check_product}=   Get Text    //div[@id="tblProductInformation"]/table/tbody/tr[4]/td[4]
+    Should Be Equal         ${get_check_product}    ${replace}
+    #Warranty Active Date
+    ${replace}=     Replace String   ${warranty_expired_date}   /   -
+    Element Should Contain    //div[@id="tblProductInformation"]/table/tbody/tr[5]/td[2]    ${replace}
+    ${get_expired_date}=    Get Text    //div[@id="tblProductInformation"]/table/tbody/tr[5]/td[2]
+    Should Be Equal     ${get_expired_date}     ${replace}
+    #Sent Product Date
+    ${replace}=     Replace String   ${check_product_date}   /   -
+    Element Should Contain    //div[@id="tblProductInformation"]/table/tbody/tr[5]/td[4]      ${replace}
+    ${get_check_product}=   Get Text    //div[@id="tblProductInformation"]/table/tbody/tr[5]/td[4]
+    Should Be Equal     ${get_check_product}    ${replace}
