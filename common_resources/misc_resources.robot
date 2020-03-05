@@ -181,9 +181,9 @@ Verify Deleted Information
 
 Verify Result Date Calendar
     [Documentation]   Verify the result of Calendar information.Should Be in a Calendar format(ex. 28-02-2020)
-    [Arguments]     ${locator}   ${row_number}   ${string_to_be_verified}
+    [Arguments]     ${locator}   ${string_to_be_verified}
     ${string_verified}=   Replace String      ${string_to_be_verified}  /   -
-    Table Row Should Contain    ${locator}   ${row_number}   ${string_verified}
+    Element Should Contain    ${locator}   ${string_verified}
 
 Enter Date Calendar Text
     [Documentation]    Calendar Text for optional informations like Case module:("Case Open Date").
@@ -193,6 +193,13 @@ Enter Date Calendar Text
     Input Text      ${locator}      ${calendar_text}    ${clear}
     ${replace}=     Replace String       ${calendar_text}   /    -
     Input Text      ${locator}      ${replace}      ${clear}
+
+#Upload Image
+#    [Documentation]     This function is to Upload Image. (For Single Upload Image File Only).
+#    [Arguments]     ${image_file}=${EMPTY}      ${locator}
+#    Run Keyword If      "${image_file}"!="${EMPTY}"     Run Keywords    Click Element    ${locator}
+#    ...     AND     Wait Until Element Is Visible   ${image_file}
+
 
 Click Save Footer Button
     [Documentation]     This function is the save button located at the footer area

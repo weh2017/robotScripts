@@ -102,7 +102,7 @@ Perform Create Sales Visit All Informations
     ${contents}=    Get File        ${csv}
     @{read}=    Create List     ${contents}
     @{lines}=   Split To Lines      @{read}     1
-    :FOR    ${line}     IN      @{lines} + 1
+    :FOR    ${line}     IN      @{lines}
     \   ${current_date}=   Get Current Date    result_format=%H:%M:%S
     \   ${end_variable}=   Set Variable    ${current_date}
     \   ${adjust}=      Add Time To Time    ${end_variable}     1 hour

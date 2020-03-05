@@ -1,5 +1,5 @@
 *** Settings ***
-Library     Selenium2Library
+Library     SeleniumLibrary
 Library     OperatingSystem
 Library     String   
 Library     DateTime
@@ -14,11 +14,13 @@ Suite Setup     Open Chrome Browser
 #Suite Teardown  Close Browser
 
 *** Variables ***
+${IMAGE_PATH}               C://Users/ruela/Documents/robotScripts/AISCRM/create_case_module/resources/images
 ${CUSTOMER_SERVICE}         Customer Service
 ${CASE_STRING}              Case
 ${CASE_TXTBOX}              name:ticket_title
 ${PRIORITY_LOC}             ticket_important
 ${CASE_TYPE_LOC}            ticket_type
+${CHANNEL_LOC}              channel
 ${STATUS_LOC}               ticketstatus
 ${PROJECT_LOC}              project_no
 ${PROJECT_ADD_BTN}          //td[4]//table[1]//tbody[1]//tr[1]//td[3]//img[1]
@@ -27,7 +29,7 @@ ${NAME_SEARCH_FIELD}        project_name
 ${CASE_OPEN_LOC}            name:case_open_date
 ${CASE_CLOSE_LOC}           name:cf_4616
 ${CASE_PLAN_LOC}            name:case_date
-${WAITING_FOR_LOC}          cf_4583
+${WAITING_FOR_LOC}          waiting_for
 ${PART_ACCOUNT_LOC}         ticket_del_name
 ${PARTNER_CONTACT_LOC}      id:cf_4614
 ${CLOSED_REASON_LOC}        cf_4681
@@ -62,21 +64,20 @@ ${CHECK_PRODUCT_LOC}        name:case_daterecieve
 ${WARRANTY_EXPIRED_LOC}     name:case_end_date
 ${SENT_PRODUCT_LOC}         name:case_datesent
 ${ALL_CONTACTS_BTN}         id:all_contacts
+${UPLOAD_IMAGE_LOC}         //input[@type="file"]
 *** Test Cases ***
 AIS-CRM Website
-    Launch Web System   ${URL_2}
+    Launch Web System   ${URL}
 
 # Log-In User with Valid Username And Password
     [Tags]  User credentials
     Input Username             ${USER}
     Input User's Password      ${PASS}
     Click Login button
-    
+
 
 Select Customer Service
     Select Menu                             ${CUSTOMER_SERVICE}
-    Select Dropdown Option From Menu        ${CASE_STRING}
-    Click Button To Create Page             ${CASE_STRING}
 
 Create Case Data Informations
     Case Data Informations      ALL     ${CURDIR}${/}create_case_module.csv
@@ -87,7 +88,9 @@ Case Data Informations
     ${contents}=    Get File    ${csv}
     @{read}=    Create List     ${contents}
     @{lines}=   Split To Lines      @{read}     1
-    :FOR    ${line}    IN          @{lines} + 1
+    :FOR    ${line}    IN          @{lines} + 2
+    \   Select Dropdown Option From Menu        ${CASE_STRING}
+    \   Click Button To Create Page             ${CASE_STRING}
     \   @{bm}=      Split String    ${line}     |
     # Case Name
     \   ${case_name}=   Set Variable    @{bm}[0]
@@ -132,64 +135,68 @@ Case Data Informations
     # Closed Reason
     \   ${strip_closed}=            Set Variable    @{bm}[13]
     \   ${closed_reason}=           Strip String    ${strip_closed}${SPACE}
+    # Channel
+    \   ${strip_channel}=           Set Variable    @{bm}[14]
+    \   ${channel}=                 Strip String    ${strip_channel}${SPACE}
     # Description
-    \   ${strip_description}=       Set Variable    @{bm}[14]
+    \   ${strip_description}=       Set Variable    @{bm}[15]
     \   ${description}=             Strip String    ${strip_description}${SPACE}
     # Solution
-    \   ${strip_solution}=          Set Variable    @{bm}[15]
+    \   ${strip_solution}=          Set Variable    @{bm}[16]
     \   ${solution}=                Strip String    ${strip_solution}${SPACE}
     # Prevention
-    \   ${strip_prevent}=           Set Variable    @{bm}[16]
+    \   ${strip_prevent}=           Set Variable    @{bm}[17]
     \   ${prevention}=              Strip String    ${strip_prevent}${SPACE}
     # Contact Name
-    \   ${strip_contact_name}=      Set Variable    @{bm}[17]
+    \   ${strip_contact_name}=      Set Variable    @{bm}[18]
     \   ${contact_name}=            Strip String    ${strip_contact_name}${SPACE}
     # Contact Mobile
-    \   ${strip_contact_mobile}=    Set Variable    @{bm}[18]
+    \   ${strip_contact_mobile}=    Set Variable    @{bm}[19]
     \   ${contact_mobile}=          Strip String    ${strip_contact_mobile}${SPACE}
     # Contact E-mail
-    \   ${strip_contact_email}=     Set Variable    @{bm}[19]
+    \   ${strip_contact_email}=     Set Variable    @{bm}[20]
     \   ${contact_email}=           Strip String    ${strip_contact_email}${SPACE}
     # Product Name
-    \   ${strip_product_name}=      Set Variable    @{bm}[20]
+    \   ${strip_product_name}=      Set Variable    @{bm}[21]
     \   ${product_name}=            Strip String    ${strip_product_name}${SPACE}
     # Serial Name
-    \   ${strip_serial_name}=       Set Variable    @{bm}[21]
+    \   ${strip_serial_name}=       Set Variable    @{bm}[22]
     \   ${serial_name}=             Strip String    ${strip_serial_name}${SPACE}
     # Product Brand
-    \   ${strip_product_brand}=     Set Variable    @{bm}[22]
+    \   ${strip_product_brand}=     Set Variable    @{bm}[23]
     \   ${product_brand}=           Strip String    ${strip_product_brand}${SPACE}
     # Product Model
-    \   ${strip_product_model}=     Set Variable    @{bm}[23]
+    \   ${strip_product_model}=     Set Variable    @{bm}[24]
     \   ${product_model}=           Strip String    ${strip_product_model}${SPACE}
     # Delivery Date
-    \   ${strip_delivery_date}=     Set Variable    @{bm}[24]
+    \   ${strip_delivery_date}=     Set Variable    @{bm}[25]
     \   ${delivery_date}=           Strip String   ${strip_delivery_date}${SPACE}
     # Warranty
-    \   ${strip_warranty}=           Set Variable    @{bm}[25]
+    \   ${strip_warranty}=           Set Variable    @{bm}[26]
     \   ${warranty}=                 Strip String    ${strip_warranty}${SPACE}
     # Warranty Active Date
-    \   ${strip_warranty_active}=    Set Variable    @{bm}[26]
+    \   ${strip_warranty_active}=    Set Variable    @{bm}[27]
     \   ${warranty_active_date}=     Strip String    ${strip_warranty_active}${SPACE}
     # Check Product Date
-    \   ${strip_check_prod}=         Set Variable    @{bm}[27]
+    \   ${strip_check_prod}=         Set Variable    @{bm}[28]
     \   ${check_product_date}=       Strip String    ${strip_check_prod}${SPACE}
     # Warranty Expired Date
-    \   ${strip_warranty_expired}=   Set Variable    @{bm}[28]
+    \   ${strip_warranty_expired}=   Set Variable    @{bm}[29]
     \   ${warranty_expired_date}=    Strip String    ${strip_warranty_expired}${SPACE}
     # Sent Product Date
-    \   ${strip_sent_prod_date}=     Set Variable    @{bm}[29]
+    \   ${strip_sent_prod_date}=     Set Variable    @{bm}[30]
     \   ${sent_product_date}=        Strip String    ${strip_sent_prod_date}${SPACE}
     \   Run Keyword If   '${data}'=='ALL'    Enter Case Information
-    ...         ${remove_case}  ${priority}  ${responsible}  ${case_type}  ${status}  ${closed_reason}
+    ...         ${remove_case}  ${priority}  ${responsible}  ${case_type}  ${status}  ${channel}  ${closed_reason}
     ...         ${account_name}  ${project}  ${case_open_date}  ${case_close_date}  ${plan_due_date}
     ...         ${waiting}  ${partner_account}  ${partner_contact}  ${description}  ${solution}
     ...         ${prevention}  ${contact_name}  ${contact_mobile}  ${contact_email}  ${serial_name}
     ...         ${product_name}  ${product_brand}  ${product_model}  ${delivery_date}  ${warranty}
     ...         ${warranty_active_date}  ${check_product_date}  ${warranty_expired_date}  ${sent_product_date}
+    \   Scroll Up Page From The Browser
 
 Enter Case Information
-    [Arguments]  ${remove_case}  ${priority}  ${responsible}  ${case_type}  ${status}   ${closed_reason}
+    [Arguments]  ${remove_case}  ${priority}  ${responsible}  ${case_type}  ${status}  ${channel}   ${closed_reason}
     ...         ${account_name}  ${project}  ${case_open_date}  ${case_close_date}  ${plan_due_date}
     ...         ${waiting}  ${partner_account}  ${partner_contact}  ${description}  ${solution}
     ...         ${prevention}  ${contact_name}  ${contact_mobile}  ${contact_email}  ${serial_name}
@@ -200,6 +207,7 @@ Enter Case Information
     Responsible Person              ${responsible}
     Case Type                       ${case_type}
     Status                          ${status}
+    Channel                         ${channel}
     Account Name                    ${account_name}
     Project Name                    ${project}
     Case Open Date                  ${case_open_date}
@@ -227,12 +235,12 @@ Enter Case Information
     Scroll Up Page From The Browser
     Pause Execution
     Click Save Header Button
-    Verify Results After Create      ${case_type}   ${remove_case}     ${status}   ${priority}     ${waiting}
+    Verify Results After Create      ${case_type}   ${remove_case}  ${status}  ${channel}   ${priority}     ${waiting}
     ...               ${responsible}    ${partner_account}  ${case_open_date}   ${partner_contact}
     ...               ${case_close_date}   ${closed_reason}   ${plan_due_date}  ${solution}     ${prevention}
     ...               ${description}  ${contact_name}  ${contact_mobile}  ${contact_email}  ${project}
     ...               ${account_name}  ${delivery_date}  ${warranty}  ${warranty_active_date}  ${check_product_date}
-    ...               ${warranty_expired_date}  ${check_product_date}   ${product_name}
+    ...               ${warranty_expired_date}  ${sent_product_date}   ${product_name}
 Case Name
     [Arguments]     ${remove_case}
     Input Data To TextBox   ${CASE_TXTBOX}      ${remove_case}
@@ -248,17 +256,15 @@ Responsible Person
     [Arguments]     ${responsible}
 #    Set Selenium Speed   0.5
     ${xpath_user}=   Get Element Count    //select[@name="assigned_user_id"]/option[contains(text(), "${responsible}")]
-    ${xpath_group}=     Get Element Count     //select[@name="assigned_group_id"]/option[contains(text(), "${responsible}")]
+    ${xpath_group}=    Get Element Count     //select[@name="assigned_group_id"]/option[contains(text(), "${responsible}")]
 
     Run Keyword And Return If  ${xpath_user}    Run Keywords     Select Radio Button   assigntype    U
     ...   AND     Click Element      //select[@name="assigned_user_id"]/option[contains(text(), "${responsible}")]
-    ...   AND     Element Text Should Be     //select[@name="assigned_user_id"]/option[contains(text(), "${responsible}")]
-    ...     ${responsible}
+#    ...   AND     Wait Until Element Contains     //select[@name="assigned_user_id"]/option[contains(text(), "${responsible}")]
     Run Keyword And Return If  ${xpath_group}   Run Keywords     Select Radio Button   assigntype    T
     ...   AND     Wait Until Element Is Visible   //select[@name="assigned_group_id"]/option[contains(text(), "${responsible}")]
     ...   AND     Click Element       //select[@name="assigned_group_id"]/option[contains(text(), "${responsible}")]
-    ...   AND     Element Text Should Be     //select[@name="assigned_group_id"]/option[contains(text(), "${responsible}")]
-    ...     ${responsible}
+    Page Should Contain     ${responsible}
 Case Type
     [Arguments]     ${case_type}
     ${ticket}=      Get Web Elements        //select[@name="ticket_type"]
@@ -333,7 +339,9 @@ Waiting For
     ${wait_for}=    Get Web Elements    //select[@name="${WAITING_FOR_LOC}"]      #Get Web Elements is extract text or strings
     :FOR   ${item}  IN    @{wait_for}
     \   Log  ${item.text}
-    Click Element   //select[@name="${WAITING_FOR_LOC}"]/option[@value=contains(text(), "${waiting}")]
+    Run Keyword If  "${waiting}"=="${EMPTY}"    Click Element   //select[@name="${WAITING_FOR_LOC}"]/option[@value="--None--"]
+    ...     ELSE IF     "${waiting}"=="None"    Click Element   //select[@name="${WAITING_FOR_LOC}"]/option[@value="--${waiting}--"]
+    ...     ELSE    Select Option From Dropdown List    ${WAITING_FOR_LOC}      ${waiting}
 Partner Account
     [Arguments]     ${partner_account}
     ${case_part_acc}=   Get Web Elements  //select[@name="${PART_ACCOUNT_LOC}"]
@@ -348,6 +356,14 @@ Closed Reason
     ${closed_reason_list}=  Get Web Elements     //select[@name="${CLOSED_REASON_LOC}"]
     :FOR  ${item}  IN   @{closed_reason_list}
     \   Log     ${item.text}
+
+Channel
+    [Arguments]   ${channel}
+    ${chan}=   Get Web Elements    //select[@name="channel"]
+    :FOR  ${item}   IN  @{chan}
+    \   Log     ${item.text}
+    Run Keyword If  "${channel}"=="None"   Click Element   //select[@name="channel"]/option[@value="--${channel}--"]
+    ...     ELSE    Select Option From Dropdown List    ${CHANNEL_LOC}     ${channel}
 
 Description
     [Arguments]  ${description}=${EMPTY}
@@ -476,13 +492,17 @@ Sent Product Date
     Run Keyword If  "${sent_product_date}"!="${EMPTY}"
     ...     Enter Date Calendar Text   ${SENT_PRODUCT_LOC}     ${sent_product_date}     clear=True
 
+#Case Image
+#    [Arguments]     ${case_image}
+#    Upload Image    ${UPLOAD_IMAGE_LOC}        //input[@value="${case_image}"]       ${case_image}
+
 Verify Results After Create
-    [Arguments]       ${case_type}   ${remove_case}     ${status}   ${priority}     ${waiting}
+    [Arguments]       ${case_type}   ${remove_case}     ${status}  ${channel}   ${priority}     ${waiting}
     ...               ${responsible}    ${partner_account}  ${case_open_date}   ${partner_contact}
     ...               ${case_close_date}   ${closed_reason}   ${plan_due_date}  ${solution}     ${prevention}
     ...               ${description}  ${contact_name}  ${contact_mobile}  ${contact_email}  ${project}
     ...               ${account_name}  ${delivery_date}  ${warranty}  ${warranty_active_date}  ${check_product_date}
-    ...               ${warranty_expired_date}  ${check_product_date}   ${product_name}
+    ...               ${warranty_expired_date}  ${sent_product_date}   ${product_name}
     Sleep  1
     ${current_date}=    Get Current Date    result_format=%d-%m-%Y
     Log     ${current_date}
@@ -495,70 +515,90 @@ Verify Results After Create
     #Case Information
     ##########################################################################################
     #Case No
-    Table Row Should Contain    //tr/td[2]      1       ${convert}
-    #Case Type
-    Table Row Should Contain    //tr/td[4]      1       ${case_type}
-    # Modified Time
-    Table Row Should Contain    //tr[2]/td[2]   2       ${current_date}
-    #Created Time
-    Table Row Should Contain    //tr[2]/td[4]   2       ${current_date}
-    #Created By
-    Table Row Should Contain    //tr[3]/td[4]   3       ${USER_FULL_NAME}
+    Element Should Contain                      //tr/td[@class="dvtCellInfo"]  ${convert}
     #Case Name
-    Table Row Should Contain    //tr[4]/td[2]   4       ${remove_case}
-    #Status
-    Table Row Should Contain    //tr[4]/td[4]   4       ${status}
+    Element Should Contain                     //td[@class="dvtCellInfo"]/span[@id="dtlview_Case Name"]       ${remove_case}
     #Priority
-    Table Row Should Contain    //tr[5]/td[2]   5       ${priority}
-    #Waiting For
-    Table Row Should Contain    //tr[5]/td[4]   5       ${waiting}
+    Element Should Contain                      //div[@id="tblCaseInformation"]//tr[3]/td[2]/font     ${priority}
     #Responsible Person
-    Table Row Should Contain    //tr[6]/td[2]   6       ${responsible}
-    #Partner Account
-    Table Row Should Contain    //tr[6]/td[4]   6       ${partner_account}
-    #Case Open Date
-    Verify Result Date Calendar   //tr[7]/td[2]   7     ${case_open_date}
-    #Partner Contact
-    Table Row Should Contain    //tr[7]/td[4]   7       ${partner_contact}
-    #Case Close Date
-    Verify Result Date Calendar    //tr[8]/td[2]   8    ${case_close_date}
-    #Closed Reason
-    Run Keyword If   "${closed_reason}"!="${None}"
-    ...     Table Row Should Contain    //tr[8]/td[4]   8       ${closed_reason}
+    Element Should Contain                      //div[@id="tblCaseInformation"]//tr[4]/td[@class="dvtCellInfo"]/a     ${responsible}
     #Plan Due Date
-    Verify Result Date Calendar    //tr[9]/td[2]   9    ${plan_due_date}
+    ${remove_dash_due}=     Replace String    ${plan_due_date}    /   -
+    Verify Result Date Calendar               //div[@id="tblCaseInformation"]//tr[5]/td[@class="dvtCellInfo"][contains(text(), "${remove_dash_due}")]      ${remove_dash_due}
+    ${get_plan_due_date}=       Get Text      //div[@id="tblCaseInformation"]//tr[5]/td[@class="dvtCellInfo"][contains(text(), "${remove_dash_due}")]
+    Log    ${get_plan_due_date}
+    #Case Close Date
+    ${remove_dash_close}=   Replace String      ${case_close_date}  /   -
+    Verify Result Date Calendar               //div[@id="tblCaseInformation"]//tr[6]/td[2][contains(text(), "${remove_dash_close}")]  ${remove_dash_close}
+    ${get_close_date}=      Get Text          //div[@id="tblCaseInformation"]//tr[6]/td[2][contains(text(), "${remove_dash_close}")]
+    Log  ${get_close_date}
+    #Case Open Date
+    ${remove_dash_open}=       Replace String      ${case_open_date}   /   -
+    Verify Result Date Calendar             //div[@id="tblCaseInformation"]//tr[7]/td[2][contains(text(), "${remove_dash_open}")]  ${remove_dash_open}
+    ${get_open_date}=       Get Text        //div[@id="tblCaseInformation"]//tr[7]/td[2][contains(text(), "${remove_dash_open}")]
+    Log   ${get_open_date}
+    #Created Time
+    Element Should Contain                  //div[@id="tblCaseInformation"]//tr[8]/td[2]    ${current_date}
+
+    #Created By
+    Element Should Contain           //div[@id="tblCaseInformation"]//tr[9]/td[2]        ${USER_FULL_NAME}
+    #Case Type
+    Wait Until Element Is Visible           //div[@id="tblCaseInformation"]//tr/td[4]/font[contains(text(), "${case_type}")]
+    ${get_case_type}=       Get Text        //div[@id="tblCaseInformation"]//tr/td[4]/font[contains(text(), "${case_type}")]
+    Log     ${get_case_type}
+    #Status
+    Wait Until Element Is Visible           //div[@id="tblCaseInformation"]//tr[2]/td[4]/font[contains(text(), "${status}")]
+    #Waiting For
+    Run Keyword If  "${waiting}"=="None"    Wait Until Element Is Visible
+    ...     //div[@id="tblCaseInformation"]//tr[3]/td[4]/font[contains(text(), "--${waiting}--")]
+    ...     ELSE    Wait Until Element Is Visible      //div[@id="tblCaseInformation"]//tr[3]/td[4]/font[contains(text(), "${waiting}")]
+    #Partner Account
+    Wait Until Element Is Visible           //div[@id="tblCaseInformation"]//tr[4]/td[4]/font[contains(text(), "${partner_account}")]
+
+    #Partner Contact
+    Wait Until Element Is Visible           //div[@id="tblCaseInformation"]//tr[5]/td[4]/span[contains(text(), "${partner_contact}")]
+    #Closed Reason
+    Run Keyword If   "${closed_reason}"!="None"
+    ...     Wait Until Element Is Visible      //div[@id="tblCaseInformation"]//tr[6]/td[4]/font[contains(text(), "${closed_reason}")]
+    # Modified Time
+    Wait Until Element Is Visible    //div[@id="tblCaseInformation"]//tr[7]/td[4][contains(text(), "${current_date}")]
+#    #Modified By
+#    Wait Until Element Is Visible    //div[@id="tblCaseInformation"]//tr[8]/td[4]/font[contains(text(), "${current_date}")]
+
+    #Channel
+    Wait Until Element Is Visible       //div[@id="tblCaseInformation"]//tr[9]/td[4]/font[contains(text(), "${channel}")]
     #####################################################################################################
     #Decription Information
     #####################################################################################################
 #    #Solution and Answer
 #    Scroll Element Into View    //tr[3]/td/div[@id="comments_div"]
 #    Table Row Should Contain    //tr[3]/td/div[@id="comments_div"]   3      ${solution}
-#    #Description
-#    Scroll Element Into View    //td[2]/span[@id="dtlview_Description"]
-#    Table Row Should Contain    //td[2]/span[@id="dtlview_Description"]     2   ${description}
-#    #Prevention
-#    Scroll Element Into View    //td[2]/span[@id="dtlview_Prevention (วิธีการป้องกัน)"]
-#    Table Row Should Contain    //td[2]/span[@id="dtlview_Prevention (วิธีการป้องกัน)"]     2    ${prevention}
+    #Description
+    Scroll Element Into View    //div[@id="tblDescriptionInformation"]//tr/td[2]/span[@id="dtlview_Description"]
+    Element Should Contain      //div[@id="tblDescriptionInformation"]//tr/td[2]/span[@id="dtlview_Description"]     ${description}
+    #Prevention
+    Scroll Element Into View    //div[@id="tblDescriptionInformation"]//tr/td[2]/span[@id="dtlview_Prevention (วิธีการป้องกัน)"]
+    Element Should Contain    //div[@id="tblDescriptionInformation"]//tr/td[2]/span[@id="dtlview_Prevention (วิธีการป้องกัน)"]    ${prevention}
     #####################################################################################################
     #Customer Information
     #####################################################################################################
     #Contact Name
     Scroll Down Page From The Browser
-    Table Should Contain    //div[@id="tblCustomerInformation"]/table/tbody/tr/td[2]    ${contact_name}
-    ${get_text}=    Get Text    //div[@id="tblCustomerInformation"]/table/tbody/tr/td[2]
-    ${remove}=  Remove String    ${get_text}    -
-    ${strip}=   Strip String    ${remove}${SPACE}
-    Should Be Equal       ${strip}  ${contact_name}
+    Wait Until Element Is Visible    //div[@id="tblCustomerInformation"]//tr/td[2]/a[contains(text(), "${contact_name}")]
+    ${get_text}=    Get Text    //div[@id="tblCustomerInformation"]//tr/td[2]/a[contains(text(), "${contact_name}")]
+#    ${remove}=  Remove String    ${get_text}    -
+#    ${strip}=   Strip String    ${remove}${SPACE}
+#    Should Be Equal       ${strip}  ${contact_name}
     #Contact Mobile
     Wait Until Element Is Visible     //span[@id="dtlview_Contact Mobile"][contains(text(), "${contact_mobile}")]
     ${mobile_text}=     Get Text    //span[@id="dtlview_Contact Mobile"]
     Should Be Equal    ${mobile_text}    ${contact_mobile}
     #Contact E-mail
-    Table Should Contain     //div[@id="tblCustomerInformation"]/table/tbody/tr[3]/td[2]    ${contact_email}
+    Element Should Contain     //div[@id="tblCustomerInformation"]/table/tbody/tr[3]/td[2]    ${contact_email}
     ${get_email}=   Get Text    //div[@id="tblCustomerInformation"]/table/tbody/tr[3]/td[2]
     Should Be Equal    ${get_email}   ${contact_email}
     #Project Name
-    Table Should Contain     //td[@id="mouseArea_Project Name"]      ${project}
+    Element Should Contain     //td[@id="mouseArea_Project Name"]      ${project}
     ${text_project}=     Get Text    //td[@id="mouseArea_Project Name"]
     Should Be Equal    ${text_project}    ${project}
     #Account Name
@@ -569,47 +609,49 @@ Verify Results After Create
     #Production Informatin
     #####################################################################################################
     #Serial Name
-    Element Should Contain     //div[@id="tblProductInformation"]/table/tbody/tr[1]/td[2]         ${suite}
-    ${get_serial}=      Get Text    //div[@id="tblProductInformation"]/table/tbody/tr[1]/td[2]
+    Element Should Contain              //div[@id="tblProductInformation"]/table/tbody/tr[1]/td[2]         ${suite}
+    ${get_serial}=      Get Text        //div[@id="tblProductInformation"]/table/tbody/tr[1]/td[2]
     Should Be Equal      ${get_serial}  ${suite}
     #Product Name
-    Element Should Contain    //div[@id="tblProductInformation"]/table/tbody/tr[1]/td[4]/a      ${product_suite}
+    Wait Until Element Is Visible       //div[@id="tblProductInformation"]/table/tbody/tr[1]/td[4]/a[contains(text(), "${product_suite}")]
     ${get_product_name}=    Get Text    //div[@id="tblProductInformation"]/table/tbody/tr[1]/td[4]/a
-    Should Be Equal     ${get_product_name}     ${product_suite}
+    Log     ${get_product_name}
     #Product Brand
     Element Should Contain   //div[@id="tblProductInformation"]/table/tbody/tr[2]/td[2]   ${brand_suite}
     ${get_brand}=   Get Text    //div[@id="tblProductInformation"]/table/tbody/tr[2]/td[2]
-    Should Be Equal      ${get_brand}   ${brand_suite}
+    Log      ${get_brand}
     #Product Model
     Element Should Contain        //div[@id="tblProductInformation"]/table/tbody/tr[2]/td[4]      ${model_suite}
     ${get_model}=   Get Text    //div[@id="tblProductInformation"]/table/tbody/tr[2]/td[4]
-    Should Be Equal    ${get_model}     ${model_suite}
+    Log    ${get_model}
     #Delivery Date
     ${replace}=     Replace String   ${delivery_date}   /   -
     Element Should Contain        //div[@id="tblProductInformation"]/table/tbody/tr[3]/td[2]  ${replace}
     ${get_delivery_date}=       Get Text    //div[@id="tblProductInformation"]/table/tbody/tr[3]/td[2]
-    Should Be Equal     ${get_delivery_date}    ${replace}
+    Log     ${get_delivery_date}
     #Warranty
-    Run Keyword If  Element Should Contain    //div[@id="tblProductInformation"]/table/tbody/tr[3]/td[4]    --${warranty}--
+    Element Should Contain    //div[@id="tblProductInformation"]/table/tbody/tr[3]/td[4]    ${warranty}
     ${get_warranty}=    Get Text  //div[@id="tblProductInformation"]/table/tbody/tr[3]/td[4]
-    Should Be Equal  ${get_warranty}  --${warranty}--
+    Log  ${get_warranty}
+
+
     #Warranty Active Date
     ${replace}=     Replace String   ${warranty_active_date}   /   -
     Element Should Contain    //div[@id="tblProductInformation"]/table/tbody/tr[4]/td[2]  ${replace}
     ${get_warranty_active}=     Get Text    //div[@id="tblProductInformation"]/table/tbody/tr[4]/td[2]
-    Should Be Equal     ${get_warranty_active}   ${replace}
+    Log     ${get_warranty_active}
     #Check Product Date
     ${replace}=     Replace String   ${check_product_date}   /   -
     Element Should Contain    //div[@id="tblProductInformation"]/table/tbody/tr[4]/td[4]  ${replace}
     ${get_check_product}=   Get Text    //div[@id="tblProductInformation"]/table/tbody/tr[4]/td[4]
-    Should Be Equal         ${get_check_product}    ${replace}
+    Log         ${get_check_product}
     #Warranty Active Date
     ${replace}=     Replace String   ${warranty_expired_date}   /   -
     Element Should Contain    //div[@id="tblProductInformation"]/table/tbody/tr[5]/td[2]    ${replace}
     ${get_expired_date}=    Get Text    //div[@id="tblProductInformation"]/table/tbody/tr[5]/td[2]
-    Should Be Equal     ${get_expired_date}     ${replace}
+    Log     ${get_expired_date}
     #Sent Product Date
-    ${replace}=     Replace String   ${check_product_date}   /   -
+    ${replace}=     Replace String   ${sent_product_date}   /   -
     Element Should Contain    //div[@id="tblProductInformation"]/table/tbody/tr[5]/td[4]      ${replace}
     ${get_check_product}=   Get Text    //div[@id="tblProductInformation"]/table/tbody/tr[5]/td[4]
-    Should Be Equal     ${get_check_product}    ${replace}
+    Log    ${get_check_product}
