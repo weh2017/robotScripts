@@ -67,7 +67,7 @@ ${ALL_CONTACTS_BTN}         id:all_contacts
 ${UPLOAD_IMAGE_LOC}         //input[@type="file"]
 *** Test Cases ***
 AIS-CRM Website
-    Launch Web System   ${URL}
+    Launch Web System   ${URL_2}
 
 # Log-In User with Valid Username And Password
     [Tags]  User credentials
