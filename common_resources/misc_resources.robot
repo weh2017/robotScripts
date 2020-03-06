@@ -194,11 +194,12 @@ Enter Date Calendar Text
     ${replace}=     Replace String       ${calendar_text}   /    -
     Input Text      ${locator}      ${replace}      ${clear}
 
-#Upload Image
-#    [Documentation]     This function is to Upload Image. (For Single Upload Image File Only).
-#    [Arguments]     ${image_file}=${EMPTY}      ${locator}
-#    Run Keyword If      "${image_file}"!="${EMPTY}"     Run Keywords    Click Element    ${locator}
-#    ...     AND     Wait Until Element Is Visible   ${image_file}
+Upload Single Image
+    [Documentation]     This function is to Upload Image. (For Single Upload Image File Only).
+    [Arguments]     ${image_file}    ${verify}
+    Choose File    ${UPLOAD_IMAGE_LOC}      ${image_file}
+    Page Should Contain Element     ${verify}
+
 
 
 Click Save Footer Button
@@ -222,4 +223,5 @@ ${ERROR_LOGIN_MSG}          //font[contains(text(),'i')
 ${SEARCH_FIELD}             //select[@name="search_field"]
 ${SAVE_FOOTER_BTN}          //tr[27]/td/div/input[@title="Save [Alt+S]"]
 ${SAVE_HEADER_BTN}          //tr/td/div/input[@title="Save [Alt+S]"]
+${UPLOAD_IMAGE_LOC}         //input[@type="file"]
 

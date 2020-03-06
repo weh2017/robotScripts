@@ -64,7 +64,6 @@ ${CHECK_PRODUCT_LOC}        name:case_daterecieve
 ${WARRANTY_EXPIRED_LOC}     name:case_end_date
 ${SENT_PRODUCT_LOC}         name:case_datesent
 ${ALL_CONTACTS_BTN}         id:all_contacts
-${UPLOAD_IMAGE_LOC}         //input[@type="file"]
 *** Test Cases ***
 AIS-CRM Website
     Launch Web System   ${URL_2}
@@ -88,7 +87,7 @@ Case Data Informations
     ${contents}=    Get File    ${csv}
     @{read}=    Create List     ${contents}
     @{lines}=   Split To Lines      @{read}     1
-    :FOR    ${line}    IN          @{lines} + 2
+    :FOR    ${line}    IN          @{lines}
     \   Select Dropdown Option From Menu        ${CASE_STRING}
     \   Click Button To Create Page             ${CASE_STRING}
     \   @{bm}=      Split String    ${line}     |
@@ -186,13 +185,16 @@ Case Data Informations
     # Sent Product Date
     \   ${strip_sent_prod_date}=     Set Variable    @{bm}[30]
     \   ${sent_product_date}=        Strip String    ${strip_sent_prod_date}${SPACE}
+    # Case Upload Image
+    \   ${strip_img}=                Set Variable    @{bm}[31]
+    \   ${case_image}=               Strip String    ${strip_img}${SPACE}
     \   Run Keyword If   '${data}'=='ALL'    Enter Case Information
     ...         ${remove_case}  ${priority}  ${responsible}  ${case_type}  ${status}  ${channel}  ${closed_reason}
     ...         ${account_name}  ${project}  ${case_open_date}  ${case_close_date}  ${plan_due_date}
     ...         ${waiting}  ${partner_account}  ${partner_contact}  ${description}  ${solution}
     ...         ${prevention}  ${contact_name}  ${contact_mobile}  ${contact_email}  ${serial_name}
     ...         ${product_name}  ${product_brand}  ${product_model}  ${delivery_date}  ${warranty}
-    ...         ${warranty_active_date}  ${check_product_date}  ${warranty_expired_date}  ${sent_product_date}
+    ...         ${warranty_active_date}  ${check_product_date}  ${warranty_expired_date}  ${sent_product_date}  ${case_image}
     \   Scroll Up Page From The Browser
 
 Enter Case Information
@@ -201,46 +203,47 @@ Enter Case Information
     ...         ${waiting}  ${partner_account}  ${partner_contact}  ${description}  ${solution}
     ...         ${prevention}  ${contact_name}  ${contact_mobile}  ${contact_email}  ${serial_name}
     ...         ${product_name}  ${product_brand}  ${product_model}  ${delivery_date}  ${warranty}
-    ...         ${warranty_active_date}  ${check_product_date}  ${warranty_expired_date}  ${sent_product_date}
-    Case Name                       ${remove_case}
-    Priority Case                   ${priority}
-    Responsible Person              ${responsible}
-    Case Type                       ${case_type}
-    Status                          ${status}
-    Channel                         ${channel}
-    Account Name                    ${account_name}
-    Project Name                    ${project}
-    Case Open Date                  ${case_open_date}
-    Case Close Date                 ${case_close_date}
-    Plan Due Date                   ${plan_due_date}
-    Waiting For                     ${waiting}
-    Partner Contact                 ${partner_contact}
-    Description                     ${description}
-    Solution                        ${solution}
-    Prevention                      ${prevention}
-    Contact Name                    ${contact_name}
-    Contact Mobile                  ${contact_mobile}
-    Contact E-mail                  ${contact_email}
-    Product Name                    ${product_name}
-    Serial Name                     ${serial_name}
-    Product Brand                   ${product_brand}
-    Product Model                   ${product_model}
-    Delivery Date                   ${delivery_date}
-    Warranty                        ${warranty}
-    Warranty Active Date            ${warranty_active_date}
-    Check Product Date              ${check_product_date}
-    Warranty Expired Date           ${warranty_expired_date}
-    Sent Product Date               ${sent_product_date}
-    Partner Account                 ${partner_account}
-    Scroll Up Page From The Browser
+    ...         ${warranty_active_date}  ${check_product_date}  ${warranty_expired_date}  ${sent_product_date}  ${case_image}
+#    Case Name                       ${remove_case}
+#    Priority Case                   ${priority}
+#    Responsible Person              ${responsible}
+#    Case Type                       ${case_type}
+#    Status                          ${status}
+#    Channel                         ${channel}
+#    Account Name                    ${account_name}
+#    Project Name                    ${project}
+#    Case Open Date                  ${case_open_date}
+#    Case Close Date                 ${case_close_date}
+#    Plan Due Date                   ${plan_due_date}
+#    Waiting For                     ${waiting}
+#    Partner Contact                 ${partner_contact}
+#    Description                     ${description}
+#    Solution                        ${solution}
+#    Prevention                      ${prevention}
+#    Contact Name                    ${contact_name}
+#    Contact Mobile                  ${contact_mobile}
+#    Contact E-mail                  ${contact_email}
+#    Product Name                    ${product_name}
+#    Serial Name                     ${serial_name}
+#    Product Brand                   ${product_brand}
+#    Product Model                   ${product_model}
+#    Delivery Date                   ${delivery_date}
+#    Warranty                        ${warranty}
+#    Warranty Active Date            ${warranty_active_date}
+#    Check Product Date              ${check_product_date}
+#    Warranty Expired Date           ${warranty_expired_date}
+#    Sent Product Date               ${sent_product_date}
+#    Partner Account                 ${partner_account}
+    Case Upload Image               ${case_image}
+#    Scroll Up Page From The Browser
     Pause Execution
-    Click Save Header Button
-    Verify Results After Create      ${case_type}   ${remove_case}  ${status}  ${channel}   ${priority}     ${waiting}
-    ...               ${responsible}    ${partner_account}  ${case_open_date}   ${partner_contact}
-    ...               ${case_close_date}   ${closed_reason}   ${plan_due_date}  ${solution}     ${prevention}
-    ...               ${description}  ${contact_name}  ${contact_mobile}  ${contact_email}  ${project}
-    ...               ${account_name}  ${delivery_date}  ${warranty}  ${warranty_active_date}  ${check_product_date}
-    ...               ${warranty_expired_date}  ${sent_product_date}   ${product_name}
+#    Click Save Header Button
+#    Verify Results After Create      ${case_type}   ${remove_case}  ${status}  ${channel}   ${priority}     ${waiting}
+#    ...               ${responsible}    ${partner_account}  ${case_open_date}   ${partner_contact}
+#    ...               ${case_close_date}   ${closed_reason}   ${plan_due_date}  ${solution}     ${prevention}
+#    ...               ${description}  ${contact_name}  ${contact_mobile}  ${contact_email}  ${project}
+#    ...               ${account_name}  ${delivery_date}  ${warranty}  ${warranty_active_date}  ${check_product_date}
+#    ...               ${warranty_expired_date}  ${sent_product_date}   ${product_name}   #${case_image}
 Case Name
     [Arguments]     ${remove_case}
     Input Data To TextBox   ${CASE_TXTBOX}      ${remove_case}
@@ -363,6 +366,7 @@ Channel
     :FOR  ${item}   IN  @{chan}
     \   Log     ${item.text}
     Run Keyword If  "${channel}"=="None"   Click Element   //select[@name="channel"]/option[@value="--${channel}--"]
+    ...     ELSE IF     "${channel}"=="${EMPTY}"    Click Element   //select[@name="channel"]/option[@value="--None--"]
     ...     ELSE    Select Option From Dropdown List    ${CHANNEL_LOC}     ${channel}
 
 Description
@@ -470,6 +474,7 @@ Warranty
     :FOR    ${item}     IN      @{get_warranty}
     \   Log     ${item.text}
     Run Keyword If      "${warranty}"=="None"     Click Element     //select[@name="case_waranty"]/option[@value="--${warranty}--"]
+    ...     ELSE IF     "${warranty}"=="${EMPTY}"   Click Element   //select[@name="case_waranty"]/option[@value="--None--"]
     ...     ELSE    Select Option From Dropdown List    ${WARRANTY_DROPDOWN_LOC}        ${warranty}
 
 Warranty Active Date
@@ -492,9 +497,12 @@ Sent Product Date
     Run Keyword If  "${sent_product_date}"!="${EMPTY}"
     ...     Enter Date Calendar Text   ${SENT_PRODUCT_LOC}     ${sent_product_date}     clear=True
 
-#Case Image
-#    [Arguments]     ${case_image}
-#    Upload Image    ${UPLOAD_IMAGE_LOC}        //input[@value="${case_image}"]       ${case_image}
+Case Upload Image
+    [Arguments]      ${case_image}
+    Scroll Down Page From The Browser
+    Run Keyword If    "${case_image}"!="${EMPTY}"     Upload Single Image    ${IMAGE_PATH}/${case_image}
+    ...     //input[@value="${case_image}"]
+#    Choose File      ${UPLOAD_IMAGE_LOC}        ${IMAGE_PATH}/${case_image}
 
 Verify Results After Create
     [Arguments]       ${case_type}   ${remove_case}     ${status}  ${channel}   ${priority}     ${waiting}
@@ -515,13 +523,13 @@ Verify Results After Create
     #Case Information
     ##########################################################################################
     #Case No
-    Element Should Contain                      //tr/td[@class="dvtCellInfo"]  ${convert}
+    Element Should Contain                        //tr/td[@class="dvtCellInfo"]  ${convert}
     #Case Name
-    Element Should Contain                     //td[@class="dvtCellInfo"]/span[@id="dtlview_Case Name"]       ${remove_case}
+    Element Should Contain                        //td[@class="dvtCellInfo"]/span[@id="dtlview_Case Name"]       ${remove_case}
     #Priority
-    Element Should Contain                      //div[@id="tblCaseInformation"]//tr[3]/td[2]/font     ${priority}
+    Element Should Contain                        //div[@id="tblCaseInformation"]//tr[3]/td[2]/font     ${priority}
     #Responsible Person
-    Element Should Contain                      //div[@id="tblCaseInformation"]//tr[4]/td[@class="dvtCellInfo"]/a     ${responsible}
+    Element Should Contain                        //div[@id="tblCaseInformation"]//tr[4]/td[@class="dvtCellInfo"]/a     ${responsible}
     #Plan Due Date
     ${remove_dash_due}=     Replace String    ${plan_due_date}    /   -
     Verify Result Date Calendar               //div[@id="tblCaseInformation"]//tr[5]/td[@class="dvtCellInfo"][contains(text(), "${remove_dash_due}")]      ${remove_dash_due}
@@ -529,25 +537,25 @@ Verify Results After Create
     Log    ${get_plan_due_date}
     #Case Close Date
     ${remove_dash_close}=   Replace String      ${case_close_date}  /   -
-    Verify Result Date Calendar               //div[@id="tblCaseInformation"]//tr[6]/td[2][contains(text(), "${remove_dash_close}")]  ${remove_dash_close}
-    ${get_close_date}=      Get Text          //div[@id="tblCaseInformation"]//tr[6]/td[2][contains(text(), "${remove_dash_close}")]
+    Verify Result Date Calendar                 //div[@id="tblCaseInformation"]//tr[6]/td[2][contains(text(), "${remove_dash_close}")]  ${remove_dash_close}
+    ${get_close_date}=      Get Text            //div[@id="tblCaseInformation"]//tr[6]/td[2][contains(text(), "${remove_dash_close}")]
     Log  ${get_close_date}
     #Case Open Date
-    ${remove_dash_open}=       Replace String      ${case_open_date}   /   -
-    Verify Result Date Calendar             //div[@id="tblCaseInformation"]//tr[7]/td[2][contains(text(), "${remove_dash_open}")]  ${remove_dash_open}
-    ${get_open_date}=       Get Text        //div[@id="tblCaseInformation"]//tr[7]/td[2][contains(text(), "${remove_dash_open}")]
+    ${remove_dash_open}=       Replace String   ${case_open_date}   /   -
+    Verify Result Date Calendar                 //div[@id="tblCaseInformation"]//tr[7]/td[2][contains(text(), "${remove_dash_open}")]  ${remove_dash_open}
+    ${get_open_date}=       Get Text            //div[@id="tblCaseInformation"]//tr[7]/td[2][contains(text(), "${remove_dash_open}")]
     Log   ${get_open_date}
     #Created Time
-    Element Should Contain                  //div[@id="tblCaseInformation"]//tr[8]/td[2]    ${current_date}
+    Element Should Contain                      //div[@id="tblCaseInformation"]//tr[8]/td[2]    ${current_date}
 
     #Created By
-    Element Should Contain           //div[@id="tblCaseInformation"]//tr[9]/td[2]        ${USER_FULL_NAME}
+    Element Should Contain                      //div[@id="tblCaseInformation"]//tr[9]/td[2]        ${USER_FULL_NAME}
     #Case Type
-    Wait Until Element Is Visible           //div[@id="tblCaseInformation"]//tr/td[4]/font[contains(text(), "${case_type}")]
-    ${get_case_type}=       Get Text        //div[@id="tblCaseInformation"]//tr/td[4]/font[contains(text(), "${case_type}")]
+    Wait Until Element Is Visible               //div[@id="tblCaseInformation"]//tr/td[4]/font[contains(text(), "${case_type}")]
+    ${get_case_type}=       Get Text            //div[@id="tblCaseInformation"]//tr/td[4]/font[contains(text(), "${case_type}")]
     Log     ${get_case_type}
     #Status
-    Wait Until Element Is Visible           //div[@id="tblCaseInformation"]//tr[2]/td[4]/font[contains(text(), "${status}")]
+    Wait Until Element Is Visible               //div[@id="tblCaseInformation"]//tr[2]/td[4]/font[contains(text(), "${status}")]
     #Waiting For
     Run Keyword If  "${waiting}"=="None"    Wait Until Element Is Visible
     ...     //div[@id="tblCaseInformation"]//tr[3]/td[4]/font[contains(text(), "--${waiting}--")]
