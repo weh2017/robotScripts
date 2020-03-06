@@ -204,46 +204,46 @@ Enter Case Information
     ...         ${prevention}  ${contact_name}  ${contact_mobile}  ${contact_email}  ${serial_name}
     ...         ${product_name}  ${product_brand}  ${product_model}  ${delivery_date}  ${warranty}
     ...         ${warranty_active_date}  ${check_product_date}  ${warranty_expired_date}  ${sent_product_date}  ${case_image}
-#    Case Name                       ${remove_case}
-#    Priority Case                   ${priority}
-#    Responsible Person              ${responsible}
-#    Case Type                       ${case_type}
-#    Status                          ${status}
-#    Channel                         ${channel}
-#    Account Name                    ${account_name}
-#    Project Name                    ${project}
-#    Case Open Date                  ${case_open_date}
-#    Case Close Date                 ${case_close_date}
-#    Plan Due Date                   ${plan_due_date}
-#    Waiting For                     ${waiting}
-#    Partner Contact                 ${partner_contact}
-#    Description                     ${description}
-#    Solution                        ${solution}
-#    Prevention                      ${prevention}
-#    Contact Name                    ${contact_name}
-#    Contact Mobile                  ${contact_mobile}
-#    Contact E-mail                  ${contact_email}
-#    Product Name                    ${product_name}
-#    Serial Name                     ${serial_name}
-#    Product Brand                   ${product_brand}
-#    Product Model                   ${product_model}
-#    Delivery Date                   ${delivery_date}
-#    Warranty                        ${warranty}
-#    Warranty Active Date            ${warranty_active_date}
-#    Check Product Date              ${check_product_date}
-#    Warranty Expired Date           ${warranty_expired_date}
-#    Sent Product Date               ${sent_product_date}
-#    Partner Account                 ${partner_account}
+    Case Name                       ${remove_case}
+    Priority Case                   ${priority}
+    Responsible Person              ${responsible}
+    Case Type                       ${case_type}
+    Status                          ${status}
+    Channel                         ${channel}
+    Account Name                    ${account_name}
+    Project Name                    ${project}
+    Case Open Date                  ${case_open_date}
+    Case Close Date                 ${case_close_date}
+    Plan Due Date                   ${plan_due_date}
+    Waiting For                     ${waiting}
+    Partner Contact                 ${partner_contact}
+    Description                     ${description}
+    Solution                        ${solution}
+    Prevention                      ${prevention}
+    Contact Name                    ${contact_name}
+    Contact Mobile                  ${contact_mobile}
+    Contact E-mail                  ${contact_email}
+    Product Name                    ${product_name}
+    Serial Name                     ${serial_name}
+    Product Brand                   ${product_brand}
+    Product Model                   ${product_model}
+    Delivery Date                   ${delivery_date}
+    Warranty                        ${warranty}
+    Warranty Active Date            ${warranty_active_date}
+    Check Product Date              ${check_product_date}
+    Warranty Expired Date           ${warranty_expired_date}
+    Sent Product Date               ${sent_product_date}
+    Partner Account                 ${partner_account}
     Case Upload Image               ${case_image}
-#    Scroll Up Page From The Browser
     Pause Execution
-#    Click Save Header Button
-#    Verify Results After Create      ${case_type}   ${remove_case}  ${status}  ${channel}   ${priority}     ${waiting}
-#    ...               ${responsible}    ${partner_account}  ${case_open_date}   ${partner_contact}
-#    ...               ${case_close_date}   ${closed_reason}   ${plan_due_date}  ${solution}     ${prevention}
-#    ...               ${description}  ${contact_name}  ${contact_mobile}  ${contact_email}  ${project}
-#    ...               ${account_name}  ${delivery_date}  ${warranty}  ${warranty_active_date}  ${check_product_date}
-#    ...               ${warranty_expired_date}  ${sent_product_date}   ${product_name}   #${case_image}
+    Scroll Up Page From The Browser
+    Click Save Header Button
+    Verify Results After Create      ${case_type}   ${remove_case}  ${status}  ${channel}   ${priority}     ${waiting}
+    ...               ${responsible}    ${partner_account}  ${case_open_date}   ${partner_contact}
+    ...               ${case_close_date}   ${closed_reason}   ${plan_due_date}  ${solution}     ${prevention}
+    ...               ${description}  ${contact_name}  ${contact_mobile}  ${contact_email}  ${project}
+    ...               ${account_name}  ${delivery_date}  ${warranty}  ${warranty_active_date}  ${check_product_date}
+    ...               ${warranty_expired_date}  ${sent_product_date}   ${product_name}   #${case_image}
 Case Name
     [Arguments]     ${remove_case}
     Input Data To TextBox   ${CASE_TXTBOX}      ${remove_case}
@@ -502,7 +502,6 @@ Case Upload Image
     Scroll Down Page From The Browser
     Run Keyword If    "${case_image}"!="${EMPTY}"     Upload Single Image    ${IMAGE_PATH}/${case_image}
     ...     //input[@value="${case_image}"]
-#    Choose File      ${UPLOAD_IMAGE_LOC}        ${IMAGE_PATH}/${case_image}
 
 Verify Results After Create
     [Arguments]       ${case_type}   ${remove_case}     ${status}  ${channel}   ${priority}     ${waiting}
@@ -564,7 +563,7 @@ Verify Results After Create
     Wait Until Element Is Visible           //div[@id="tblCaseInformation"]//tr[4]/td[4]/font[contains(text(), "${partner_account}")]
 
     #Partner Contact
-    Wait Until Element Is Visible           //div[@id="tblCaseInformation"]//tr[5]/td[4]/span[contains(text(), "${partner_contact}")]
+    Element Should Contain       //div[@id="tblCaseInformation"]//tr[5]/td[4]/span      ${partner_contact}
     #Closed Reason
     Run Keyword If   "${closed_reason}"!="None"
     ...     Wait Until Element Is Visible      //div[@id="tblCaseInformation"]//tr[6]/td[4]/font[contains(text(), "${closed_reason}")]
@@ -598,13 +597,9 @@ Verify Results After Create
 #    ${strip}=   Strip String    ${remove}${SPACE}
 #    Should Be Equal       ${strip}  ${contact_name}
     #Contact Mobile
-    Wait Until Element Is Visible     //span[@id="dtlview_Contact Mobile"][contains(text(), "${contact_mobile}")]
-    ${mobile_text}=     Get Text    //span[@id="dtlview_Contact Mobile"]
-    Should Be Equal    ${mobile_text}    ${contact_mobile}
+    Element Should Contain     //span[@id="dtlview_Contact Mobile"]     ${contact_mobile}
     #Contact E-mail
     Element Should Contain     //div[@id="tblCustomerInformation"]/table/tbody/tr[3]/td[2]    ${contact_email}
-    ${get_email}=   Get Text    //div[@id="tblCustomerInformation"]/table/tbody/tr[3]/td[2]
-    Should Be Equal    ${get_email}   ${contact_email}
     #Project Name
     Element Should Contain     //td[@id="mouseArea_Project Name"]      ${project}
     ${text_project}=     Get Text    //td[@id="mouseArea_Project Name"]
@@ -621,27 +616,25 @@ Verify Results After Create
     ${get_serial}=      Get Text        //div[@id="tblProductInformation"]/table/tbody/tr[1]/td[2]
     Should Be Equal      ${get_serial}  ${suite}
     #Product Name
-    Wait Until Element Is Visible       //div[@id="tblProductInformation"]/table/tbody/tr[1]/td[4]/a[contains(text(), "${product_suite}")]
-    ${get_product_name}=    Get Text    //div[@id="tblProductInformation"]/table/tbody/tr[1]/td[4]/a
-    Log     ${get_product_name}
+    ${prod_suite}=      Strip String    ${product_suite}${SPACE}
+    Element Should Contain       //div[@id="tblProductInformation"]/table/tbody/tr[1]/td[4]/a    ${prod_suite}
+
     #Product Brand
     Element Should Contain   //div[@id="tblProductInformation"]/table/tbody/tr[2]/td[2]   ${brand_suite}
-    ${get_brand}=   Get Text    //div[@id="tblProductInformation"]/table/tbody/tr[2]/td[2]
-    Log      ${get_brand}
+
     #Product Model
     Element Should Contain        //div[@id="tblProductInformation"]/table/tbody/tr[2]/td[4]      ${model_suite}
-    ${get_model}=   Get Text    //div[@id="tblProductInformation"]/table/tbody/tr[2]/td[4]
-    Log    ${get_model}
+
     #Delivery Date
     ${replace}=     Replace String   ${delivery_date}   /   -
     Element Should Contain        //div[@id="tblProductInformation"]/table/tbody/tr[3]/td[2]  ${replace}
     ${get_delivery_date}=       Get Text    //div[@id="tblProductInformation"]/table/tbody/tr[3]/td[2]
     Log     ${get_delivery_date}
+
     #Warranty
     Element Should Contain    //div[@id="tblProductInformation"]/table/tbody/tr[3]/td[4]    ${warranty}
     ${get_warranty}=    Get Text  //div[@id="tblProductInformation"]/table/tbody/tr[3]/td[4]
     Log  ${get_warranty}
-
 
     #Warranty Active Date
     ${replace}=     Replace String   ${warranty_active_date}   /   -
