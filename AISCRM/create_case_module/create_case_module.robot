@@ -21,6 +21,7 @@ ${SEARCH_STRING}            Search
 ${DROPDOWN_SEARCH_LOC}      search_field
 ${CASE_TXTBOX}              name:ticket_title
 ${PRIORITY_LOC}             ticket_important
+${CASE_NO_LOC}              ticket_no
 ${CASE_TYPE_LOC}            ticket_type
 ${CHANNEL_LOC}              channel
 ${STATUS_LOC}               ticketstatus
@@ -236,7 +237,7 @@ Enter Case Information
     Sent Product Date               ${sent_product_date}
     Partner Account                 ${partner_account}
     Case Upload Image               ${case_image}
-    Pause Execution
+#    Pause Execution
     Scroll Up Page From The Browser
     Click Save Header Button
     Verify Results After Create      ${case_type}   ${remove_case}  ${status}  ${channel}   ${priority}     ${waiting}
@@ -511,6 +512,7 @@ Verify Results After Create
     ${get_id}=  Get Text  //tr/td[2][@class="dvtCellInfo"]
     ${convert}=     Convert To String   ${get_id}
     Log  ${convert}
+    Set Task Variable   ${convert}
     ##########################################################################################
     #Case Information
     ##########################################################################################
@@ -651,4 +653,8 @@ Verify Results After Create
     Log    ${get_check_product}
 
 Verify Tabulated Case Results
+    [Arguments]
     Click Button To Create Page     ${SEARCH_STRING}
+    Input Text To Search    ${convert}
+    Select Option From Dropdown List    ${DROPDOWN_SEARCH_LOC}  ${CASE_NO_LOC}
+    Click Search Button

@@ -171,7 +171,10 @@ Input Text To Search
     Input Text      name:search_text     ${search_text}
 
 Click Search Button
-    Click Element       name:search
+    ${xpath_search}=    Get Element Count   name:search
+    ${xpath_submit}=    Get Element Count   name:submit
+    Run Keyword And Return If   ${xpath_search}   Click Element       name:search
+    Run Keyword And Return If   ${xpath_submit}   Click Element       name:submit
 
 Swap String
     [Documentation]     This function is to replace from the original string to new string depending on the users.
