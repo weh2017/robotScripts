@@ -17,6 +17,8 @@ Suite Setup     Open Chrome Browser
 ${IMAGE_PATH}               C://Users/ruela/Documents/robotScripts/AISCRM/create_case_module/resources/images
 ${CUSTOMER_SERVICE}         Customer Service
 ${CASE_STRING}              Case
+${SEARCH_STRING}            Search
+${DROPDOWN_SEARCH_LOC}      search_field
 ${CASE_TXTBOX}              name:ticket_title
 ${PRIORITY_LOC}             ticket_important
 ${CASE_TYPE_LOC}            ticket_type
@@ -38,7 +40,6 @@ ${SOLUTION_LOC}             name:case_perfomance
 ${PREVENTION_LOC}           name:case_protection
 ${CONTACT_ADDNAME_BTN}      //td[@class='showPanelBg']//td[2]//table[1]//tbody[1]//tr[1]//td[2]//img[1]
 ${CONTACTNAME_DEL_BTN}      //td[@class='showPanelBg']//td[2]//table[1]//tbody[1]//tr[1]//td[3]//input[1]
-${DROPDOWN_SEARCH_LOC}      search_field
 ${CONTACT_NAME_SEARCH}      firstname
 ${CONTACT_NAME_LABEL}       contact_name
 ${CONTACT_EMAIL_LOC}        name:email
@@ -88,7 +89,7 @@ Case Data Informations
     @{read}=    Create List     ${contents}
     @{lines}=   Split To Lines      @{read}     1
     :FOR    ${line}    IN          @{lines}
-    \   Select Dropdown Option From Menu        ${CASE_STRING}
+    \   Select Sub-Menu        ${CASE_STRING}
     \   Click Button To Create Page             ${CASE_STRING}
     \   @{bm}=      Split String    ${line}     |
     # Case Name
@@ -126,7 +127,7 @@ Case Data Informations
     \   ${strip_waiting}=           Set Variable   @{bm}[10]
     \   ${waiting}=                 Strip String   ${strip_waiting}${SPACE}
     # Partner Account
-    \   ${strip_part_acc}=         Set Variable    @{bm}[11]
+    \   ${strip_part_acc}=          Set Variable    @{bm}[11]
     \   ${partner_account}=         Strip String   ${strip_part_acc}${SPACE}
     # Partner Contact
     \   ${strip_part_cont}=         Set Variable    @{bm}[12]
@@ -258,16 +259,8 @@ Responsible Person
     [Documentation]  This is to set the person to assign Case
     [Arguments]     ${responsible}
 #    Set Selenium Speed   0.5
-    ${xpath_user}=   Get Element Count    //select[@name="assigned_user_id"]/option[contains(text(), "${responsible}")]
-    ${xpath_group}=    Get Element Count     //select[@name="assigned_group_id"]/option[contains(text(), "${responsible}")]
+    Radio Button     ${responsible}
 
-    Run Keyword And Return If  ${xpath_user}    Run Keywords     Select Radio Button   assigntype    U
-    ...   AND     Click Element      //select[@name="assigned_user_id"]/option[contains(text(), "${responsible}")]
-#    ...   AND     Wait Until Element Contains     //select[@name="assigned_user_id"]/option[contains(text(), "${responsible}")]
-    Run Keyword And Return If  ${xpath_group}   Run Keywords     Select Radio Button   assigntype    T
-    ...   AND     Wait Until Element Is Visible   //select[@name="assigned_group_id"]/option[contains(text(), "${responsible}")]
-    ...   AND     Click Element       //select[@name="assigned_group_id"]/option[contains(text(), "${responsible}")]
-    Page Should Contain     ${responsible}
 Case Type
     [Arguments]     ${case_type}
     ${ticket}=      Get Web Elements        //select[@name="ticket_type"]
@@ -294,14 +287,14 @@ Project Name
     Run Keyword If  "${project}"!="${EMPTY}"    Run Keywords    Scroll Down Page From The Browser
     ...     AND     Click Plus Button       ${PROJECT_ADD_BTN}
     ...     AND     Focus New Browser Window
-    ...     AND    Select Data On Basic Search Mode          ${DROPDOWN_SEARCH_LOC}   ${NAME_SEARCH_FIELD}    ${project}   #from misc_resource.robot
+    ...     AND    Select Data On Basic Search Mode           ${DROPDOWN_SEARCH_LOC}    ${NAME_SEARCH_FIELD}    ${project}   #from misc_resource.robot
     ...     AND    Exit New Window And Focus Main Browser
     ...     AND    Verify Added Information    ${project}      ${PROJECT_LOC}
     ...     AND    Click Erase Button      ${PROJECT_DEL_BTN}
     ...     AND    Verify Deleted Information      ${PROJECT_LOC}
     ...     AND    Click Plus Button       ${PROJECT_ADD_BTN}
     ...     AND    Focus New Browser Window
-    ...     AND    Select Data On Basic Search Mode          ${DROPDOWN_SEARCH_LOC}   ${NAME_SEARCH_FIELD}    ${project}   #from misc_resource.robot
+    ...     AND    Select Data On Basic Search Mode           ${DROPDOWN_SEARCH_LOC}    ${NAME_SEARCH_FIELD}    ${project}   #from misc_resource.robot
     ...     AND    Exit New Window And Focus Main Browser
     ...     AND    Verify Added Information    ${project}  ${PROJECT_LOC}
     Run Keyword If  "${project}"=="${EMPTY}"    Run Keywords    Click Erase Button  ${PROJECT_DEL_BTN}
@@ -319,7 +312,7 @@ Account Name
     ...     AND     Verify Deleted Information  ${ACCOUNT_NAME_LABEL}
     ...     AND     Click Plus Button   ${ACCOUNT_NAME_ADD_BTN}
     ...     AND     Focus New Browser Window
-    ...     AND     Select Data On Basic Search Mode    ${DROPDOWN_SEARCH_LOC}  ${ACCOUNT_NAME_SEARCH}  ${account_name}
+    ...     AND     Select Data On Basic Search Mode     ${DROPDOWN_SEARCH_LOC}  ${ACCOUNT_NAME_SEARCH}  ${account_name}
     ...     AND     Exit New Window And Focus Main Browser
     ...     AND     Verify Added Information    ${account_name}  ${ACCOUNT_NAME_LABEL}
     Run Keyword If  "${account_name}"=="${EMPTY}"   Run Keywords    Click Erase Button   ${ACCOUNT_NAME_DEL_BTN}
@@ -392,7 +385,7 @@ Contact Name
     ...     AND     Verify Deleted Information            ${CONTACT_NAME_LABEL}
     ...     AND     Click Plus Button                     ${CONTACT_ADDNAME_BTN}
     ...     AND     Focus New Browser Window
-    ...     AND     Select Data On Basic Search Mode      ${DROPDOWN_SEARCH_LOC}   ${CONTACT_NAME_SEARCH}    ${contact_name}   #from misc_resource.robot
+    ...     AND     Select Data On Basic Search Mode      ${DROPDOWN_SEARCH_LOC}  ${CONTACT_NAME_SEARCH}    ${contact_name}   #from misc_resource.robot
     ...     AND     Exit New Window And Focus Main Browser
     ...     AND     Verify Added Information              ${contact_name}      ${CONTACT_NAME_LABEL}
 Contact Mobile
@@ -414,7 +407,7 @@ Serial Name
     Run Keyword If  "${serial_name}"!="${EMPTY}"     Run Keywords    Click Plus Button   ${SERIAL_NAME_ADD_BTN}   # plus button locator
     ...     AND     Focus New Browser Window
     ...     AND     Run Keyword If     "${not_empty}"!="${EMPTY}"      Click Element       ${ALL_CONTACTS_BTN}
-    ...     AND     Select Data On Basic Search Mode    ${DROPDOWN_SEARCH_LOC}  ${SERIAL_NO_SEARCH}     ${serial_name}
+    ...     AND     Select Data On Basic Search Mode     ${DROPDOWN_SEARCH_LOC}  ${SERIAL_NO_SEARCH}     ${serial_name}
     ...     AND     Exit New Window And Focus Main Browser
     ...     AND     Verify Added Information      ${element}     ${SERIAL_NAME_LABEL}
     ...     AND     Click Erase Button      ${SERIAL_NAME_DEL_BTN}
@@ -422,7 +415,7 @@ Serial Name
     ...     AND     Click Plus Button               ${SERIAL_NAME_ADD_BTN}
     ...     AND     Focus New Browser Window
     ...     AND     Run Keyword If     "${not_empty}"!="${EMPTY}"      Click Element       ${ALL_CONTACTS_BTN}
-    ...     AND     Select Data On Basic Search Mode    ${DROPDOWN_SEARCH_LOC}  ${SERIAL_NO_SEARCH}     ${serial_name}
+    ...     AND     Select Data On Basic Search Mode     ${DROPDOWN_SEARCH_LOC}  ${SERIAL_NO_SEARCH}     ${serial_name}
     ...     AND     Exit New Window And Focus Main Browser
     ...     AND     Verify Added Information            ${element}     ${SERIAL_NAME_LABEL}
     ${suite}=       Get Value   //input[@name="${SERIAL_NAME_LABEL}"]
@@ -433,7 +426,7 @@ Product Name
     Scroll Down Page From The Browser
     Run Keyword If  "${product_name}"!="${EMPTY}"   Run Keywords    Click Plus Button   ${PROD_NAME_ADD_BTN}
     ...     AND     Focus New Browser Window
-    ...     AND     Select Data On Basic Search Mode    ${DROPDOWN_SEARCH_LOC}  ${PROD_NAME_SEARCH}     ${product_name}
+    ...     AND     Select Data On Basic Search Mode   ${DROPDOWN_SEARCH_LOC}  ${PROD_NAME_SEARCH}     ${product_name}
     ...     AND     Exit New Window And Focus Main Browser
     ...     AND     Verify Added Information              ${product_name}     ${PROD_NAME_LABEL}
     ...     AND     Click Erase Button                  ${PROD_NAME_DEL_BTN}
@@ -522,17 +515,17 @@ Verify Results After Create
     #Case Information
     ##########################################################################################
     #Case No
-    Element Should Contain                        //tr/td[@class="dvtCellInfo"]  ${convert}
+    Element Should Contain                      //tr/td[@class="dvtCellInfo"]  ${convert}
     #Case Name
-    Element Should Contain                        //td[@class="dvtCellInfo"]/span[@id="dtlview_Case Name"]       ${remove_case}
+    Element Should Contain                      //td[@class="dvtCellInfo"]/span[@id="dtlview_Case Name"]       ${remove_case}
     #Priority
-    Element Should Contain                        //div[@id="tblCaseInformation"]//tr[3]/td[2]/font     ${priority}
+    Element Should Contain                      //div[@id="tblCaseInformation"]//tr[3]/td[2]/font     ${priority}
     #Responsible Person
-    Element Should Contain                        //div[@id="tblCaseInformation"]//tr[4]/td[@class="dvtCellInfo"]/a     ${responsible}
+    Element Should Contain                      //div[@id="tblCaseInformation"]//tr[4]/td[@class="dvtCellInfo"]/a     ${responsible}
     #Plan Due Date
-    ${remove_dash_due}=     Replace String    ${plan_due_date}    /   -
-    Verify Result Date Calendar               //div[@id="tblCaseInformation"]//tr[5]/td[@class="dvtCellInfo"][contains(text(), "${remove_dash_due}")]      ${remove_dash_due}
-    ${get_plan_due_date}=       Get Text      //div[@id="tblCaseInformation"]//tr[5]/td[@class="dvtCellInfo"][contains(text(), "${remove_dash_due}")]
+    ${remove_dash_due}=       Replace String    ${plan_due_date}    /   -
+    Verify Result Date Calendar                 //div[@id="tblCaseInformation"]//tr[5]/td[@class="dvtCellInfo"][contains(text(), "${remove_dash_due}")]      ${remove_dash_due}
+    ${get_plan_due_date}=       Get Text        //div[@id="tblCaseInformation"]//tr[5]/td[@class="dvtCellInfo"][contains(text(), "${remove_dash_due}")]
     Log    ${get_plan_due_date}
     #Case Close Date
     ${remove_dash_close}=   Replace String      ${case_close_date}  /   -
@@ -560,20 +553,20 @@ Verify Results After Create
     ...     //div[@id="tblCaseInformation"]//tr[3]/td[4]/font[contains(text(), "--${waiting}--")]
     ...     ELSE    Wait Until Element Is Visible      //div[@id="tblCaseInformation"]//tr[3]/td[4]/font[contains(text(), "${waiting}")]
     #Partner Account
-    Wait Until Element Is Visible           //div[@id="tblCaseInformation"]//tr[4]/td[4]/font[contains(text(), "${partner_account}")]
+    Wait Until Element Is Visible               //div[@id="tblCaseInformation"]//tr[4]/td[4]/font[contains(text(), "${partner_account}")]
 
     #Partner Contact
-    Element Should Contain       //div[@id="tblCaseInformation"]//tr[5]/td[4]/span      ${partner_contact}
+    Element Should Contain                      //div[@id="tblCaseInformation"]//tr[5]/td[4]/span      ${partner_contact}
     #Closed Reason
     Run Keyword If   "${closed_reason}"!="None"
-    ...     Wait Until Element Is Visible      //div[@id="tblCaseInformation"]//tr[6]/td[4]/font[contains(text(), "${closed_reason}")]
+    ...     Wait Until Element Is Visible       //div[@id="tblCaseInformation"]//tr[6]/td[4]/font[contains(text(), "${closed_reason}")]
     # Modified Time
-    Wait Until Element Is Visible    //div[@id="tblCaseInformation"]//tr[7]/td[4][contains(text(), "${current_date}")]
+    Wait Until Element Is Visible               //div[@id="tblCaseInformation"]//tr[7]/td[4][contains(text(), "${current_date}")]
 #    #Modified By
 #    Wait Until Element Is Visible    //div[@id="tblCaseInformation"]//tr[8]/td[4]/font[contains(text(), "${current_date}")]
 
     #Channel
-    Wait Until Element Is Visible       //div[@id="tblCaseInformation"]//tr[9]/td[4]/font[contains(text(), "${channel}")]
+    Wait Until Element Is Visible               //div[@id="tblCaseInformation"]//tr[9]/td[4]/font[contains(text(), "${channel}")]
     #####################################################################################################
     #Decription Information
     #####################################################################################################
@@ -585,14 +578,14 @@ Verify Results After Create
     Element Should Contain      //div[@id="tblDescriptionInformation"]//tr/td[2]/span[@id="dtlview_Description"]     ${description}
     #Prevention
     Scroll Element Into View    //div[@id="tblDescriptionInformation"]//tr/td[2]/span[@id="dtlview_Prevention (วิธีการป้องกัน)"]
-    Element Should Contain    //div[@id="tblDescriptionInformation"]//tr/td[2]/span[@id="dtlview_Prevention (วิธีการป้องกัน)"]    ${prevention}
+    Element Should Contain      //div[@id="tblDescriptionInformation"]//tr/td[2]/span[@id="dtlview_Prevention (วิธีการป้องกัน)"]    ${prevention}
     #####################################################################################################
     #Customer Information
     #####################################################################################################
     #Contact Name
     Scroll Down Page From The Browser
     Wait Until Element Is Visible    //div[@id="tblCustomerInformation"]//tr/td[2]/a[contains(text(), "${contact_name}")]
-    ${get_text}=    Get Text    //div[@id="tblCustomerInformation"]//tr/td[2]/a[contains(text(), "${contact_name}")]
+    ${get_text}=    Get Text         //div[@id="tblCustomerInformation"]//tr/td[2]/a[contains(text(), "${contact_name}")]
 #    ${remove}=  Remove String    ${get_text}    -
 #    ${strip}=   Strip String    ${remove}${SPACE}
 #    Should Be Equal       ${strip}  ${contact_name}
@@ -605,8 +598,8 @@ Verify Results After Create
     ${text_project}=     Get Text    //td[@id="mouseArea_Project Name"]
     Should Be Equal    ${text_project}    ${project}
     #Account Name
-    Wait Until Element Is Visible    //div[@id="tblCustomerInformation"]/table/tbody/tr[2]/td[4][contains(text(), "${account_name}")]
-    ${get_account}=     Get Text    //div[@id="tblCustomerInformation"]/table/tbody/tr[2]/td[4]
+    Wait Until Element Is Visible      //div[@id="tblCustomerInformation"]/table/tbody/tr[2]/td[4][contains(text(), "${account_name}")]
+    ${get_account}=     Get Text       //div[@id="tblCustomerInformation"]/table/tbody/tr[2]/td[4]
     Should Be Equal   ${get_account}   ${account_name}
     #####################################################################################################
     #Production Informatin
@@ -620,7 +613,7 @@ Verify Results After Create
     Element Should Contain       //div[@id="tblProductInformation"]/table/tbody/tr[1]/td[4]/a    ${prod_suite}
 
     #Product Brand
-    Element Should Contain   //div[@id="tblProductInformation"]/table/tbody/tr[2]/td[2]   ${brand_suite}
+    Element Should Contain       //div[@id="tblProductInformation"]/table/tbody/tr[2]/td[2]   ${brand_suite}
 
     #Product Model
     Element Should Contain        //div[@id="tblProductInformation"]/table/tbody/tr[2]/td[4]      ${model_suite}
@@ -632,27 +625,30 @@ Verify Results After Create
     Log     ${get_delivery_date}
 
     #Warranty
-    Element Should Contain    //div[@id="tblProductInformation"]/table/tbody/tr[3]/td[4]    ${warranty}
+    Element Should Contain        //div[@id="tblProductInformation"]/table/tbody/tr[3]/td[4]    ${warranty}
     ${get_warranty}=    Get Text  //div[@id="tblProductInformation"]/table/tbody/tr[3]/td[4]
     Log  ${get_warranty}
 
     #Warranty Active Date
     ${replace}=     Replace String   ${warranty_active_date}   /   -
-    Element Should Contain    //div[@id="tblProductInformation"]/table/tbody/tr[4]/td[2]  ${replace}
+    Element Should Contain                  //div[@id="tblProductInformation"]/table/tbody/tr[4]/td[2]  ${replace}
     ${get_warranty_active}=     Get Text    //div[@id="tblProductInformation"]/table/tbody/tr[4]/td[2]
     Log     ${get_warranty_active}
     #Check Product Date
     ${replace}=     Replace String   ${check_product_date}   /   -
-    Element Should Contain    //div[@id="tblProductInformation"]/table/tbody/tr[4]/td[4]  ${replace}
+    Element Should Contain              //div[@id="tblProductInformation"]/table/tbody/tr[4]/td[4]  ${replace}
     ${get_check_product}=   Get Text    //div[@id="tblProductInformation"]/table/tbody/tr[4]/td[4]
     Log         ${get_check_product}
     #Warranty Active Date
     ${replace}=     Replace String   ${warranty_expired_date}   /   -
-    Element Should Contain    //div[@id="tblProductInformation"]/table/tbody/tr[5]/td[2]    ${replace}
+    Element Should Contain              //div[@id="tblProductInformation"]/table/tbody/tr[5]/td[2]    ${replace}
     ${get_expired_date}=    Get Text    //div[@id="tblProductInformation"]/table/tbody/tr[5]/td[2]
     Log     ${get_expired_date}
     #Sent Product Date
     ${replace}=     Replace String   ${sent_product_date}   /   -
-    Element Should Contain    //div[@id="tblProductInformation"]/table/tbody/tr[5]/td[4]      ${replace}
+    Element Should Contain              //div[@id="tblProductInformation"]/table/tbody/tr[5]/td[4]      ${replace}
     ${get_check_product}=   Get Text    //div[@id="tblProductInformation"]/table/tbody/tr[5]/td[4]
     Log    ${get_check_product}
+
+Verify Tabulated Case Results
+    Click Button To Create Page     ${SEARCH_STRING}

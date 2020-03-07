@@ -17,11 +17,17 @@ Select Menu
     Wait Until Element Is Visible      //td[@class="tabUnSelected"]/a[contains(text(), '${menu}')]
     Click Link      //td[@class="tabUnSelected"]/a[contains(text(), '${menu}')]
 
-Select Dropdown Option From Menu
+Select Sub-Menu
     [Arguments]     ${select}
     [Documentation]     Select Dropdown options from menu like sales visit, account,contacts, case.etc
-    Wait Until Element Is Visible   //a[contains(text(), '${select}')]
-    Click Link      //a[contains(text(), '${select}')]
+    ${xpath_select}=    Get Element Count   //td[@class="level2SelTab"]/a[contains(text(), "${select}")]
+    ${xpath_unselect}=    Get Element Count   //td[@class="level2UnSelTab"]/a[contains(text(), "${select}")]
+    Run Keyword And Return If   ${xpath_select}
+    ...     Run Keywords    Wait Until Element Is Visible   //td[@class="level2SelTab"]/a[contains(text(), "${select}")]
+    ...     AND     Click Link      //td[@class="level2SelTab"]/a[contains(text(), "${select}")]
+    Run Keyword And Return If   ${xpath_unselect}   Run Keywords       Wait Until Element Is Visible
+    ...     //td[@class="level2UnSelTab"]/a[contains(text(), "${select}")]
+    ...     AND     Click Link      //td[@class="level2UnSelTab"]/a[contains(text(), "${select}")]
 
 Focus New Browser Window
     [Documentation]   To focus and execute new pop-up browser window
@@ -33,8 +39,8 @@ Exit New Window And Focus Main Browser
 
 Select Data On Basic Search Mode
     [Documentation]  This Function is to Add some data. It has a plus button and erase Button
-    [Arguments]        ${selector}     ${option}   ${string_reference}
-    Select Option From Dropdown List   ${selector}   ${option}     # OTHER KEYWORD UNDER misc.resources
+    [Arguments]            ${search}    ${option_value}   ${string_reference}
+    Select Option From Dropdown List   ${search}    ${option_value}     # OTHER KEYWORD UNDER misc.resources
     Input Text To Search        ${string_reference}
     Click Search Button
     Wait Until Page Contains   ${string_reference}
@@ -42,7 +48,7 @@ Select Data On Basic Search Mode
 
 Click Button To Create Page
     [Documentation]   This is specific button for creating Case, Jobs, Contacts, Leads, Documents, Projects.
-    ...     cannot use in sales visit.
+    ...     cannot use in sales visit. Exclusive for Create button, Search button, etc.
     [Arguments]     ${button_create}
     Wait Until Element Is Visible       //img[@title="Create ${button_create}..."]
     Click Image     //img[@title="Create ${button_create}..."]
@@ -97,8 +103,8 @@ Click Button
 
 Select Option From Dropdown List
     [Documentation]   Example in Status from Sales Visit : Plan, Complete, Cancel
-    [Arguments]     ${selector}     ${option}
-    Click Element   //select[@name="${selector}"]/option[@value="${option}"]
+    [Arguments]      ${search}      ${option_value}
+    Click Element   //select[@name="${search}"]/option[@value="${option_value}"]
 
 Alert Message Should Be Found
     [Documentation]     This is for Alert Message
@@ -210,6 +216,20 @@ Click Save Header Button
     [Documentation]     This function is the save button located at the header area
     Click Element            ${SAVE_HEADER_BTN}
 
+Radio Button
+    [Documentation]     This Function is to select the desired option using radio button
+    [Arguments]     ${select_option}
+    ${xpath_user}=   Get Element Count    //select[@name="assigned_user_id"]/option[contains(text(), "${select_option}")]
+    ${xpath_group}=    Get Element Count     //select[@name="assigned_group_id"]/option[contains(text(), "${select_option}")]
+
+    Run Keyword And Return If  ${xpath_user}    Run Keywords     Select Radio Button   assigntype    U
+    ...   AND     Click Element      //select[@name="assigned_user_id"]/option[contains(text(), "${select_option}")]
+#    ...   AND     Wait Until Element Contains     //select[@name="assigned_user_id"]/option[contains(text(), "${responsible}")]
+    Run Keyword And Return If  ${xpath_group}   Run Keywords     Select Radio Button   assigntype    T
+    ...   AND     Wait Until Element Is Visible   //select[@name="assigned_group_id"]/option[contains(text(), "${select_option}")]
+    ...   AND     Click Element       //select[@name="assigned_group_id"]/option[contains(text(), "${select_option}")]
+    Page Should Contain     ${select_option}
+
 *** Variables ***
 
 ${USERNAME_LOCATOR}         name:user_name
@@ -224,4 +244,3 @@ ${SEARCH_FIELD}             //select[@name="search_field"]
 ${SAVE_FOOTER_BTN}          //tr[27]/td/div/input[@title="Save [Alt+S]"]
 ${SAVE_HEADER_BTN}          //tr/td/div/input[@title="Save [Alt+S]"]
 ${UPLOAD_IMAGE_LOC}         //input[@type="file"]
-

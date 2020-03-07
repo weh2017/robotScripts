@@ -210,7 +210,7 @@ Navigate Creating Sales Visit All
     ...    ${comment}   ${report}       ${remaining}    ${remark}   ${competitor}       ${lead_no}      ${lead_name}    ${mobile}   ${phone}
     ...             ${image}
 #    Select Menu     ${HEADER_MENU_STRING}
-    Select Dropdown Option From Menu    ${SALES_VISIT_STRING}
+    Select Sub-Menu    ${SALES_VISIT_STRING}
     Select Sales Visit Schedule Tab     ${schedule}
     View Sales Visit Form       ${objective}
     Start And End Date Informations     ${start_date}   ${objective}
@@ -279,7 +279,7 @@ Navigate Creating Sales Visit Required
     ...             ${project_name}      ${add}   ${subtract}      ${plan}     ${comment}
     ...             ${image}
     #    Select Menu     ${HEADER_MENU_STRING}
-    Select Dropdown Option From Menu    ${SALES_VISIT_STRING}
+    Select Sub-Menu    ${SALES_VISIT_STRING}
     Select Sales Visit Schedule Tab     ${schedule}
     View Sales Visit Form       ${objective}
     Start And End Date Informations     ${start_date}   ${objective}
@@ -327,7 +327,7 @@ Navigate Creating Sales Visit Optional Fields
     ...              ${competitor}  ${department}   ${position}     ${email}    ${mobile}   ${phone}
     ...              ${lead_no}     ${lead_name}    ${contact_name}     ${project_name}     ${plan}
     ...              ${image}
-    Select Dropdown Option From Menu    ${SALES_VISIT_STRING}
+    Select Sub-Menu    ${SALES_VISIT_STRING}
     Select Sales Visit Schedule Tab     ${schedule}
     View Sales Visit Form       ${objective}
     Get Registered Username
@@ -876,7 +876,7 @@ Check In Results Sales Visit Page
     [Arguments]         ${objective}     ${start_date}     ${add}    ${start_date}   ${subtract}
     ...         ${status}   ${account}  ${plan}
 
-    Select Dropdown Option From Menu    ${SALES_VISIT_STRING}
+    Select Sub-Menu    ${SALES_VISIT_STRING}
     Click Element     //td[@class="dvtUnSelectedCell"]/a[contains(text(), "All Events")]
 
     @{create}=      Create List         ${objective}    ${USER}     ${start_date}     ${add}    ${start_date}   ${subtract}
