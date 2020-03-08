@@ -1,0 +1,3251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 3.0.2 (Python 3.7.4 on win32)" generated="20200308 20:37:00.352">
+<suite id="s1" name="Create Case Module" source="D:\my_files\Robot_Framework\robotScripts\AISCRM\create_case_module\create_case_module.robot">
+<kw name="Open Chrome Browser" library="web_common" type="setup">
+<doc>Open the Chrome Browser with maximize view, no infobars notification and no pop-ups.</doc>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>sys.modules['selenium.webdriver'].ChromeOptions()</arg>
+<arg>sys, selenium.webdriver</arg>
+</arguments>
+<assign>
+<var>${chrome_options}</var>
+</assign>
+<msg timestamp="20200308 20:37:00.538" level="INFO">${chrome_options} = &lt;selenium.webdriver.chrome.options.Options object at 0x03AE3A90&gt;</msg>
+<status status="PASS" starttime="20200308 20:37:00.538" endtime="20200308 20:37:00.538"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>credentials_enable_service=${false}</arg>
+</arguments>
+<assign>
+<var>${prefs}</var>
+</assign>
+<msg timestamp="20200308 20:37:00.538" level="INFO">${prefs} = {'credentials_enable_service': False}</msg>
+<status status="PASS" starttime="20200308 20:37:00.538" endtime="20200308 20:37:00.538"></status>
+</kw>
+<kw name="Call Method" library="BuiltIn">
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<arguments>
+<arg>${chrome_options}</arg>
+<arg>add_experimental_option</arg>
+<arg>prefs</arg>
+<arg>${prefs}</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:00.539" endtime="20200308 20:37:00.539"></status>
+</kw>
+<kw name="Call Method" library="BuiltIn">
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<arguments>
+<arg>${chrome_options}</arg>
+<arg>add_argument</arg>
+<arg>--start-maximized</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:00.539" endtime="20200308 20:37:00.539"></status>
+</kw>
+<kw name="Call Method" library="BuiltIn">
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<arguments>
+<arg>${chrome_options}</arg>
+<arg>add_argument</arg>
+<arg>--disable-popup-blocking</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:00.539" endtime="20200308 20:37:00.539"></status>
+</kw>
+<kw name="Create Webdriver" library="SeleniumLibrary">
+<doc>Creates an instance of Selenium WebDriver.</doc>
+<arguments>
+<arg>Chrome</arg>
+<arg>chrome_options=${chrome_options}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:00.540" level="INFO">Creating an instance of the Chrome WebDriver.</msg>
+<status status="PASS" starttime="20200308 20:37:00.539" endtime="20200308 20:37:05.656"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:00.537" endtime="20200308 20:37:05.656"></status>
+</kw>
+<test id="s1-t1" name="AIS-CRM Website">
+<kw name="Launch Web System" library="misc_resources">
+<doc>Url of the web application</doc>
+<arguments>
+<arg>${URL_2}</arg>
+</arguments>
+<kw name="Go To" library="SeleniumLibrary">
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<arguments>
+<arg>${link}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:05.656" level="INFO">Opening url 'http://aisystem.dyndns.biz:8090/aistcrm_uat/'</msg>
+<status status="PASS" starttime="20200308 20:37:05.656" endtime="20200308 20:37:06.163"></status>
+</kw>
+<kw name="Verify Title Page" library="misc_resources">
+<doc>Verify the title of the page after the login with username successfully entered.</doc>
+<kw name="Get Title" library="SeleniumLibrary">
+<doc>Returns the title of the current page.</doc>
+<status status="PASS" starttime="20200308 20:37:06.163" endtime="20200308 20:37:06.163"></status>
+</kw>
+<kw name="Title Should Be" library="SeleniumLibrary">
+<doc>Verifies that the current page title equals ``title``.</doc>
+<arguments>
+<arg>MOAI-CRM - The Premium CRM Solution</arg>
+</arguments>
+<msg timestamp="20200308 20:37:06.173" level="INFO">Page title is 'MOAI-CRM - The Premium CRM Solution'.</msg>
+<status status="PASS" starttime="20200308 20:37:06.163" endtime="20200308 20:37:06.173"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>Get Title</arg>
+</arguments>
+<msg timestamp="20200308 20:37:06.173" level="INFO">Get Title</msg>
+<status status="PASS" starttime="20200308 20:37:06.173" endtime="20200308 20:37:06.173"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:06.163" endtime="20200308 20:37:06.173"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:05.656" endtime="20200308 20:37:06.173"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:05.656" endtime="20200308 20:37:06.174" critical="yes"></status>
+</test>
+<test id="s1-t2" name="Log-In User with Valid Username And Password">
+<kw name="Input Username" library="misc_resources">
+<doc>This is the email username input text function.</doc>
+<arguments>
+<arg>${USER}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${USERNAME_LOCATOR}</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:06.176" endtime="20200308 20:37:06.193"></status>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${USERNAME_LOCATOR}</arg>
+<arg>${user_name}</arg>
+<arg>clear=True</arg>
+</arguments>
+<msg timestamp="20200308 20:37:06.193" level="INFO">Typing text 'KC1' into text field 'name:user_name'.</msg>
+<status status="PASS" starttime="20200308 20:37:06.193" endtime="20200308 20:37:06.255"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:06.176" endtime="20200308 20:37:06.255"></status>
+</kw>
+<kw name="Input User's Password" library="misc_resources">
+<doc>This is the email password input text function.</doc>
+<arguments>
+<arg>${PASS}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${PASSWORD_LOCATOR}</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:06.255" endtime="20200308 20:37:06.287"></status>
+</kw>
+<kw name="Input Password" library="SeleniumLibrary">
+<doc>Types the given password into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${PASSWORD_LOCATOR}</arg>
+<arg>${user_pass}</arg>
+<arg>clear=True</arg>
+</arguments>
+<msg timestamp="20200308 20:37:06.287" level="INFO">Typing password into text field 'name:user_password'.</msg>
+<msg timestamp="20200308 20:37:06.318" level="INFO">Temporally setting log level to: NONE</msg>
+<msg timestamp="20200308 20:37:06.349" level="INFO">Log level changed from NONE to INFO.</msg>
+<status status="PASS" starttime="20200308 20:37:06.287" endtime="20200308 20:37:06.349"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:06.255" endtime="20200308 20:37:06.349"></status>
+</kw>
+<kw name="Click Login button" library="misc_resources">
+<doc>This is Sign In function from the system.</doc>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${SIGNIN_LOCATOR}</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:06.349" endtime="20200308 20:37:06.365"></status>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>${SIGNIN_LOCATOR}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:06.365" level="INFO">Clicking element '//input[@value="Sign In"]'.</msg>
+<status status="PASS" starttime="20200308 20:37:06.365" endtime="20200308 20:37:07.624"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:06.349" endtime="20200308 20:37:07.624"></status>
+</kw>
+<tags>
+<tag>User credentials</tag>
+</tags>
+<status status="PASS" starttime="20200308 20:37:06.175" endtime="20200308 20:37:07.625" critical="yes"></status>
+</test>
+<test id="s1-t3" name="Select Customer Service">
+<kw name="Select Menu" library="misc_resources">
+<doc>Select Menu Header like Sales, Customer Service, Inventory</doc>
+<arguments>
+<arg>${CUSTOMER_SERVICE}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>//td[@class="tabUnSelected"]/a[contains(text(), '${menu}')]</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:07.627" endtime="20200308 20:37:07.648"></status>
+</kw>
+<kw name="Click Link" library="SeleniumLibrary">
+<doc>Clicks a link identified by ``locator``.</doc>
+<arguments>
+<arg>//td[@class="tabUnSelected"]/a[contains(text(), '${menu}')]</arg>
+</arguments>
+<msg timestamp="20200308 20:37:07.648" level="INFO">Clicking link '//td[@class="tabUnSelected"]/a[contains(text(), 'Customer Service')]'.</msg>
+<status status="PASS" starttime="20200308 20:37:07.648" endtime="20200308 20:37:08.946"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:07.627" endtime="20200308 20:37:08.946"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:07.626" endtime="20200308 20:37:08.947" critical="yes"></status>
+</test>
+<test id="s1-t4" name="Create Case Data Informations">
+<kw name="Case Data Informations">
+<arguments>
+<arg>ALL</arg>
+<arg>D:\\my_files\\Robot_Framework\\robotScripts\\AISCRM\\create_case_module${/}create_case_module.csv</arg>
+</arguments>
+<kw name="Get File" library="OperatingSystem">
+<doc>Returns the contents of a specified file.</doc>
+<arguments>
+<arg>${csv}</arg>
+</arguments>
+<assign>
+<var>${contents}</var>
+</assign>
+<msg timestamp="20200308 20:37:08.949" level="INFO" html="yes">Getting file '&lt;a href="file://D:\my_files\Robot_Framework\robotScripts\AISCRM\create_case_module\create_case_module.csv"&gt;D:\my_files\Robot_Framework\robotScripts\AISCRM\create_case_module\create_case_module.csv&lt;/a&gt;'.</msg>
+<msg timestamp="20200308 20:37:08.950" level="INFO">${contents} = ﻿Case Name|Priority|Person|Case Type|Status |Account Name|Project|Case Open Date|Case Close Date|Plan Due Date|Waiting For|Partner Account|Partner Contact|Closed Reason|Channel|Description|Solution|Pr...</msg>
+<status status="PASS" starttime="20200308 20:37:08.949" endtime="20200308 20:37:08.950"></status>
+</kw>
+<kw name="Create List" library="BuiltIn">
+<doc>Returns a list containing given items.</doc>
+<arguments>
+<arg>${contents}</arg>
+</arguments>
+<assign>
+<var>@{read}</var>
+</assign>
+<msg timestamp="20200308 20:37:08.951" level="INFO">@{read} = [ ﻿Case Name|Priority|Person|Case Type|Status |Account Name|Project|Case Open Date|Case Close Date|Plan Due Date|Waiting For|Partner Account|Partner Contact|Closed Reason|Channel|Description|Solution|...</msg>
+<status status="PASS" starttime="20200308 20:37:08.951" endtime="20200308 20:37:08.951"></status>
+</kw>
+<kw name="Split To Lines" library="String">
+<doc>Splits the given string to lines.</doc>
+<arguments>
+<arg>@{read}</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>@{lines}</var>
+</assign>
+<msg timestamp="20200308 20:37:08.952" level="INFO">45 lines returned</msg>
+<msg timestamp="20200308 20:37:08.952" level="INFO">@{lines} = [ Business Development and PM|Urgent|Business Development and PM|แจ้งซ่อม|รับงาน|A.N.N. Service Limited Partnership|ANNS|28/02/2020||28/02/2020||VST ECS (Thailand) Co., Ltd.||||||||||||||||||||pop up ...</msg>
+<status status="PASS" starttime="20200308 20:37:08.951" endtime="20200308 20:37:08.952"></status>
+</kw>
+<kw name="${line} IN [ @{lines} ]" type="for">
+<kw name="${line} = Business Development and PM|Urgent|Business Development and PM|แจ้งซ่อม|รับงาน|A.N.N. Service Limited Partnership|ANNS|28/02/2020||28/02/2020||VST ECS (Thailand) Co., Ltd.||||||||||||||||||||pop up 0...." type="foritem">
+<kw name="Select Sub-Menu" library="misc_resources">
+<doc>Select Dropdown options from menu like sales visit, account,contacts, case.etc</doc>
+<arguments>
+<arg>${CASE_STRING}</arg>
+</arguments>
+<kw name="Get Element Count" library="SeleniumLibrary">
+<doc>Returns the number of elements matching ``locator``.</doc>
+<arguments>
+<arg>//td[@class="level2SelTab"]/a[contains(text(), "${select}")]</arg>
+</arguments>
+<assign>
+<var>${xpath_select}</var>
+</assign>
+<msg timestamp="20200308 20:37:08.965" level="INFO">${xpath_select} = 1</msg>
+<status status="PASS" starttime="20200308 20:37:08.953" endtime="20200308 20:37:08.965"></status>
+</kw>
+<kw name="Get Element Count" library="SeleniumLibrary">
+<doc>Returns the number of elements matching ``locator``.</doc>
+<arguments>
+<arg>//td[@class="level2UnSelTab"]/a[contains(text(), "${select}")]</arg>
+</arguments>
+<assign>
+<var>${xpath_unselect}</var>
+</assign>
+<msg timestamp="20200308 20:37:08.976" level="INFO">${xpath_unselect} = 0</msg>
+<status status="PASS" starttime="20200308 20:37:08.965" endtime="20200308 20:37:08.976"></status>
+</kw>
+<kw name="Run Keyword And Return If" library="BuiltIn">
+<doc>Runs the specified keyword and returns from the enclosing user keyword.</doc>
+<arguments>
+<arg>${xpath_select}</arg>
+<arg>Run Keywords</arg>
+<arg>Wait Until Element Is Visible</arg>
+<arg>//td[@class="level2SelTab"]/a[contains(text(), "${select}")]</arg>
+<arg>AND</arg>
+<arg>Click Link</arg>
+<arg>//td[@class="level2SelTab"]/a[contains(text(), "${select}")]</arg>
+</arguments>
+<kw name="Run Keywords" library="BuiltIn">
+<doc>Executes all the given keywords in a sequence.</doc>
+<arguments>
+<arg>Wait Until Element Is Visible</arg>
+<arg>//td[@class="level2SelTab"]/a[contains(text(), "${select}")]</arg>
+<arg>AND</arg>
+<arg>Click Link</arg>
+<arg>//td[@class="level2SelTab"]/a[contains(text(), "${select}")]</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>//td[@class="level2SelTab"]/a[contains(text(), "${select}")]</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:08.977" endtime="20200308 20:37:08.995"></status>
+</kw>
+<kw name="Click Link" library="SeleniumLibrary">
+<doc>Clicks a link identified by ``locator``.</doc>
+<arguments>
+<arg>//td[@class="level2SelTab"]/a[contains(text(), "${select}")]</arg>
+</arguments>
+<msg timestamp="20200308 20:37:08.995" level="INFO">Clicking link '//td[@class="level2SelTab"]/a[contains(text(), "Case")]'.</msg>
+<status status="PASS" starttime="20200308 20:37:08.995" endtime="20200308 20:37:09.863"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:08.977" endtime="20200308 20:37:09.863"></status>
+</kw>
+<msg timestamp="20200308 20:37:09.864" level="INFO">Returning from the enclosing user keyword.</msg>
+<status status="PASS" starttime="20200308 20:37:08.976" endtime="20200308 20:37:09.864"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:08.953" endtime="20200308 20:37:09.864"></status>
+</kw>
+<kw name="Click Button To Create Page" library="misc_resources">
+<doc>This is specific button for creating Case, Jobs, Contacts, Leads, Documents, Projects.</doc>
+<arguments>
+<arg>${CASE_STRING}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>//img[@title="Create ${button_create}..."]</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:09.864" endtime="20200308 20:37:09.889"></status>
+</kw>
+<kw name="Click Image" library="SeleniumLibrary">
+<doc>Clicks an image identified by ``locator``.</doc>
+<arguments>
+<arg>//img[@title="Create ${button_create}..."]</arg>
+</arguments>
+<msg timestamp="20200308 20:37:09.890" level="INFO">Clicking image '//img[@title="Create Case..."]'.</msg>
+<status status="PASS" starttime="20200308 20:37:09.890" endtime="20200308 20:37:12.108"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:09.864" endtime="20200308 20:37:12.108"></status>
+</kw>
+<kw name="Split String" library="String">
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<arguments>
+<arg>${line}</arg>
+<arg>|</arg>
+</arguments>
+<assign>
+<var>@{bm}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.109" level="INFO">@{bm} = [ Business Development and PM | Urgent | Business Development and PM | แจ้งซ่อม | รับงาน | A.N.N. Service Limited Partnership | ANNS | 28/02/2020 |  | 28/02/2020 |  | VST ECS (Thailand) Co., Ltd. |  |...</msg>
+<status status="PASS" starttime="20200308 20:37:12.108" endtime="20200308 20:37:12.109"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[0]</arg>
+</arguments>
+<assign>
+<var>${case_name}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.109" level="INFO">${case_name} = Business Development and PM</msg>
+<status status="PASS" starttime="20200308 20:37:12.109" endtime="20200308 20:37:12.109"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${case_name}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${remove_space}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.110" level="INFO">${remove_space} = Business Development and PM</msg>
+<status status="PASS" starttime="20200308 20:37:12.110" endtime="20200308 20:37:12.110"></status>
+</kw>
+<kw name="Remove String" library="String">
+<doc>Removes all ``removables`` from the given ``string``.</doc>
+<arguments>
+<arg>${remove_space}</arg>
+<arg>['</arg>
+</arguments>
+<assign>
+<var>${remove_case}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.110" level="INFO">${remove_case} = Business Development and PM</msg>
+<status status="PASS" starttime="20200308 20:37:12.110" endtime="20200308 20:37:12.110"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[1]</arg>
+</arguments>
+<assign>
+<var>${remove}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.111" level="INFO">${remove} = Urgent</msg>
+<status status="PASS" starttime="20200308 20:37:12.111" endtime="20200308 20:37:12.111"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${remove}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${priority}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.112" level="INFO">${priority} = Urgent</msg>
+<status status="PASS" starttime="20200308 20:37:12.111" endtime="20200308 20:37:12.112"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[2]</arg>
+</arguments>
+<assign>
+<var>${space_res}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.112" level="INFO">${space_res} = Business Development and PM</msg>
+<status status="PASS" starttime="20200308 20:37:12.112" endtime="20200308 20:37:12.112"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${space_res}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${responsible}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.112" level="INFO">${responsible} = Business Development and PM</msg>
+<status status="PASS" starttime="20200308 20:37:12.112" endtime="20200308 20:37:12.112"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[3]</arg>
+</arguments>
+<assign>
+<var>${rem_case}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.113" level="INFO">${rem_case} = แจ้งซ่อม</msg>
+<status status="PASS" starttime="20200308 20:37:12.113" endtime="20200308 20:37:12.113"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${rem_case}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${case_type}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.113" level="INFO">${case_type} = แจ้งซ่อม</msg>
+<status status="PASS" starttime="20200308 20:37:12.113" endtime="20200308 20:37:12.113"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[4]</arg>
+</arguments>
+<assign>
+<var>${strip_status}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.113" level="INFO">${strip_status} = รับงาน</msg>
+<status status="PASS" starttime="20200308 20:37:12.113" endtime="20200308 20:37:12.113"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${strip_status}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${status}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.114" level="INFO">${status} = รับงาน</msg>
+<status status="PASS" starttime="20200308 20:37:12.114" endtime="20200308 20:37:12.114"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[5]</arg>
+</arguments>
+<assign>
+<var>${strip_account}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.114" level="INFO">${strip_account} = A.N.N. Service Limited Partnership</msg>
+<status status="PASS" starttime="20200308 20:37:12.114" endtime="20200308 20:37:12.114"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${strip_account}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${account_name}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.114" level="INFO">${account_name} = A.N.N. Service Limited Partnership</msg>
+<status status="PASS" starttime="20200308 20:37:12.114" endtime="20200308 20:37:12.114"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[6]</arg>
+</arguments>
+<assign>
+<var>${strip_project}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.115" level="INFO">${strip_project} = ANNS</msg>
+<status status="PASS" starttime="20200308 20:37:12.115" endtime="20200308 20:37:12.115"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${strip_project}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${project}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.115" level="INFO">${project} = ANNS</msg>
+<status status="PASS" starttime="20200308 20:37:12.115" endtime="20200308 20:37:12.115"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[7]</arg>
+</arguments>
+<assign>
+<var>${strip_case_open}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.115" level="INFO">${strip_case_open} = 28/02/2020</msg>
+<status status="PASS" starttime="20200308 20:37:12.115" endtime="20200308 20:37:12.115"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${strip_case_open}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${case_open_date}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.116" level="INFO">${case_open_date} = 28/02/2020</msg>
+<status status="PASS" starttime="20200308 20:37:12.116" endtime="20200308 20:37:12.116"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[8]</arg>
+</arguments>
+<assign>
+<var>${strip_case_close}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.116" level="INFO">${strip_case_close} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.116" endtime="20200308 20:37:12.116"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${strip_case_close}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${case_close_date}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.116" level="INFO">${case_close_date} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.116" endtime="20200308 20:37:12.117"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[9]</arg>
+</arguments>
+<assign>
+<var>${strip_plan_due}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.117" level="INFO">${strip_plan_due} = 28/02/2020</msg>
+<status status="PASS" starttime="20200308 20:37:12.117" endtime="20200308 20:37:12.117"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${strip_plan_due}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${plan_due_date}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.118" level="INFO">${plan_due_date} = 28/02/2020</msg>
+<status status="PASS" starttime="20200308 20:37:12.117" endtime="20200308 20:37:12.118"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[10]</arg>
+</arguments>
+<assign>
+<var>${strip_waiting}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.119" level="INFO">${strip_waiting} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.118" endtime="20200308 20:37:12.119"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${strip_waiting}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${waiting}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.121" level="INFO">${waiting} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.120" endtime="20200308 20:37:12.121"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[11]</arg>
+</arguments>
+<assign>
+<var>${strip_part_acc}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.122" level="INFO">${strip_part_acc} = VST ECS (Thailand) Co., Ltd.</msg>
+<status status="PASS" starttime="20200308 20:37:12.121" endtime="20200308 20:37:12.122"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${strip_part_acc}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${partner_account}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.123" level="INFO">${partner_account} = VST ECS (Thailand) Co., Ltd.</msg>
+<status status="PASS" starttime="20200308 20:37:12.122" endtime="20200308 20:37:12.123"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[12]</arg>
+</arguments>
+<assign>
+<var>${strip_part_cont}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.124" level="INFO">${strip_part_cont} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.123" endtime="20200308 20:37:12.124"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${strip_part_cont}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${partner_contact}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.124" level="INFO">${partner_contact} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.124" endtime="20200308 20:37:12.124"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[13]</arg>
+</arguments>
+<assign>
+<var>${strip_closed}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.125" level="INFO">${strip_closed} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.124" endtime="20200308 20:37:12.125"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${strip_closed}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${closed_reason}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.125" level="INFO">${closed_reason} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.125" endtime="20200308 20:37:12.125"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[14]</arg>
+</arguments>
+<assign>
+<var>${strip_channel}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.125" level="INFO">${strip_channel} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.125" endtime="20200308 20:37:12.125"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${strip_channel}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${channel}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.126" level="INFO">${channel} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.125" endtime="20200308 20:37:12.126"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[15]</arg>
+</arguments>
+<assign>
+<var>${strip_description}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.126" level="INFO">${strip_description} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.126" endtime="20200308 20:37:12.126"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${strip_description}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${description}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.126" level="INFO">${description} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.126" endtime="20200308 20:37:12.126"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[16]</arg>
+</arguments>
+<assign>
+<var>${strip_solution}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.127" level="INFO">${strip_solution} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.126" endtime="20200308 20:37:12.127"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${strip_solution}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${solution}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.127" level="INFO">${solution} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.127" endtime="20200308 20:37:12.127"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[17]</arg>
+</arguments>
+<assign>
+<var>${strip_prevent}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.127" level="INFO">${strip_prevent} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.127" endtime="20200308 20:37:12.127"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${strip_prevent}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${prevention}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.127" level="INFO">${prevention} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.127" endtime="20200308 20:37:12.128"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[18]</arg>
+</arguments>
+<assign>
+<var>${strip_contact_name}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.128" level="INFO">${strip_contact_name} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.128" endtime="20200308 20:37:12.128"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${strip_contact_name}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${contact_name}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.128" level="INFO">${contact_name} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.128" endtime="20200308 20:37:12.128"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[19]</arg>
+</arguments>
+<assign>
+<var>${strip_contact_mobile}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.128" level="INFO">${strip_contact_mobile} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.128" endtime="20200308 20:37:12.129"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${strip_contact_mobile}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${contact_mobile}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.129" level="INFO">${contact_mobile} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.129" endtime="20200308 20:37:12.129"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[20]</arg>
+</arguments>
+<assign>
+<var>${strip_contact_email}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.129" level="INFO">${strip_contact_email} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.129" endtime="20200308 20:37:12.129"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${strip_contact_email}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${contact_email}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.129" level="INFO">${contact_email} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.129" endtime="20200308 20:37:12.129"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[21]</arg>
+</arguments>
+<assign>
+<var>${strip_product_name}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.130" level="INFO">${strip_product_name} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.130" endtime="20200308 20:37:12.130"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${strip_product_name}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${product_name}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.130" level="INFO">${product_name} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.130" endtime="20200308 20:37:12.130"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[22]</arg>
+</arguments>
+<assign>
+<var>${strip_serial_name}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.130" level="INFO">${strip_serial_name} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.130" endtime="20200308 20:37:12.130"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${strip_serial_name}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${serial_name}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.131" level="INFO">${serial_name} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.130" endtime="20200308 20:37:12.131"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[23]</arg>
+</arguments>
+<assign>
+<var>${strip_product_brand}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.131" level="INFO">${strip_product_brand} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.131" endtime="20200308 20:37:12.131"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${strip_product_brand}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${product_brand}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.131" level="INFO">${product_brand} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.131" endtime="20200308 20:37:12.131"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[24]</arg>
+</arguments>
+<assign>
+<var>${strip_product_model}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.132" level="INFO">${strip_product_model} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.131" endtime="20200308 20:37:12.132"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${strip_product_model}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${product_model}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.132" level="INFO">${product_model} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.132" endtime="20200308 20:37:12.132"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[25]</arg>
+</arguments>
+<assign>
+<var>${strip_delivery_date}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.132" level="INFO">${strip_delivery_date} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.132" endtime="20200308 20:37:12.132"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${strip_delivery_date}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${delivery_date}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.133" level="INFO">${delivery_date} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.132" endtime="20200308 20:37:12.133"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[26]</arg>
+</arguments>
+<assign>
+<var>${strip_warranty}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.133" level="INFO">${strip_warranty} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.133" endtime="20200308 20:37:12.133"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${strip_warranty}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${warranty}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.133" level="INFO">${warranty} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.133" endtime="20200308 20:37:12.133"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[27]</arg>
+</arguments>
+<assign>
+<var>${strip_warranty_active}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.134" level="INFO">${strip_warranty_active} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.133" endtime="20200308 20:37:12.134"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${strip_warranty_active}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${warranty_active_date}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.135" level="INFO">${warranty_active_date} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.134" endtime="20200308 20:37:12.135"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[28]</arg>
+</arguments>
+<assign>
+<var>${strip_check_prod}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.136" level="INFO">${strip_check_prod} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.135" endtime="20200308 20:37:12.136"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${strip_check_prod}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${check_product_date}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.136" level="INFO">${check_product_date} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.136" endtime="20200308 20:37:12.136"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[29]</arg>
+</arguments>
+<assign>
+<var>${strip_warranty_expired}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.137" level="INFO">${strip_warranty_expired} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.136" endtime="20200308 20:37:12.137"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${strip_warranty_expired}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${warranty_expired_date}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.137" level="INFO">${warranty_expired_date} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.137" endtime="20200308 20:37:12.137"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[30]</arg>
+</arguments>
+<assign>
+<var>${strip_sent_prod_date}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.137" level="INFO">${strip_sent_prod_date} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.137" endtime="20200308 20:37:12.137"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${strip_sent_prod_date}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${sent_product_date}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.138" level="INFO">${sent_product_date} = </msg>
+<status status="PASS" starttime="20200308 20:37:12.137" endtime="20200308 20:37:12.138"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>@{bm}[31]</arg>
+</arguments>
+<assign>
+<var>${strip_img}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.138" level="INFO">${strip_img} = pop up 0.png</msg>
+<status status="PASS" starttime="20200308 20:37:12.138" endtime="20200308 20:37:12.138"></status>
+</kw>
+<kw name="Strip String" library="String">
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<arguments>
+<arg>${strip_img}${SPACE}</arg>
+</arguments>
+<assign>
+<var>${case_image}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.138" level="INFO">${case_image} = pop up 0.png</msg>
+<status status="PASS" starttime="20200308 20:37:12.138" endtime="20200308 20:37:12.138"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${data}'=='ALL'</arg>
+<arg>Enter Case Information</arg>
+<arg>${remove_case}</arg>
+<arg>${priority}</arg>
+<arg>${responsible}</arg>
+<arg>${case_type}</arg>
+<arg>${status}</arg>
+<arg>${channel}</arg>
+<arg>${closed_reason}</arg>
+<arg>${account_name}</arg>
+<arg>${project}</arg>
+<arg>${case_open_date}</arg>
+<arg>${case_close_date}</arg>
+<arg>${plan_due_date}</arg>
+<arg>${waiting}</arg>
+<arg>${partner_account}</arg>
+<arg>${partner_contact}</arg>
+<arg>${description}</arg>
+<arg>${solution}</arg>
+<arg>${prevention}</arg>
+<arg>${contact_name}</arg>
+<arg>${contact_mobile}</arg>
+<arg>${contact_email}</arg>
+<arg>${serial_name}</arg>
+<arg>${product_name}</arg>
+<arg>${product_brand}</arg>
+<arg>${product_model}</arg>
+<arg>${delivery_date}</arg>
+<arg>${warranty}</arg>
+<arg>${warranty_active_date}</arg>
+<arg>${check_product_date}</arg>
+<arg>${warranty_expired_date}</arg>
+<arg>${sent_product_date}</arg>
+<arg>${case_image}</arg>
+</arguments>
+<kw name="Enter Case Information">
+<arguments>
+<arg>${remove_case}</arg>
+<arg>${priority}</arg>
+<arg>${responsible}</arg>
+<arg>${case_type}</arg>
+<arg>${status}</arg>
+<arg>${channel}</arg>
+<arg>${closed_reason}</arg>
+<arg>${account_name}</arg>
+<arg>${project}</arg>
+<arg>${case_open_date}</arg>
+<arg>${case_close_date}</arg>
+<arg>${plan_due_date}</arg>
+<arg>${waiting}</arg>
+<arg>${partner_account}</arg>
+<arg>${partner_contact}</arg>
+<arg>${description}</arg>
+<arg>${solution}</arg>
+<arg>${prevention}</arg>
+<arg>${contact_name}</arg>
+<arg>${contact_mobile}</arg>
+<arg>${contact_email}</arg>
+<arg>${serial_name}</arg>
+<arg>${product_name}</arg>
+<arg>${product_brand}</arg>
+<arg>${product_model}</arg>
+<arg>${delivery_date}</arg>
+<arg>${warranty}</arg>
+<arg>${warranty_active_date}</arg>
+<arg>${check_product_date}</arg>
+<arg>${warranty_expired_date}</arg>
+<arg>${sent_product_date}</arg>
+<arg>${case_image}</arg>
+</arguments>
+<kw name="Case Name">
+<arguments>
+<arg>${remove_case}</arg>
+</arguments>
+<kw name="Input Data To TextBox" library="misc_resources">
+<doc>This function is to locate the element of the textbox and Input the desired text in this location.</doc>
+<arguments>
+<arg>${CASE_TXTBOX}</arg>
+<arg>${remove_case}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${locator}</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:12.141" endtime="20200308 20:37:12.181"></status>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>${string}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:12.182" level="INFO">Typing text 'Business Development and PM' into text field 'name:ticket_title'.</msg>
+<status status="PASS" starttime="20200308 20:37:12.182" endtime="20200308 20:37:12.381"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:12.140" endtime="20200308 20:37:12.381"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:12.140" endtime="20200308 20:37:12.381"></status>
+</kw>
+<kw name="Priority Case">
+<arguments>
+<arg>${priority}</arg>
+</arguments>
+<kw name="Get WebElements" library="SeleniumLibrary">
+<doc>Returns a list of WebElement objects matching the ``locator``.</doc>
+<arguments>
+<arg>//select[@name="ticket_important"]</arg>
+</arguments>
+<assign>
+<var>${prior}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.395" level="INFO">${prior} = [&lt;selenium.webdriver.remote.webelement.WebElement (session="70ee5b0c99d420eb30230a2abdee4a1d", element="ad2b1688-c35e-469c-8981-650f263b5b8e")&gt;]</msg>
+<status status="PASS" starttime="20200308 20:37:12.382" endtime="20200308 20:37:12.395"></status>
+</kw>
+<kw name="${item} IN [ @{prior} ]" type="for">
+<kw name="${item} = &lt;selenium.webdriver.remote.webelement.WebElement (session=&quot;70ee5b0c99d420eb30230a2abdee4a1d&quot;, element=&quot;ad2b1688-c35e-469c-8981-650f263b5b8e&quot;)&gt;" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${item.text}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:12.420" level="INFO">                    
+                
+                                                                 
+                                --None--
+                        
+                        
+                                                                    
+                                Low
+                        
+                        
+                                                                    
+                                Medium
+                        
+                        
+                                                                    
+                                High
+                        
+                        
+                                                                    
+                                Urgent
+                        
+                        
+                    
+
+                
+
+                   </msg>
+<status status="PASS" starttime="20200308 20:37:12.395" endtime="20200308 20:37:12.420"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:12.395" endtime="20200308 20:37:12.420"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:12.395" endtime="20200308 20:37:12.420"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${priority}"=="None"</arg>
+<arg>Click Element</arg>
+<arg>//select[@name="ticket_important"]/option[@value="--${priority}--"]</arg>
+<arg>ELSE</arg>
+<arg>Select Option From Dropdown List</arg>
+<arg>${PRIORITY_LOC}</arg>
+<arg>${priority}</arg>
+</arguments>
+<kw name="Select Option From Dropdown List" library="misc_resources">
+<doc>Example in Status from Sales Visit : Plan, Complete, Cancel</doc>
+<arguments>
+<arg>${PRIORITY_LOC}</arg>
+<arg>${priority}</arg>
+</arguments>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>//select[@name="${search}"]/option[@value="${option_value}"]</arg>
+</arguments>
+<msg timestamp="20200308 20:37:12.421" level="INFO">Clicking element '//select[@name="ticket_important"]/option[@value="Urgent"]'.</msg>
+<status status="PASS" starttime="20200308 20:37:12.421" endtime="20200308 20:37:12.457"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:12.421" endtime="20200308 20:37:12.457"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:12.420" endtime="20200308 20:37:12.457"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:12.381" endtime="20200308 20:37:12.458"></status>
+</kw>
+<kw name="Responsible Person">
+<doc>This is to set the person to assign Case</doc>
+<arguments>
+<arg>${responsible}</arg>
+</arguments>
+<kw name="Radio Button" library="misc_resources">
+<doc>This Function is to select the desired option using radio button</doc>
+<arguments>
+<arg>${responsible}</arg>
+</arguments>
+<kw name="Get Element Count" library="SeleniumLibrary">
+<doc>Returns the number of elements matching ``locator``.</doc>
+<arguments>
+<arg>//select[@name="assigned_user_id"]/option[contains(text(), "${select_option}")]</arg>
+</arguments>
+<assign>
+<var>${xpath_user}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.467" level="INFO">${xpath_user} = 0</msg>
+<status status="PASS" starttime="20200308 20:37:12.458" endtime="20200308 20:37:12.468"></status>
+</kw>
+<kw name="Get Element Count" library="SeleniumLibrary">
+<doc>Returns the number of elements matching ``locator``.</doc>
+<arguments>
+<arg>//select[@name="assigned_group_id"]/option[contains(text(), "${select_option}")]</arg>
+</arguments>
+<assign>
+<var>${xpath_group}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.477" level="INFO">${xpath_group} = 1</msg>
+<status status="PASS" starttime="20200308 20:37:12.468" endtime="20200308 20:37:12.477"></status>
+</kw>
+<kw name="Run Keyword And Return If" library="BuiltIn">
+<doc>Runs the specified keyword and returns from the enclosing user keyword.</doc>
+<arguments>
+<arg>${xpath_user}</arg>
+<arg>Run Keywords</arg>
+<arg>Select Radio Button</arg>
+<arg>assigntype</arg>
+<arg>U</arg>
+<arg>AND</arg>
+<arg>Click Element</arg>
+<arg>//select[@name="assigned_user_id"]/option[contains(text(), "${select_option}")]</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:12.477" endtime="20200308 20:37:12.477"></status>
+</kw>
+<kw name="Run Keyword And Return If" library="BuiltIn">
+<doc>Runs the specified keyword and returns from the enclosing user keyword.</doc>
+<arguments>
+<arg>${xpath_group}</arg>
+<arg>Run Keywords</arg>
+<arg>Select Radio Button</arg>
+<arg>assigntype</arg>
+<arg>T</arg>
+<arg>AND</arg>
+<arg>Wait Until Element Is Visible</arg>
+<arg>//select[@name="assigned_group_id"]/option[contains(text(), "${select_option}")]</arg>
+<arg>AND</arg>
+<arg>Click Element</arg>
+<arg>//select[@name="assigned_group_id"]/option[contains(text(), "${select_option}")]</arg>
+</arguments>
+<kw name="Run Keywords" library="BuiltIn">
+<doc>Executes all the given keywords in a sequence.</doc>
+<arguments>
+<arg>Select Radio Button</arg>
+<arg>assigntype</arg>
+<arg>T</arg>
+<arg>AND</arg>
+<arg>Wait Until Element Is Visible</arg>
+<arg>//select[@name="assigned_group_id"]/option[contains(text(), "${select_option}")]</arg>
+<arg>AND</arg>
+<arg>Click Element</arg>
+<arg>//select[@name="assigned_group_id"]/option[contains(text(), "${select_option}")]</arg>
+</arguments>
+<kw name="Select Radio Button" library="SeleniumLibrary">
+<doc>Sets the radio button group ``group_name`` to ``value``.</doc>
+<arguments>
+<arg>assigntype</arg>
+<arg>T</arg>
+</arguments>
+<msg timestamp="20200308 20:37:12.478" level="INFO">Selecting 'T' from radio button 'assigntype'.</msg>
+<status status="PASS" starttime="20200308 20:37:12.478" endtime="20200308 20:37:12.532"></status>
+</kw>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>//select[@name="assigned_group_id"]/option[contains(text(), "${select_option}")]</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:12.532" endtime="20200308 20:37:12.547"></status>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>//select[@name="assigned_group_id"]/option[contains(text(), "${select_option}")]</arg>
+</arguments>
+<msg timestamp="20200308 20:37:12.549" level="INFO">Clicking element '//select[@name="assigned_group_id"]/option[contains(text(), "Business Development and PM")]'.</msg>
+<status status="PASS" starttime="20200308 20:37:12.549" endtime="20200308 20:37:12.577"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:12.478" endtime="20200308 20:37:12.577"></status>
+</kw>
+<msg timestamp="20200308 20:37:12.577" level="INFO">Returning from the enclosing user keyword.</msg>
+<status status="PASS" starttime="20200308 20:37:12.478" endtime="20200308 20:37:12.577"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:12.458" endtime="20200308 20:37:12.577"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:12.458" endtime="20200308 20:37:12.577"></status>
+</kw>
+<kw name="Case Type">
+<arguments>
+<arg>${case_type}</arg>
+</arguments>
+<kw name="Get WebElements" library="SeleniumLibrary">
+<doc>Returns a list of WebElement objects matching the ``locator``.</doc>
+<arguments>
+<arg>//select[@name="ticket_type"]</arg>
+</arguments>
+<assign>
+<var>${ticket}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.589" level="INFO">${ticket} = [&lt;selenium.webdriver.remote.webelement.WebElement (session="70ee5b0c99d420eb30230a2abdee4a1d", element="fb68d52f-a953-426d-8f9b-496fa75d4679")&gt;]</msg>
+<status status="PASS" starttime="20200308 20:37:12.578" endtime="20200308 20:37:12.589"></status>
+</kw>
+<kw name="${item} IN [ @{ticket} ]" type="for">
+<kw name="${item} = &lt;selenium.webdriver.remote.webelement.WebElement (session=&quot;70ee5b0c99d420eb30230a2abdee4a1d&quot;, element=&quot;fb68d52f-a953-426d-8f9b-496fa75d4679&quot;)&gt;" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${item.text}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:12.606" level="INFO">                    
+                
+                                                                 
+                                --None--
+                        
+                        
+                                                                    
+                                แจ้งปัญหา
+                        
+                        
+                                                                    
+                                ร้องเรียน
+                        
+                        
+                                                                    
+                                แจ้งซ่อม
+                        
+                        
+                                                                    
+                                ร้องขอสนับสนุน
+                        
+                        
+                                                                    
+                                แจ้งเคลม
+                        
+                        
+                                                                    
+                                อื่นๆ
+                        
+                        
+                    
+
+                
+
+                   </msg>
+<status status="PASS" starttime="20200308 20:37:12.590" endtime="20200308 20:37:12.606"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:12.590" endtime="20200308 20:37:12.606"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:12.589" endtime="20200308 20:37:12.606"></status>
+</kw>
+<kw name="Select Option From Dropdown List" library="misc_resources">
+<doc>Example in Status from Sales Visit : Plan, Complete, Cancel</doc>
+<arguments>
+<arg>${CASE_TYPE_LOC}</arg>
+<arg>${case_type}</arg>
+</arguments>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>//select[@name="${search}"]/option[@value="${option_value}"]</arg>
+</arguments>
+<msg timestamp="20200308 20:37:12.607" level="INFO">Clicking element '//select[@name="ticket_type"]/option[@value="แจ้งซ่อม"]'.</msg>
+<status status="PASS" starttime="20200308 20:37:12.606" endtime="20200308 20:37:12.642"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:12.606" endtime="20200308 20:37:12.642"></status>
+</kw>
+<kw name="Wait Until Page Contains Element" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<arguments>
+<arg>//select[@name="${CASE_TYPE_LOC}"]/option[@value="${case_type}"]</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:12.642" endtime="20200308 20:37:12.648"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:12.577" endtime="20200308 20:37:12.649"></status>
+</kw>
+<kw name="Status">
+<arguments>
+<arg>${status}</arg>
+</arguments>
+<kw name="Get WebElements" library="SeleniumLibrary">
+<doc>Returns a list of WebElement objects matching the ``locator``.</doc>
+<arguments>
+<arg>//select[@name="ticketstatus"]</arg>
+</arguments>
+<assign>
+<var>${status_case}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.661" level="INFO">${status_case} = [&lt;selenium.webdriver.remote.webelement.WebElement (session="70ee5b0c99d420eb30230a2abdee4a1d", element="7a7d3310-366f-48e3-8f2c-7a5b5f62499d")&gt;]</msg>
+<status status="PASS" starttime="20200308 20:37:12.649" endtime="20200308 20:37:12.661"></status>
+</kw>
+<kw name="${item} IN [ @{status_case} ]" type="for">
+<kw name="${item} = &lt;selenium.webdriver.remote.webelement.WebElement (session=&quot;70ee5b0c99d420eb30230a2abdee4a1d&quot;, element=&quot;7a7d3310-366f-48e3-8f2c-7a5b5f62499d&quot;)&gt;" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${item.text}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:12.678" level="INFO">                    
+                
+                                                                 
+                                เปิดงาน
+                        
+                        
+                                                                    
+                                ส่งต่อ
+                        
+                        
+                                                                    
+                                รับงาน
+                        
+                        
+                                                                    
+                                เช็คอิน
+                        
+                        
+                                                                    
+                                อยู่ระหว่างดำเนินการ
+                        
+                        
+                                                                    
+                                ปิดงาน
+                        
+                        
+                                                                    
+                                ยกเลิก
+                        
+                        
+                    
+
+                
+
+                   </msg>
+<status status="PASS" starttime="20200308 20:37:12.661" endtime="20200308 20:37:12.678"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:12.661" endtime="20200308 20:37:12.678"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:12.661" endtime="20200308 20:37:12.678"></status>
+</kw>
+<kw name="Select Option From Dropdown List" library="misc_resources">
+<doc>Example in Status from Sales Visit : Plan, Complete, Cancel</doc>
+<arguments>
+<arg>${STATUS_LOC}</arg>
+<arg>${status}</arg>
+</arguments>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>//select[@name="${search}"]/option[@value="${option_value}"]</arg>
+</arguments>
+<msg timestamp="20200308 20:37:12.678" level="INFO">Clicking element '//select[@name="ticketstatus"]/option[@value="รับงาน"]'.</msg>
+<status status="PASS" starttime="20200308 20:37:12.678" endtime="20200308 20:37:12.720"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:12.678" endtime="20200308 20:37:12.720"></status>
+</kw>
+<kw name="Wait Until Page Contains Element" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<arguments>
+<arg>//select[@name="${STATUS_LOC}"]/option[@value="${status}"]</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:12.721" endtime="20200308 20:37:12.731"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:12.649" endtime="20200308 20:37:12.731"></status>
+</kw>
+<kw name="Channel">
+<arguments>
+<arg>${channel}</arg>
+</arguments>
+<kw name="Get WebElements" library="SeleniumLibrary">
+<doc>Returns a list of WebElement objects matching the ``locator``.</doc>
+<arguments>
+<arg>//select[@name="channel"]</arg>
+</arguments>
+<assign>
+<var>${chan}</var>
+</assign>
+<msg timestamp="20200308 20:37:12.743" level="INFO">${chan} = [&lt;selenium.webdriver.remote.webelement.WebElement (session="70ee5b0c99d420eb30230a2abdee4a1d", element="b220cf20-776e-4faa-b60b-dd49cb91ff22")&gt;]</msg>
+<status status="PASS" starttime="20200308 20:37:12.731" endtime="20200308 20:37:12.743"></status>
+</kw>
+<kw name="${item} IN [ @{chan} ]" type="for">
+<kw name="${item} = &lt;selenium.webdriver.remote.webelement.WebElement (session=&quot;70ee5b0c99d420eb30230a2abdee4a1d&quot;, element=&quot;b220cf20-776e-4faa-b60b-dd49cb91ff22&quot;)&gt;" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${item.text}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:12.758" level="INFO">                    
+                
+                                                                 
+                                --None--
+                        
+                        
+                                                                    
+                                E-mail
+                        
+                        
+                                                                    
+                                Call
+                        
+                        
+                                                                    
+                                Line
+                        
+                        
+                                                                    
+                                Line-Official
+                        
+                        
+                    
+
+                
+
+                   </msg>
+<status status="PASS" starttime="20200308 20:37:12.743" endtime="20200308 20:37:12.759"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:12.743" endtime="20200308 20:37:12.759"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:12.743" endtime="20200308 20:37:12.759"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${channel}"=="None"</arg>
+<arg>Click Element</arg>
+<arg>//select[@name="channel"]/option[@value="--${channel}--"]</arg>
+<arg>ELSE IF</arg>
+<arg>"${channel}"=="${EMPTY}"</arg>
+<arg>Click Element</arg>
+<arg>//select[@name="channel"]/option[@value="--None--"]</arg>
+<arg>ELSE</arg>
+<arg>Select Option From Dropdown List</arg>
+<arg>${CHANNEL_LOC}</arg>
+<arg>${channel}</arg>
+</arguments>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>//select[@name="channel"]/option[@value="--None--"]</arg>
+</arguments>
+<msg timestamp="20200308 20:37:12.759" level="INFO">Clicking element '//select[@name="channel"]/option[@value="--None--"]'.</msg>
+<status status="PASS" starttime="20200308 20:37:12.759" endtime="20200308 20:37:12.791"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:12.759" endtime="20200308 20:37:12.791"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:12.731" endtime="20200308 20:37:12.791"></status>
+</kw>
+<kw name="Account Name">
+<arguments>
+<arg>${account_name}</arg>
+</arguments>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${account_name}"!="${EMPTY}"</arg>
+<arg>Run Keywords</arg>
+<arg>Scroll Down Page From The Browser</arg>
+<arg>AND</arg>
+<arg>Click Plus Button</arg>
+<arg>${ACCOUNT_NAME_ADD_BTN}</arg>
+<arg>AND</arg>
+<arg>Focus New Browser Window</arg>
+<arg>AND</arg>
+<arg>Select Data On Basic Search Mode</arg>
+<arg>${DROPDOWN_SEARCH_LOC}</arg>
+<arg>${ACCOUNT_NAME_SEARCH}</arg>
+<arg>${account_name}</arg>
+<arg>AND</arg>
+<arg>Exit New Window And Focus Main Browser</arg>
+<arg>AND</arg>
+<arg>Verify Added Information</arg>
+<arg>${account_name}</arg>
+<arg>${ACCOUNT_NAME_LABEL}</arg>
+<arg>AND</arg>
+<arg>Click Erase Button</arg>
+<arg>${ACCOUNT_NAME_DEL_BTN}</arg>
+<arg>AND</arg>
+<arg>Verify Deleted Information</arg>
+<arg>${ACCOUNT_NAME_LABEL}</arg>
+<arg>AND</arg>
+<arg>Click Plus Button</arg>
+<arg>${ACCOUNT_NAME_ADD_BTN}</arg>
+<arg>AND</arg>
+<arg>Focus New Browser Window</arg>
+<arg>AND</arg>
+<arg>Select Data On Basic Search Mode</arg>
+<arg>${DROPDOWN_SEARCH_LOC}</arg>
+<arg>${ACCOUNT_NAME_SEARCH}</arg>
+<arg>${account_name}</arg>
+<arg>AND</arg>
+<arg>Exit New Window And Focus Main Browser</arg>
+<arg>AND</arg>
+<arg>Verify Added Information</arg>
+<arg>${account_name}</arg>
+<arg>${ACCOUNT_NAME_LABEL}</arg>
+</arguments>
+<kw name="Run Keywords" library="BuiltIn">
+<doc>Executes all the given keywords in a sequence.</doc>
+<arguments>
+<arg>Scroll Down Page From The Browser</arg>
+<arg>AND</arg>
+<arg>Click Plus Button</arg>
+<arg>${ACCOUNT_NAME_ADD_BTN}</arg>
+<arg>AND</arg>
+<arg>Focus New Browser Window</arg>
+<arg>AND</arg>
+<arg>Select Data On Basic Search Mode</arg>
+<arg>${DROPDOWN_SEARCH_LOC}</arg>
+<arg>${ACCOUNT_NAME_SEARCH}</arg>
+<arg>${account_name}</arg>
+<arg>AND</arg>
+<arg>Exit New Window And Focus Main Browser</arg>
+<arg>AND</arg>
+<arg>Verify Added Information</arg>
+<arg>${account_name}</arg>
+<arg>${ACCOUNT_NAME_LABEL}</arg>
+<arg>AND</arg>
+<arg>Click Erase Button</arg>
+<arg>${ACCOUNT_NAME_DEL_BTN}</arg>
+<arg>AND</arg>
+<arg>Verify Deleted Information</arg>
+<arg>${ACCOUNT_NAME_LABEL}</arg>
+<arg>AND</arg>
+<arg>Click Plus Button</arg>
+<arg>${ACCOUNT_NAME_ADD_BTN}</arg>
+<arg>AND</arg>
+<arg>Focus New Browser Window</arg>
+<arg>AND</arg>
+<arg>Select Data On Basic Search Mode</arg>
+<arg>${DROPDOWN_SEARCH_LOC}</arg>
+<arg>${ACCOUNT_NAME_SEARCH}</arg>
+<arg>${account_name}</arg>
+<arg>AND</arg>
+<arg>Exit New Window And Focus Main Browser</arg>
+<arg>AND</arg>
+<arg>Verify Added Information</arg>
+<arg>${account_name}</arg>
+<arg>${ACCOUNT_NAME_LABEL}</arg>
+</arguments>
+<kw name="Scroll Down Page From The Browser" library="misc_resources">
+<doc>This function will perform to scroll down to bottom.</doc>
+<kw name="Execute Javascript" library="SeleniumLibrary">
+<doc>Executes the given JavaScript code with possible arguments.</doc>
+<arguments>
+<arg>window.scrollTo(0,document.body.scrollHeight)</arg>
+</arguments>
+<msg timestamp="20200308 20:37:12.794" level="INFO">Executing JavaScript:
+window.scrollTo(0,document.body.scrollHeight)
+Without any arguments.</msg>
+<status status="PASS" starttime="20200308 20:37:12.794" endtime="20200308 20:37:12.798"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:12.794" endtime="20200308 20:37:12.798"></status>
+</kw>
+<kw name="Click Plus Button" library="misc_resources">
+<doc>This function is to click the "+" button</doc>
+<arguments>
+<arg>${ACCOUNT_NAME_ADD_BTN}</arg>
+</arguments>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>${plus_button}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:12.798" level="INFO">Clicking element '//tr[17]//td[4]//table[1]//tbody[1]//tr[1]//td[2]//img[1]'.</msg>
+<status status="PASS" starttime="20200308 20:37:12.798" endtime="20200308 20:37:12.919"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:12.798" endtime="20200308 20:37:12.919"></status>
+</kw>
+<kw name="Focus New Browser Window" library="misc_resources">
+<doc>To focus and execute new pop-up browser window</doc>
+<kw name="Switch Window" library="SeleniumLibrary">
+<doc>Switches to browser window matching ``locator``.</doc>
+<arguments>
+<arg>NEW</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:12.921" endtime="20200308 20:37:12.929"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:12.920" endtime="20200308 20:37:12.930"></status>
+</kw>
+<kw name="Select Data On Basic Search Mode" library="misc_resources">
+<doc>This Function is to Add some data. It has a plus button and erase Button</doc>
+<arguments>
+<arg>${DROPDOWN_SEARCH_LOC}</arg>
+<arg>${ACCOUNT_NAME_SEARCH}</arg>
+<arg>${account_name}</arg>
+</arguments>
+<kw name="Select Option From Dropdown List" library="misc_resources">
+<doc>Example in Status from Sales Visit : Plan, Complete, Cancel</doc>
+<arguments>
+<arg>${search}</arg>
+<arg>${option_value}</arg>
+</arguments>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>//select[@name="${search}"]/option[@value="${option_value}"]</arg>
+</arguments>
+<msg timestamp="20200308 20:37:12.931" level="INFO">Clicking element '//select[@name="search_field"]/option[@value="accountname"]'.</msg>
+<status status="PASS" starttime="20200308 20:37:12.931" endtime="20200308 20:37:16.986"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:12.930" endtime="20200308 20:37:16.987"></status>
+</kw>
+<kw name="Input Text To Search" library="misc_resources">
+<doc>This function is to input keywords to search textbox.</doc>
+<arguments>
+<arg>${string_reference}</arg>
+</arguments>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>name:search_text</arg>
+<arg>${search_text}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:16.987" level="INFO">Typing text 'A.N.N. Service Limited Partnership' into text field 'name:search_text'.</msg>
+<status status="PASS" starttime="20200308 20:37:16.987" endtime="20200308 20:37:17.113"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:16.987" endtime="20200308 20:37:17.113"></status>
+</kw>
+<kw name="Click Search Button" library="misc_resources">
+<kw name="Get Element Count" library="SeleniumLibrary">
+<doc>Returns the number of elements matching ``locator``.</doc>
+<arguments>
+<arg>name:search</arg>
+</arguments>
+<assign>
+<var>${xpath_search}</var>
+</assign>
+<msg timestamp="20200308 20:37:17.122" level="INFO">${xpath_search} = 1</msg>
+<status status="PASS" starttime="20200308 20:37:17.113" endtime="20200308 20:37:17.122"></status>
+</kw>
+<kw name="Get Element Count" library="SeleniumLibrary">
+<doc>Returns the number of elements matching ``locator``.</doc>
+<arguments>
+<arg>name:submit</arg>
+</arguments>
+<assign>
+<var>${xpath_submit}</var>
+</assign>
+<msg timestamp="20200308 20:37:17.132" level="INFO">${xpath_submit} = 0</msg>
+<status status="PASS" starttime="20200308 20:37:17.123" endtime="20200308 20:37:17.133"></status>
+</kw>
+<kw name="Run Keyword And Return If" library="BuiltIn">
+<doc>Runs the specified keyword and returns from the enclosing user keyword.</doc>
+<arguments>
+<arg>${xpath_search}</arg>
+<arg>Click Element</arg>
+<arg>name:search</arg>
+</arguments>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>name:search</arg>
+</arguments>
+<msg timestamp="20200308 20:37:17.135" level="INFO">Clicking element 'name:search'.</msg>
+<status status="PASS" starttime="20200308 20:37:17.134" endtime="20200308 20:37:17.186"></status>
+</kw>
+<msg timestamp="20200308 20:37:17.186" level="INFO">Returning from the enclosing user keyword.</msg>
+<status status="PASS" starttime="20200308 20:37:17.133" endtime="20200308 20:37:17.186"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:17.113" endtime="20200308 20:37:17.186"></status>
+</kw>
+<kw name="Wait Until Page Contains" library="SeleniumLibrary">
+<doc>Waits until ``text`` appears on the current page.</doc>
+<arguments>
+<arg>${string_reference}</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:17.187" endtime="20200308 20:37:17.197"></status>
+</kw>
+<kw name="Select The List Found" library="misc_resources">
+<doc>This function is to click the link element</doc>
+<arguments>
+<arg>${string_reference}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>//a[@href="javascript:window.close();"][contains(text(), '${found_list}')]</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:17.198" endtime="20200308 20:37:17.216"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>3</arg>
+</arguments>
+<msg timestamp="20200308 20:37:20.219" level="INFO">Slept 3 seconds</msg>
+<status status="PASS" starttime="20200308 20:37:17.217" endtime="20200308 20:37:20.219"></status>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>//a[@href="javascript:window.close();"][contains(text(), '${found_list}')]</arg>
+</arguments>
+<msg timestamp="20200308 20:37:20.219" level="INFO">Clicking element '//a[@href="javascript:window.close();"][contains(text(), 'A.N.N. Service Limited Partnership')]'.</msg>
+<status status="PASS" starttime="20200308 20:37:20.219" endtime="20200308 20:37:20.268"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:17.197" endtime="20200308 20:37:20.268"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:12.930" endtime="20200308 20:37:20.268"></status>
+</kw>
+<kw name="Exit New Window And Focus Main Browser" library="misc_resources">
+<doc>To Exit pop-up browser window and go back to the main browser</doc>
+<kw name="Switch Window" library="SeleniumLibrary">
+<doc>Switches to browser window matching ``locator``.</doc>
+<status status="PASS" starttime="20200308 20:37:20.269" endtime="20200308 20:37:20.295"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:20.269" endtime="20200308 20:37:20.295"></status>
+</kw>
+<kw name="Verify Added Information" library="misc_resources">
+<doc>This function is to check the added account name, contact name, project name.</doc>
+<arguments>
+<arg>${account_name}</arg>
+<arg>${ACCOUNT_NAME_LABEL}</arg>
+</arguments>
+<kw name="Get Value" library="SeleniumLibrary">
+<doc>Returns the value attribute of the element identified by ``locator``.</doc>
+<arguments>
+<arg>//input[@name="${variable}"]</arg>
+</arguments>
+<assign>
+<var>${actual}</var>
+</assign>
+<msg timestamp="20200308 20:37:20.317" level="INFO">${actual} = A.N.N. Service Limited Partnership</msg>
+<status status="PASS" starttime="20200308 20:37:20.295" endtime="20200308 20:37:20.317"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>Contains text ${actual}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:20.317" level="INFO">Contains text A.N.N. Service Limited Partnership</msg>
+<status status="PASS" starttime="20200308 20:37:20.317" endtime="20200308 20:37:20.317"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:20.295" endtime="20200308 20:37:20.317"></status>
+</kw>
+<kw name="Click Erase Button" library="misc_resources">
+<doc>This function is to erase the added account name, contact name, etc. example in creating sales visit.</doc>
+<arguments>
+<arg>${ACCOUNT_NAME_DEL_BTN}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${account_delete}</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:20.318" endtime="20200308 20:37:20.340"></status>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>${account_delete}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:20.340" level="INFO">Clicking element '//tr[17]//td[4]//table[1]//tbody[1]//tr[1]//td[3]//input[1]'.</msg>
+<status status="PASS" starttime="20200308 20:37:20.340" endtime="20200308 20:37:20.382"></status>
+</kw>
+<kw name="Set Selenium Timeout" library="SeleniumLibrary">
+<doc>Sets the timeout that is used by various keywords.</doc>
+<arguments>
+<arg>5 seconds</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:20.382" endtime="20200308 20:37:20.383"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:20.317" endtime="20200308 20:37:20.383"></status>
+</kw>
+<kw name="Verify Deleted Information" library="misc_resources">
+<doc>This function is to check if successfull deleting account after clicking the erase button.</doc>
+<arguments>
+<arg>${ACCOUNT_NAME_LABEL}</arg>
+</arguments>
+<kw name="Get Value" library="SeleniumLibrary">
+<doc>Returns the value attribute of the element identified by ``locator``.</doc>
+<arguments>
+<arg>//input[@name="${variable}"]</arg>
+</arguments>
+<assign>
+<var>${actual}</var>
+</assign>
+<msg timestamp="20200308 20:37:20.397" level="INFO">${actual} = </msg>
+<status status="PASS" starttime="20200308 20:37:20.384" endtime="20200308 20:37:20.397"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${actual}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:20.397" level="INFO"></msg>
+<status status="PASS" starttime="20200308 20:37:20.397" endtime="20200308 20:37:20.397"></status>
+</kw>
+<kw name="Should Be Empty" library="BuiltIn">
+<doc>Verifies that the given item is empty.</doc>
+<arguments>
+<arg>${actual}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:20.397" level="INFO">Length is 0</msg>
+<status status="PASS" starttime="20200308 20:37:20.397" endtime="20200308 20:37:20.397"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:20.383" endtime="20200308 20:37:20.397"></status>
+</kw>
+<kw name="Click Plus Button" library="misc_resources">
+<doc>This function is to click the "+" button</doc>
+<arguments>
+<arg>${ACCOUNT_NAME_ADD_BTN}</arg>
+</arguments>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>${plus_button}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:20.398" level="INFO">Clicking element '//tr[17]//td[4]//table[1]//tbody[1]//tr[1]//td[2]//img[1]'.</msg>
+<status status="PASS" starttime="20200308 20:37:20.398" endtime="20200308 20:37:20.485"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:20.398" endtime="20200308 20:37:20.486"></status>
+</kw>
+<kw name="Focus New Browser Window" library="misc_resources">
+<doc>To focus and execute new pop-up browser window</doc>
+<kw name="Switch Window" library="SeleniumLibrary">
+<doc>Switches to browser window matching ``locator``.</doc>
+<arguments>
+<arg>NEW</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:20.486" endtime="20200308 20:37:20.494"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:20.486" endtime="20200308 20:37:20.494"></status>
+</kw>
+<kw name="Select Data On Basic Search Mode" library="misc_resources">
+<doc>This Function is to Add some data. It has a plus button and erase Button</doc>
+<arguments>
+<arg>${DROPDOWN_SEARCH_LOC}</arg>
+<arg>${ACCOUNT_NAME_SEARCH}</arg>
+<arg>${account_name}</arg>
+</arguments>
+<kw name="Select Option From Dropdown List" library="misc_resources">
+<doc>Example in Status from Sales Visit : Plan, Complete, Cancel</doc>
+<arguments>
+<arg>${search}</arg>
+<arg>${option_value}</arg>
+</arguments>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>//select[@name="${search}"]/option[@value="${option_value}"]</arg>
+</arguments>
+<msg timestamp="20200308 20:37:20.496" level="INFO">Clicking element '//select[@name="search_field"]/option[@value="accountname"]'.</msg>
+<status status="PASS" starttime="20200308 20:37:20.495" endtime="20200308 20:37:24.580"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:20.495" endtime="20200308 20:37:24.580"></status>
+</kw>
+<kw name="Input Text To Search" library="misc_resources">
+<doc>This function is to input keywords to search textbox.</doc>
+<arguments>
+<arg>${string_reference}</arg>
+</arguments>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>name:search_text</arg>
+<arg>${search_text}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:24.581" level="INFO">Typing text 'A.N.N. Service Limited Partnership' into text field 'name:search_text'.</msg>
+<status status="PASS" starttime="20200308 20:37:24.580" endtime="20200308 20:37:24.702"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:24.580" endtime="20200308 20:37:24.702"></status>
+</kw>
+<kw name="Click Search Button" library="misc_resources">
+<kw name="Get Element Count" library="SeleniumLibrary">
+<doc>Returns the number of elements matching ``locator``.</doc>
+<arguments>
+<arg>name:search</arg>
+</arguments>
+<assign>
+<var>${xpath_search}</var>
+</assign>
+<msg timestamp="20200308 20:37:24.708" level="INFO">${xpath_search} = 1</msg>
+<status status="PASS" starttime="20200308 20:37:24.703" endtime="20200308 20:37:24.709"></status>
+</kw>
+<kw name="Get Element Count" library="SeleniumLibrary">
+<doc>Returns the number of elements matching ``locator``.</doc>
+<arguments>
+<arg>name:submit</arg>
+</arguments>
+<assign>
+<var>${xpath_submit}</var>
+</assign>
+<msg timestamp="20200308 20:37:24.715" level="INFO">${xpath_submit} = 0</msg>
+<status status="PASS" starttime="20200308 20:37:24.709" endtime="20200308 20:37:24.715"></status>
+</kw>
+<kw name="Run Keyword And Return If" library="BuiltIn">
+<doc>Runs the specified keyword and returns from the enclosing user keyword.</doc>
+<arguments>
+<arg>${xpath_search}</arg>
+<arg>Click Element</arg>
+<arg>name:search</arg>
+</arguments>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>name:search</arg>
+</arguments>
+<msg timestamp="20200308 20:37:24.716" level="INFO">Clicking element 'name:search'.</msg>
+<status status="PASS" starttime="20200308 20:37:24.716" endtime="20200308 20:37:24.775"></status>
+</kw>
+<msg timestamp="20200308 20:37:24.776" level="INFO">Returning from the enclosing user keyword.</msg>
+<status status="PASS" starttime="20200308 20:37:24.716" endtime="20200308 20:37:24.776"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:24.703" endtime="20200308 20:37:24.776"></status>
+</kw>
+<kw name="Wait Until Page Contains" library="SeleniumLibrary">
+<doc>Waits until ``text`` appears on the current page.</doc>
+<arguments>
+<arg>${string_reference}</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:24.776" endtime="20200308 20:37:24.782"></status>
+</kw>
+<kw name="Select The List Found" library="misc_resources">
+<doc>This function is to click the link element</doc>
+<arguments>
+<arg>${string_reference}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>//a[@href="javascript:window.close();"][contains(text(), '${found_list}')]</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:24.783" endtime="20200308 20:37:24.799"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>3</arg>
+</arguments>
+<msg timestamp="20200308 20:37:27.801" level="INFO">Slept 3 seconds</msg>
+<status status="PASS" starttime="20200308 20:37:24.799" endtime="20200308 20:37:27.801"></status>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>//a[@href="javascript:window.close();"][contains(text(), '${found_list}')]</arg>
+</arguments>
+<msg timestamp="20200308 20:37:27.802" level="INFO">Clicking element '//a[@href="javascript:window.close();"][contains(text(), 'A.N.N. Service Limited Partnership')]'.</msg>
+<status status="PASS" starttime="20200308 20:37:27.801" endtime="20200308 20:37:27.854"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:24.782" endtime="20200308 20:37:27.855"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:20.494" endtime="20200308 20:37:27.855"></status>
+</kw>
+<kw name="Exit New Window And Focus Main Browser" library="misc_resources">
+<doc>To Exit pop-up browser window and go back to the main browser</doc>
+<kw name="Switch Window" library="SeleniumLibrary">
+<doc>Switches to browser window matching ``locator``.</doc>
+<status status="PASS" starttime="20200308 20:37:27.856" endtime="20200308 20:37:27.881"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:27.855" endtime="20200308 20:37:27.882"></status>
+</kw>
+<kw name="Verify Added Information" library="misc_resources">
+<doc>This function is to check the added account name, contact name, project name.</doc>
+<arguments>
+<arg>${account_name}</arg>
+<arg>${ACCOUNT_NAME_LABEL}</arg>
+</arguments>
+<kw name="Get Value" library="SeleniumLibrary">
+<doc>Returns the value attribute of the element identified by ``locator``.</doc>
+<arguments>
+<arg>//input[@name="${variable}"]</arg>
+</arguments>
+<assign>
+<var>${actual}</var>
+</assign>
+<msg timestamp="20200308 20:37:27.899" level="INFO">${actual} = A.N.N. Service Limited Partnership</msg>
+<status status="PASS" starttime="20200308 20:37:27.883" endtime="20200308 20:37:27.899"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>Contains text ${actual}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:27.899" level="INFO">Contains text A.N.N. Service Limited Partnership</msg>
+<status status="PASS" starttime="20200308 20:37:27.899" endtime="20200308 20:37:27.899"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:27.882" endtime="20200308 20:37:27.899"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:12.793" endtime="20200308 20:37:27.900"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:12.793" endtime="20200308 20:37:27.900"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${account_name}"=="${EMPTY}"</arg>
+<arg>Run Keywords</arg>
+<arg>Click Erase Button</arg>
+<arg>${ACCOUNT_NAME_DEL_BTN}</arg>
+<arg>AND</arg>
+<arg>Verify Deleted Information</arg>
+<arg>${ACCOUNT_NAME_LABEL}</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:27.900" endtime="20200308 20:37:27.900"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:12.791" endtime="20200308 20:37:27.901"></status>
+</kw>
+<kw name="Project Name">
+<arguments>
+<arg>${project}</arg>
+</arguments>
+<kw name="Get WebElements" library="SeleniumLibrary">
+<doc>Returns a list of WebElement objects matching the ``locator``.</doc>
+<arguments>
+<arg>//a[@href="javascript:window.close();"]</arg>
+</arguments>
+<assign>
+<var>${get}</var>
+</assign>
+<msg timestamp="20200308 20:37:27.911" level="INFO">${get} = []</msg>
+<status status="PASS" starttime="20200308 20:37:27.901" endtime="20200308 20:37:27.911"></status>
+</kw>
+<kw name="${item} IN [ @{get} ]" type="for">
+<status status="PASS" starttime="20200308 20:37:27.911" endtime="20200308 20:37:27.911"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${project}"!="${EMPTY}"</arg>
+<arg>Run Keywords</arg>
+<arg>Scroll Down Page From The Browser</arg>
+<arg>AND</arg>
+<arg>Click Plus Button</arg>
+<arg>${PROJECT_ADD_BTN}</arg>
+<arg>AND</arg>
+<arg>Focus New Browser Window</arg>
+<arg>AND</arg>
+<arg>Select Data On Basic Search Mode</arg>
+<arg>${DROPDOWN_SEARCH_LOC}</arg>
+<arg>${NAME_SEARCH_FIELD}</arg>
+<arg>${project}</arg>
+<arg>AND</arg>
+<arg>Exit New Window And Focus Main Browser</arg>
+<arg>AND</arg>
+<arg>Verify Added Information</arg>
+<arg>${project}</arg>
+<arg>${PROJECT_LOC}</arg>
+<arg>AND</arg>
+<arg>Click Erase Button</arg>
+<arg>${PROJECT_DEL_BTN}</arg>
+<arg>AND</arg>
+<arg>Verify Deleted Information</arg>
+<arg>${PROJECT_LOC}</arg>
+<arg>AND</arg>
+<arg>Click Plus Button</arg>
+<arg>${PROJECT_ADD_BTN}</arg>
+<arg>AND</arg>
+<arg>Focus New Browser Window</arg>
+<arg>AND</arg>
+<arg>Select Data On Basic Search Mode</arg>
+<arg>${DROPDOWN_SEARCH_LOC}</arg>
+<arg>${NAME_SEARCH_FIELD}</arg>
+<arg>${project}</arg>
+<arg>AND</arg>
+<arg>Exit New Window And Focus Main Browser</arg>
+<arg>AND</arg>
+<arg>Verify Added Information</arg>
+<arg>${project}</arg>
+<arg>${PROJECT_LOC}</arg>
+</arguments>
+<kw name="Run Keywords" library="BuiltIn">
+<doc>Executes all the given keywords in a sequence.</doc>
+<arguments>
+<arg>Scroll Down Page From The Browser</arg>
+<arg>AND</arg>
+<arg>Click Plus Button</arg>
+<arg>${PROJECT_ADD_BTN}</arg>
+<arg>AND</arg>
+<arg>Focus New Browser Window</arg>
+<arg>AND</arg>
+<arg>Select Data On Basic Search Mode</arg>
+<arg>${DROPDOWN_SEARCH_LOC}</arg>
+<arg>${NAME_SEARCH_FIELD}</arg>
+<arg>${project}</arg>
+<arg>AND</arg>
+<arg>Exit New Window And Focus Main Browser</arg>
+<arg>AND</arg>
+<arg>Verify Added Information</arg>
+<arg>${project}</arg>
+<arg>${PROJECT_LOC}</arg>
+<arg>AND</arg>
+<arg>Click Erase Button</arg>
+<arg>${PROJECT_DEL_BTN}</arg>
+<arg>AND</arg>
+<arg>Verify Deleted Information</arg>
+<arg>${PROJECT_LOC}</arg>
+<arg>AND</arg>
+<arg>Click Plus Button</arg>
+<arg>${PROJECT_ADD_BTN}</arg>
+<arg>AND</arg>
+<arg>Focus New Browser Window</arg>
+<arg>AND</arg>
+<arg>Select Data On Basic Search Mode</arg>
+<arg>${DROPDOWN_SEARCH_LOC}</arg>
+<arg>${NAME_SEARCH_FIELD}</arg>
+<arg>${project}</arg>
+<arg>AND</arg>
+<arg>Exit New Window And Focus Main Browser</arg>
+<arg>AND</arg>
+<arg>Verify Added Information</arg>
+<arg>${project}</arg>
+<arg>${PROJECT_LOC}</arg>
+</arguments>
+<kw name="Scroll Down Page From The Browser" library="misc_resources">
+<doc>This function will perform to scroll down to bottom.</doc>
+<kw name="Execute Javascript" library="SeleniumLibrary">
+<doc>Executes the given JavaScript code with possible arguments.</doc>
+<arguments>
+<arg>window.scrollTo(0,document.body.scrollHeight)</arg>
+</arguments>
+<msg timestamp="20200308 20:37:27.913" level="INFO">Executing JavaScript:
+window.scrollTo(0,document.body.scrollHeight)
+Without any arguments.</msg>
+<status status="PASS" starttime="20200308 20:37:27.913" endtime="20200308 20:37:27.927"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:27.913" endtime="20200308 20:37:27.927"></status>
+</kw>
+<kw name="Click Plus Button" library="misc_resources">
+<doc>This function is to click the "+" button</doc>
+<arguments>
+<arg>${PROJECT_ADD_BTN}</arg>
+</arguments>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>${plus_button}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:27.928" level="INFO">Clicking element '//td[4]//table[1]//tbody[1]//tr[1]//td[3]//img[1]'.</msg>
+<status status="PASS" starttime="20200308 20:37:27.928" endtime="20200308 20:37:28.015"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:27.927" endtime="20200308 20:37:28.015"></status>
+</kw>
+<kw name="Focus New Browser Window" library="misc_resources">
+<doc>To focus and execute new pop-up browser window</doc>
+<kw name="Switch Window" library="SeleniumLibrary">
+<doc>Switches to browser window matching ``locator``.</doc>
+<arguments>
+<arg>NEW</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:28.016" endtime="20200308 20:37:28.028"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:28.015" endtime="20200308 20:37:28.029"></status>
+</kw>
+<kw name="Select Data On Basic Search Mode" library="misc_resources">
+<doc>This Function is to Add some data. It has a plus button and erase Button</doc>
+<arguments>
+<arg>${DROPDOWN_SEARCH_LOC}</arg>
+<arg>${NAME_SEARCH_FIELD}</arg>
+<arg>${project}</arg>
+</arguments>
+<kw name="Select Option From Dropdown List" library="misc_resources">
+<doc>Example in Status from Sales Visit : Plan, Complete, Cancel</doc>
+<arguments>
+<arg>${search}</arg>
+<arg>${option_value}</arg>
+</arguments>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>//select[@name="${search}"]/option[@value="${option_value}"]</arg>
+</arguments>
+<msg timestamp="20200308 20:37:28.030" level="INFO">Clicking element '//select[@name="search_field"]/option[@value="project_name"]'.</msg>
+<status status="PASS" starttime="20200308 20:37:28.030" endtime="20200308 20:37:32.117"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:28.029" endtime="20200308 20:37:32.117"></status>
+</kw>
+<kw name="Input Text To Search" library="misc_resources">
+<doc>This function is to input keywords to search textbox.</doc>
+<arguments>
+<arg>${string_reference}</arg>
+</arguments>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>name:search_text</arg>
+<arg>${search_text}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:32.117" level="INFO">Typing text 'ANNS' into text field 'name:search_text'.</msg>
+<status status="PASS" starttime="20200308 20:37:32.117" endtime="20200308 20:37:32.191"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:32.117" endtime="20200308 20:37:32.191"></status>
+</kw>
+<kw name="Click Search Button" library="misc_resources">
+<kw name="Get Element Count" library="SeleniumLibrary">
+<doc>Returns the number of elements matching ``locator``.</doc>
+<arguments>
+<arg>name:search</arg>
+</arguments>
+<assign>
+<var>${xpath_search}</var>
+</assign>
+<msg timestamp="20200308 20:37:32.201" level="INFO">${xpath_search} = 1</msg>
+<status status="PASS" starttime="20200308 20:37:32.192" endtime="20200308 20:37:32.201"></status>
+</kw>
+<kw name="Get Element Count" library="SeleniumLibrary">
+<doc>Returns the number of elements matching ``locator``.</doc>
+<arguments>
+<arg>name:submit</arg>
+</arguments>
+<assign>
+<var>${xpath_submit}</var>
+</assign>
+<msg timestamp="20200308 20:37:32.212" level="INFO">${xpath_submit} = 0</msg>
+<status status="PASS" starttime="20200308 20:37:32.201" endtime="20200308 20:37:32.212"></status>
+</kw>
+<kw name="Run Keyword And Return If" library="BuiltIn">
+<doc>Runs the specified keyword and returns from the enclosing user keyword.</doc>
+<arguments>
+<arg>${xpath_search}</arg>
+<arg>Click Element</arg>
+<arg>name:search</arg>
+</arguments>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>name:search</arg>
+</arguments>
+<msg timestamp="20200308 20:37:32.212" level="INFO">Clicking element 'name:search'.</msg>
+<status status="PASS" starttime="20200308 20:37:32.212" endtime="20200308 20:37:32.258"></status>
+</kw>
+<msg timestamp="20200308 20:37:32.258" level="INFO">Returning from the enclosing user keyword.</msg>
+<status status="PASS" starttime="20200308 20:37:32.212" endtime="20200308 20:37:32.258"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:32.191" endtime="20200308 20:37:32.258"></status>
+</kw>
+<kw name="Wait Until Page Contains" library="SeleniumLibrary">
+<doc>Waits until ``text`` appears on the current page.</doc>
+<arguments>
+<arg>${string_reference}</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:32.258" endtime="20200308 20:37:32.269"></status>
+</kw>
+<kw name="Select The List Found" library="misc_resources">
+<doc>This function is to click the link element</doc>
+<arguments>
+<arg>${string_reference}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>//a[@href="javascript:window.close();"][contains(text(), '${found_list}')]</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:32.270" endtime="20200308 20:37:32.292"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>3</arg>
+</arguments>
+<msg timestamp="20200308 20:37:35.294" level="INFO">Slept 3 seconds</msg>
+<status status="PASS" starttime="20200308 20:37:32.292" endtime="20200308 20:37:35.294"></status>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>//a[@href="javascript:window.close();"][contains(text(), '${found_list}')]</arg>
+</arguments>
+<msg timestamp="20200308 20:37:35.294" level="INFO">Clicking element '//a[@href="javascript:window.close();"][contains(text(), 'ANNS')]'.</msg>
+<status status="PASS" starttime="20200308 20:37:35.294" endtime="20200308 20:37:35.340"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:32.269" endtime="20200308 20:37:35.340"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:28.029" endtime="20200308 20:37:35.340"></status>
+</kw>
+<kw name="Exit New Window And Focus Main Browser" library="misc_resources">
+<doc>To Exit pop-up browser window and go back to the main browser</doc>
+<kw name="Switch Window" library="SeleniumLibrary">
+<doc>Switches to browser window matching ``locator``.</doc>
+<status status="PASS" starttime="20200308 20:37:35.341" endtime="20200308 20:37:35.365"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:35.340" endtime="20200308 20:37:35.365"></status>
+</kw>
+<kw name="Verify Added Information" library="misc_resources">
+<doc>This function is to check the added account name, contact name, project name.</doc>
+<arguments>
+<arg>${project}</arg>
+<arg>${PROJECT_LOC}</arg>
+</arguments>
+<kw name="Get Value" library="SeleniumLibrary">
+<doc>Returns the value attribute of the element identified by ``locator``.</doc>
+<arguments>
+<arg>//input[@name="${variable}"]</arg>
+</arguments>
+<assign>
+<var>${actual}</var>
+</assign>
+<msg timestamp="20200308 20:37:35.387" level="INFO">${actual} = ANNS</msg>
+<status status="PASS" starttime="20200308 20:37:35.367" endtime="20200308 20:37:35.387"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>Contains text ${actual}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:35.387" level="INFO">Contains text ANNS</msg>
+<status status="PASS" starttime="20200308 20:37:35.387" endtime="20200308 20:37:35.387"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:35.366" endtime="20200308 20:37:35.387"></status>
+</kw>
+<kw name="Click Erase Button" library="misc_resources">
+<doc>This function is to erase the added account name, contact name, etc. example in creating sales visit.</doc>
+<arguments>
+<arg>${PROJECT_DEL_BTN}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${account_delete}</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:35.388" endtime="20200308 20:37:35.412"></status>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>${account_delete}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:35.412" level="INFO">Clicking element '//td[4]//table[1]//tbody[1]//tr[1]//td[4]//input[1]'.</msg>
+<status status="PASS" starttime="20200308 20:37:35.412" endtime="20200308 20:37:35.458"></status>
+</kw>
+<kw name="Set Selenium Timeout" library="SeleniumLibrary">
+<doc>Sets the timeout that is used by various keywords.</doc>
+<arguments>
+<arg>5 seconds</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:35.458" endtime="20200308 20:37:35.459"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:35.388" endtime="20200308 20:37:35.459"></status>
+</kw>
+<kw name="Verify Deleted Information" library="misc_resources">
+<doc>This function is to check if successfull deleting account after clicking the erase button.</doc>
+<arguments>
+<arg>${PROJECT_LOC}</arg>
+</arguments>
+<kw name="Get Value" library="SeleniumLibrary">
+<doc>Returns the value attribute of the element identified by ``locator``.</doc>
+<arguments>
+<arg>//input[@name="${variable}"]</arg>
+</arguments>
+<assign>
+<var>${actual}</var>
+</assign>
+<msg timestamp="20200308 20:37:35.473" level="INFO">${actual} = </msg>
+<status status="PASS" starttime="20200308 20:37:35.460" endtime="20200308 20:37:35.473"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${actual}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:35.473" level="INFO"></msg>
+<status status="PASS" starttime="20200308 20:37:35.473" endtime="20200308 20:37:35.473"></status>
+</kw>
+<kw name="Should Be Empty" library="BuiltIn">
+<doc>Verifies that the given item is empty.</doc>
+<arguments>
+<arg>${actual}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:35.474" level="INFO">Length is 0</msg>
+<status status="PASS" starttime="20200308 20:37:35.474" endtime="20200308 20:37:35.474"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:35.459" endtime="20200308 20:37:35.474"></status>
+</kw>
+<kw name="Click Plus Button" library="misc_resources">
+<doc>This function is to click the "+" button</doc>
+<arguments>
+<arg>${PROJECT_ADD_BTN}</arg>
+</arguments>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>${plus_button}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:35.474" level="INFO">Clicking element '//td[4]//table[1]//tbody[1]//tr[1]//td[3]//img[1]'.</msg>
+<status status="PASS" starttime="20200308 20:37:35.474" endtime="20200308 20:37:35.565"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:35.474" endtime="20200308 20:37:35.565"></status>
+</kw>
+<kw name="Focus New Browser Window" library="misc_resources">
+<doc>To focus and execute new pop-up browser window</doc>
+<kw name="Switch Window" library="SeleniumLibrary">
+<doc>Switches to browser window matching ``locator``.</doc>
+<arguments>
+<arg>NEW</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:35.567" endtime="20200308 20:37:35.579"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:35.565" endtime="20200308 20:37:35.579"></status>
+</kw>
+<kw name="Select Data On Basic Search Mode" library="misc_resources">
+<doc>This Function is to Add some data. It has a plus button and erase Button</doc>
+<arguments>
+<arg>${DROPDOWN_SEARCH_LOC}</arg>
+<arg>${NAME_SEARCH_FIELD}</arg>
+<arg>${project}</arg>
+</arguments>
+<kw name="Select Option From Dropdown List" library="misc_resources">
+<doc>Example in Status from Sales Visit : Plan, Complete, Cancel</doc>
+<arguments>
+<arg>${search}</arg>
+<arg>${option_value}</arg>
+</arguments>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>//select[@name="${search}"]/option[@value="${option_value}"]</arg>
+</arguments>
+<msg timestamp="20200308 20:37:35.581" level="INFO">Clicking element '//select[@name="search_field"]/option[@value="project_name"]'.</msg>
+<status status="PASS" starttime="20200308 20:37:35.580" endtime="20200308 20:37:39.620"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:35.580" endtime="20200308 20:37:39.621"></status>
+</kw>
+<kw name="Input Text To Search" library="misc_resources">
+<doc>This function is to input keywords to search textbox.</doc>
+<arguments>
+<arg>${string_reference}</arg>
+</arguments>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>name:search_text</arg>
+<arg>${search_text}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:39.621" level="INFO">Typing text 'ANNS' into text field 'name:search_text'.</msg>
+<status status="PASS" starttime="20200308 20:37:39.621" endtime="20200308 20:37:39.693"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:39.621" endtime="20200308 20:37:39.693"></status>
+</kw>
+<kw name="Click Search Button" library="misc_resources">
+<kw name="Get Element Count" library="SeleniumLibrary">
+<doc>Returns the number of elements matching ``locator``.</doc>
+<arguments>
+<arg>name:search</arg>
+</arguments>
+<assign>
+<var>${xpath_search}</var>
+</assign>
+<msg timestamp="20200308 20:37:39.701" level="INFO">${xpath_search} = 1</msg>
+<status status="PASS" starttime="20200308 20:37:39.694" endtime="20200308 20:37:39.701"></status>
+</kw>
+<kw name="Get Element Count" library="SeleniumLibrary">
+<doc>Returns the number of elements matching ``locator``.</doc>
+<arguments>
+<arg>name:submit</arg>
+</arguments>
+<assign>
+<var>${xpath_submit}</var>
+</assign>
+<msg timestamp="20200308 20:37:39.707" level="INFO">${xpath_submit} = 0</msg>
+<status status="PASS" starttime="20200308 20:37:39.701" endtime="20200308 20:37:39.707"></status>
+</kw>
+<kw name="Run Keyword And Return If" library="BuiltIn">
+<doc>Runs the specified keyword and returns from the enclosing user keyword.</doc>
+<arguments>
+<arg>${xpath_search}</arg>
+<arg>Click Element</arg>
+<arg>name:search</arg>
+</arguments>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>name:search</arg>
+</arguments>
+<msg timestamp="20200308 20:37:39.708" level="INFO">Clicking element 'name:search'.</msg>
+<status status="PASS" starttime="20200308 20:37:39.708" endtime="20200308 20:37:39.760"></status>
+</kw>
+<msg timestamp="20200308 20:37:39.760" level="INFO">Returning from the enclosing user keyword.</msg>
+<status status="PASS" starttime="20200308 20:37:39.708" endtime="20200308 20:37:39.761"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:39.694" endtime="20200308 20:37:39.761"></status>
+</kw>
+<kw name="Wait Until Page Contains" library="SeleniumLibrary">
+<doc>Waits until ``text`` appears on the current page.</doc>
+<arguments>
+<arg>${string_reference}</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:39.761" endtime="20200308 20:37:39.769"></status>
+</kw>
+<kw name="Select The List Found" library="misc_resources">
+<doc>This function is to click the link element</doc>
+<arguments>
+<arg>${string_reference}</arg>
+</arguments>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>//a[@href="javascript:window.close();"][contains(text(), '${found_list}')]</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:39.769" endtime="20200308 20:37:39.785"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>3</arg>
+</arguments>
+<msg timestamp="20200308 20:37:42.797" level="INFO">Slept 3 seconds</msg>
+<status status="PASS" starttime="20200308 20:37:39.785" endtime="20200308 20:37:42.797"></status>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>//a[@href="javascript:window.close();"][contains(text(), '${found_list}')]</arg>
+</arguments>
+<msg timestamp="20200308 20:37:42.797" level="INFO">Clicking element '//a[@href="javascript:window.close();"][contains(text(), 'ANNS')]'.</msg>
+<status status="PASS" starttime="20200308 20:37:42.797" endtime="20200308 20:37:42.860"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:39.769" endtime="20200308 20:37:42.860"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:35.579" endtime="20200308 20:37:42.860"></status>
+</kw>
+<kw name="Exit New Window And Focus Main Browser" library="misc_resources">
+<doc>To Exit pop-up browser window and go back to the main browser</doc>
+<kw name="Switch Window" library="SeleniumLibrary">
+<doc>Switches to browser window matching ``locator``.</doc>
+<status status="PASS" starttime="20200308 20:37:42.861" endtime="20200308 20:37:46.887"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:42.860" endtime="20200308 20:37:46.887"></status>
+</kw>
+<kw name="Verify Added Information" library="misc_resources">
+<doc>This function is to check the added account name, contact name, project name.</doc>
+<arguments>
+<arg>${project}</arg>
+<arg>${PROJECT_LOC}</arg>
+</arguments>
+<kw name="Get Value" library="SeleniumLibrary">
+<doc>Returns the value attribute of the element identified by ``locator``.</doc>
+<arguments>
+<arg>//input[@name="${variable}"]</arg>
+</arguments>
+<assign>
+<var>${actual}</var>
+</assign>
+<msg timestamp="20200308 20:37:46.902" level="INFO">${actual} = ANNS</msg>
+<status status="PASS" starttime="20200308 20:37:46.887" endtime="20200308 20:37:46.902"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>Contains text ${actual}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:46.902" level="INFO">Contains text ANNS</msg>
+<status status="PASS" starttime="20200308 20:37:46.902" endtime="20200308 20:37:46.902"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:46.887" endtime="20200308 20:37:46.902"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:27.912" endtime="20200308 20:37:46.902"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:27.912" endtime="20200308 20:37:46.902"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${project}"=="${EMPTY}"</arg>
+<arg>Run Keywords</arg>
+<arg>Click Erase Button</arg>
+<arg>${PROJECT_DEL_BTN}</arg>
+<arg>AND</arg>
+<arg>Verify Deleted Information</arg>
+<arg>${PROJECT_LOC}</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:46.902" endtime="20200308 20:37:46.902"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:27.901" endtime="20200308 20:37:46.902"></status>
+</kw>
+<kw name="Case Open Date">
+<arguments>
+<arg>${case_open_date}</arg>
+</arguments>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${case_open_date}"!="${EMPTY}"</arg>
+<arg>Enter Date Calendar Text</arg>
+<arg>${CASE_OPEN_LOC}</arg>
+<arg>${case_open_date}</arg>
+<arg>clear=True</arg>
+</arguments>
+<kw name="Enter Date Calendar Text" library="misc_resources">
+<doc>Calendar Text for optional informations like Case module:("Case Open Date").</doc>
+<arguments>
+<arg>${CASE_OPEN_LOC}</arg>
+<arg>${case_open_date}</arg>
+<arg>clear=True</arg>
+</arguments>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>${locator}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:46.902" level="INFO">Clicking element 'name:case_open_date'.</msg>
+<status status="PASS" starttime="20200308 20:37:46.902" endtime="20200308 20:37:46.991"></status>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>${calendar_text}</arg>
+<arg>${clear}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:46.991" level="INFO">Typing text '28/02/2020' into text field 'name:case_open_date'.</msg>
+<status status="PASS" starttime="20200308 20:37:46.991" endtime="20200308 20:37:47.096"></status>
+</kw>
+<kw name="Replace String" library="String">
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<arguments>
+<arg>${calendar_text}</arg>
+<arg>/</arg>
+<arg>-</arg>
+</arguments>
+<assign>
+<var>${replace}</var>
+</assign>
+<msg timestamp="20200308 20:37:47.097" level="INFO">${replace} = 28-02-2020</msg>
+<status status="PASS" starttime="20200308 20:37:47.097" endtime="20200308 20:37:47.097"></status>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>${replace}</arg>
+<arg>${clear}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:47.097" level="INFO">Typing text '28-02-2020' into text field 'name:case_open_date'.</msg>
+<status status="PASS" starttime="20200308 20:37:47.097" endtime="20200308 20:37:47.178"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:46.902" endtime="20200308 20:37:47.178"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:46.902" endtime="20200308 20:37:47.178"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:46.902" endtime="20200308 20:37:47.178"></status>
+</kw>
+<kw name="Case Close Date">
+<arguments>
+<arg>${case_close_date}</arg>
+</arguments>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${case_close_date}"!="${EMPTY}"</arg>
+<arg>Enter Date Calendar Text</arg>
+<arg>${CASE_CLOSE_LOC}</arg>
+<arg>${case_close_date}</arg>
+<arg>clear=True</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:47.179" endtime="20200308 20:37:47.179"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:47.178" endtime="20200308 20:37:47.179"></status>
+</kw>
+<kw name="Plan Due Date">
+<arguments>
+<arg>${plan_due_date}</arg>
+</arguments>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${plan_due_date}"!="${EMPTY}"</arg>
+<arg>Enter Date Calendar Text</arg>
+<arg>${CASE_PLAN_LOC}</arg>
+<arg>${plan_due_date}</arg>
+<arg>clear=True</arg>
+</arguments>
+<kw name="Enter Date Calendar Text" library="misc_resources">
+<doc>Calendar Text for optional informations like Case module:("Case Open Date").</doc>
+<arguments>
+<arg>${CASE_PLAN_LOC}</arg>
+<arg>${plan_due_date}</arg>
+<arg>clear=True</arg>
+</arguments>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>${locator}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:47.180" level="INFO">Clicking element 'name:case_date'.</msg>
+<status status="PASS" starttime="20200308 20:37:47.180" endtime="20200308 20:37:47.236"></status>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>${calendar_text}</arg>
+<arg>${clear}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:47.237" level="INFO">Typing text '28/02/2020' into text field 'name:case_date'.</msg>
+<status status="PASS" starttime="20200308 20:37:47.237" endtime="20200308 20:37:47.335"></status>
+</kw>
+<kw name="Replace String" library="String">
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<arguments>
+<arg>${calendar_text}</arg>
+<arg>/</arg>
+<arg>-</arg>
+</arguments>
+<assign>
+<var>${replace}</var>
+</assign>
+<msg timestamp="20200308 20:37:47.335" level="INFO">${replace} = 28-02-2020</msg>
+<status status="PASS" starttime="20200308 20:37:47.335" endtime="20200308 20:37:47.335"></status>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>${replace}</arg>
+<arg>${clear}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:47.335" level="INFO">Typing text '28-02-2020' into text field 'name:case_date'.</msg>
+<status status="PASS" starttime="20200308 20:37:47.335" endtime="20200308 20:37:47.421"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:47.180" endtime="20200308 20:37:47.421"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:47.179" endtime="20200308 20:37:47.421"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:47.179" endtime="20200308 20:37:47.421"></status>
+</kw>
+<kw name="Waiting For">
+<arguments>
+<arg>${waiting}</arg>
+</arguments>
+<kw name="Get WebElements" library="SeleniumLibrary">
+<doc>Returns a list of WebElement objects matching the ``locator``.</doc>
+<arguments>
+<arg>//select[@name="${WAITING_FOR_LOC}"]</arg>
+</arguments>
+<assign>
+<var>${wait_for}</var>
+</assign>
+<msg timestamp="20200308 20:37:47.433" level="INFO">${wait_for} = [&lt;selenium.webdriver.remote.webelement.WebElement (session="70ee5b0c99d420eb30230a2abdee4a1d", element="a92eacae-b710-4795-8ef4-90eae64f2693")&gt;]</msg>
+<status status="PASS" starttime="20200308 20:37:47.422" endtime="20200308 20:37:47.433"></status>
+</kw>
+<kw name="${item} IN [ @{wait_for} ]" type="for">
+<kw name="${item} = &lt;selenium.webdriver.remote.webelement.WebElement (session=&quot;70ee5b0c99d420eb30230a2abdee4a1d&quot;, element=&quot;a92eacae-b710-4795-8ef4-90eae64f2693&quot;)&gt;" type="foritem">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${item.text}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:47.447" level="INFO">                    
+                
+                                                                 
+                                --None--
+                        
+                        
+                                                                    
+                                AI
+                        
+                        
+                                                                    
+                                Customer
+                        
+                        
+                                                                    
+                                Vendor
+                        
+                        
+                    
+
+                
+
+                   </msg>
+<status status="PASS" starttime="20200308 20:37:47.433" endtime="20200308 20:37:47.448"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:47.433" endtime="20200308 20:37:47.448"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:47.433" endtime="20200308 20:37:47.448"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${waiting}"=="${EMPTY}"</arg>
+<arg>Click Element</arg>
+<arg>//select[@name="${WAITING_FOR_LOC}"]/option[@value="--None--"]</arg>
+<arg>ELSE IF</arg>
+<arg>"${waiting}"=="None"</arg>
+<arg>Click Element</arg>
+<arg>//select[@name="${WAITING_FOR_LOC}"]/option[@value="--${waiting}--"]</arg>
+<arg>ELSE</arg>
+<arg>Select Option From Dropdown List</arg>
+<arg>${WAITING_FOR_LOC}</arg>
+<arg>${waiting}</arg>
+</arguments>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>//select[@name="${WAITING_FOR_LOC}"]/option[@value="--None--"]</arg>
+</arguments>
+<msg timestamp="20200308 20:37:47.448" level="INFO">Clicking element '//select[@name="waiting_for"]/option[@value="--None--"]'.</msg>
+<status status="PASS" starttime="20200308 20:37:47.448" endtime="20200308 20:37:47.478"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:47.448" endtime="20200308 20:37:47.479"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:47.421" endtime="20200308 20:37:47.479"></status>
+</kw>
+<kw name="Partner Contact">
+<arguments>
+<arg>${partner_contact}</arg>
+</arguments>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${PARTNER_CONTACT_LOC}</arg>
+<arg>${partner_contact}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:47.479" level="INFO">Typing text '' into text field 'id:cf_4614'.</msg>
+<status status="PASS" starttime="20200308 20:37:47.479" endtime="20200308 20:37:47.540"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:47.479" endtime="20200308 20:37:47.541"></status>
+</kw>
+<kw name="Description">
+<arguments>
+<arg>${description}</arg>
+</arguments>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${description}"!="${EMPTY}"</arg>
+<arg>Input Text</arg>
+<arg>${DESCRIPTION_LOC}</arg>
+<arg>${description}</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:47.541" endtime="20200308 20:37:47.541"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:47.541" endtime="20200308 20:37:47.541"></status>
+</kw>
+<kw name="Solution">
+<arguments>
+<arg>${solution}</arg>
+</arguments>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${solution}"!="${EMPTY}"</arg>
+<arg>Input Text</arg>
+<arg>${SOLUTION_LOC}</arg>
+<arg>${solution}</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:47.542" endtime="20200308 20:37:47.542"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:47.542" endtime="20200308 20:37:47.542"></status>
+</kw>
+<kw name="Prevention">
+<arguments>
+<arg>${prevention}</arg>
+</arguments>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${prevention}"!="${EMPTY}"</arg>
+<arg>Input Text</arg>
+<arg>${PREVENTION_LOC}</arg>
+<arg>${prevention}</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:47.543" endtime="20200308 20:37:47.543"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:47.542" endtime="20200308 20:37:47.543"></status>
+</kw>
+<kw name="Contact Name">
+<arguments>
+<arg>${contact_name}</arg>
+</arguments>
+<kw name="Scroll Down Page From The Browser" library="misc_resources">
+<doc>This function will perform to scroll down to bottom.</doc>
+<kw name="Execute Javascript" library="SeleniumLibrary">
+<doc>Executes the given JavaScript code with possible arguments.</doc>
+<arguments>
+<arg>window.scrollTo(0,document.body.scrollHeight)</arg>
+</arguments>
+<msg timestamp="20200308 20:37:47.544" level="INFO">Executing JavaScript:
+window.scrollTo(0,document.body.scrollHeight)
+Without any arguments.</msg>
+<status status="PASS" starttime="20200308 20:37:47.543" endtime="20200308 20:37:47.551"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:47.543" endtime="20200308 20:37:47.551"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${contact_name}"!="${EMPTY}"</arg>
+<arg>Run Keywords</arg>
+<arg>Click Plus Button</arg>
+<arg>${CONTACT_ADDNAME_BTN}</arg>
+<arg>AND</arg>
+<arg>Focus New Browser Window</arg>
+<arg>AND</arg>
+<arg>Select Data On Basic Search Mode</arg>
+<arg>${DROPDOWN_SEARCH_LOC}</arg>
+<arg>${CONTACT_NAME_SEARCH}</arg>
+<arg>${contact_name}</arg>
+<arg>AND</arg>
+<arg>Exit New Window And Focus Main Browser</arg>
+<arg>AND</arg>
+<arg>Verify Added Information</arg>
+<arg>${contact_name}</arg>
+<arg>${CONTACT_NAME_LABEL}</arg>
+<arg>AND</arg>
+<arg>Click Erase Button</arg>
+<arg>${CONTACTNAME_DEL_BTN}</arg>
+<arg>AND</arg>
+<arg>Verify Deleted Information</arg>
+<arg>${CONTACT_NAME_LABEL}</arg>
+<arg>AND</arg>
+<arg>Click Plus Button</arg>
+<arg>${CONTACT_ADDNAME_BTN}</arg>
+<arg>AND</arg>
+<arg>Focus New Browser Window</arg>
+<arg>AND</arg>
+<arg>Select Data On Basic Search Mode</arg>
+<arg>${DROPDOWN_SEARCH_LOC}</arg>
+<arg>${CONTACT_NAME_SEARCH}</arg>
+<arg>${contact_name}</arg>
+<arg>AND</arg>
+<arg>Exit New Window And Focus Main Browser</arg>
+<arg>AND</arg>
+<arg>Verify Added Information</arg>
+<arg>${contact_name}</arg>
+<arg>${CONTACT_NAME_LABEL}</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:47.551" endtime="20200308 20:37:47.552"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:47.543" endtime="20200308 20:37:47.552"></status>
+</kw>
+<kw name="Contact Mobile">
+<arguments>
+<arg>${contact_mobile}</arg>
+</arguments>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${contact_mobile}"!="${EMPTY}"</arg>
+<arg>Input Text</arg>
+<arg>${CONTACT_MOBILE_LOC}</arg>
+<arg>${contact_mobile}</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:47.552" endtime="20200308 20:37:47.552"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:47.552" endtime="20200308 20:37:47.552"></status>
+</kw>
+<kw name="Contact E-mail">
+<arguments>
+<arg>${contact_email}</arg>
+</arguments>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${contact_email}"!="${EMPTY}"</arg>
+<arg>Input Text</arg>
+<arg>${CONTACT_EMAIL_LOC}</arg>
+<arg>${contact_email}</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:47.553" endtime="20200308 20:37:47.553"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:47.552" endtime="20200308 20:37:47.553"></status>
+</kw>
+<kw name="Product Name">
+<arguments>
+<arg>${product_name}</arg>
+</arguments>
+<kw name="Scroll Down Page From The Browser" library="misc_resources">
+<doc>This function will perform to scroll down to bottom.</doc>
+<kw name="Execute Javascript" library="SeleniumLibrary">
+<doc>Executes the given JavaScript code with possible arguments.</doc>
+<arguments>
+<arg>window.scrollTo(0,document.body.scrollHeight)</arg>
+</arguments>
+<msg timestamp="20200308 20:37:47.554" level="INFO">Executing JavaScript:
+window.scrollTo(0,document.body.scrollHeight)
+Without any arguments.</msg>
+<status status="PASS" starttime="20200308 20:37:47.554" endtime="20200308 20:37:47.557"></status>
+</kw>
+<status status="PASS" starttime="20200308 20:37:47.553" endtime="20200308 20:37:47.558"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${product_name}"!="${EMPTY}"</arg>
+<arg>Run Keywords</arg>
+<arg>Click Plus Button</arg>
+<arg>${PROD_NAME_ADD_BTN}</arg>
+<arg>AND</arg>
+<arg>Focus New Browser Window</arg>
+<arg>AND</arg>
+<arg>Select Data On Basic Search Mode</arg>
+<arg>${DROPDOWN_SEARCH_LOC}</arg>
+<arg>${PROD_NAME_SEARCH}</arg>
+<arg>${product_name}</arg>
+<arg>AND</arg>
+<arg>Exit New Window And Focus Main Browser</arg>
+<arg>AND</arg>
+<arg>Verify Added Information</arg>
+<arg>${product_name}</arg>
+<arg>${PROD_NAME_LABEL}</arg>
+<arg>AND</arg>
+<arg>Click Erase Button</arg>
+<arg>${PROD_NAME_DEL_BTN}</arg>
+<arg>AND</arg>
+<arg>Verify Deleted Information</arg>
+<arg>${PROD_NAME_LABEL}</arg>
+<arg>AND</arg>
+<arg>Click Plus Button</arg>
+<arg>${PROD_NAME_ADD_BTN}</arg>
+<arg>AND</arg>
+<arg>Focus New Browser Window</arg>
+<arg>AND</arg>
+<arg>Select Data On Basic Search Mode</arg>
+<arg>${DROPDOWN_SEARCH_LOC}</arg>
+<arg>${PROD_NAME_SEARCH}</arg>
+<arg>${product_name}</arg>
+<arg>AND</arg>
+<arg>Exit New Window And Focus Main Browser</arg>
+<arg>AND</arg>
+<arg>Verify Added Information</arg>
+<arg>${product_name}</arg>
+<arg>${PROD_NAME_LABEL}</arg>
+</arguments>
+<status status="PASS" starttime="20200308 20:37:47.558" endtime="20200308 20:37:47.558"></status>
+</kw>
+<kw name="Get Value" library="SeleniumLibrary">
+<doc>Returns the value attribute of the element identified by ``locator``.</doc>
+<arguments>
+<arg>//input[@name="${PROD_NAME_LABEL}"]</arg>
+</arguments>
+<assign>
+<var>${product_suite}</var>
+</assign>
+<msg timestamp="20200308 20:37:47.573" level="INFO">${product_suite} = </msg>
+<status status="PASS" starttime="20200308 20:37:47.558" endtime="20200308 20:37:47.573"></status>
+</kw>
+<kw name="Set Task Variable">
+<arguments>
+<arg>${product_suite}</arg>
+</arguments>
+<msg timestamp="20200308 20:37:47.579" level="FAIL">No keyword with name 'Set Task Variable' found. Did you mean:
+    BuiltIn.Set Test Variable</msg>
+<status status="FAIL" starttime="20200308 20:37:47.579" endtime="20200308 20:37:47.579"></status>
+</kw>
+<status status="FAIL" starttime="20200308 20:37:47.553" endtime="20200308 20:37:47.579"></status>
+</kw>
+<status status="FAIL" starttime="20200308 20:37:12.139" endtime="20200308 20:37:47.580"></status>
+</kw>
+<status status="FAIL" starttime="20200308 20:37:12.138" endtime="20200308 20:37:47.580"></status>
+</kw>
+<status status="FAIL" starttime="20200308 20:37:08.952" endtime="20200308 20:37:47.580"></status>
+</kw>
+<status status="FAIL" starttime="20200308 20:37:08.952" endtime="20200308 20:37:47.580"></status>
+</kw>
+<status status="FAIL" starttime="20200308 20:37:08.948" endtime="20200308 20:37:47.580"></status>
+</kw>
+<status status="FAIL" starttime="20200308 20:37:08.948" endtime="20200308 20:37:47.580" critical="yes">No keyword with name 'Set Task Variable' found. Did you mean:
+    BuiltIn.Set Test Variable</status>
+</test>
+<kw name="Close Browser" library="SeleniumLibrary" type="teardown">
+<doc>Closes the current browser.</doc>
+<status status="PASS" starttime="20200308 20:37:47.583" endtime="20200308 20:37:49.673"></status>
+</kw>
+<status status="FAIL" starttime="20200308 20:37:00.354" endtime="20200308 20:37:49.673"></status>
+</suite>
+<statistics>
+<total>
+<stat pass="3" fail="1">Critical Tests</stat>
+<stat pass="3" fail="1">All Tests</stat>
+</total>
+<tag>
+<stat pass="1" fail="0">User credentials</stat>
+</tag>
+<suite>
+<stat pass="3" fail="1" id="s1" name="Create Case Module">Create Case Module</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

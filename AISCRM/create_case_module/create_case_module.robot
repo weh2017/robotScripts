@@ -11,10 +11,10 @@ Resource        ../resources/user_login_resources/user_login_resource.robot
 
 
 Suite Setup     Open Chrome Browser
-#Suite Teardown  Close Browser
+Suite Teardown  Close Browser
 
 *** Variables ***
-${IMAGE_PATH}               C://Users/ruela/Documents/robotScripts/AISCRM/create_case_module/resources/images
+${IMAGE_PATH}               C://Users/ruela/Documents/robotScripts/AISCRM/create_case_module/images
 ${CUSTOMER_SERVICE}         Customer Service
 ${CASE_STRING}              Case
 ${SEARCH_STRING}            Search
@@ -70,7 +70,7 @@ ${ALL_CONTACTS_BTN}         id:all_contacts
 AIS-CRM Website
     Launch Web System   ${URL_2}
 
-# Log-In User with Valid Username And Password
+Log-In User with Valid Username And Password
     [Tags]  User credentials
     Input Username             ${USER}
     Input User's Password      ${PASS}
